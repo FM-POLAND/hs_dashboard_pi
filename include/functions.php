@@ -13,15 +13,15 @@ function getSVXLog() {
 	}
 	$logLines1 = array_slice($logLines1, -250);
 	if (sizeof($logLines1) < 250) {
-		if (file_exists(SVXLOGPATH.".hdd/".SVXLOGPREFIX.".1")) {
-			$logPath = SVXLOGPATH.".hdd/".SVXLOGPREFIX.".1";
+		if (file_exists(SVXLOGPATH."/".SVXLOGPREFIX.".1")) {
+			$logPath = SVXLOGPATH."/".SVXLOGPREFIX.".1";
 			$logLines2 = explode("\n", `egrep -a -h "Talker start on|Talker stop on" $logPath | tail -250`);
 		}
 	}
 	$logLines2 = array_slice($logLines2, -250);
 //	$logLines = $logLines1 + $logLines2;
 	$logLines = array_merge($logLines1,$logLines2);
-	$logLines = array_slice($logLines, -500);
+	$logLines = array_slice($logLines, -250);
 	return $logLines;
 }
 
@@ -36,15 +36,15 @@ function getSVXStatusLog() {
 	}
 	$logLines1 = array_slice($logLines1, -250);
 	if (sizeof($logLines1) < 250) {
-		if (file_exists(SVXLOGPATH.".hdd/".SVXLOGPREFIX.".1")) {
-			$logPath = SVXLOGPATH.".hdd/".SVXLOGPREFIX.".1";
+		if (file_exists(SVXLOGPATH."/".SVXLOGPREFIX.".1")) {
+			$logPath = SVXLOGPATH."/".SVXLOGPREFIX.".1";
 			$logLines2 = explode("\n", `egrep -a -h "Talker start on|Talker stop on" $logPath | tail -250`);
 		}
 	}
 	$logLines2 = array_slice($logLines2, -250);
 //	$logLines = $logLines1 + $logLines2;
 	$logLines = array_merge($logLines1,$logLines2);
-	$logLines = array_slice($logLines, -250);
+	$logLines = array_slice($logLines, -500);
 	return $logLines;
 }
 
@@ -61,8 +61,8 @@ function getSVXRstatus() {
 	if (file_exists(SVXLOGPATH."/".SVXLOGPREFIX)) {
            $slogPath = SVXLOGPATH."/".SVXLOGPREFIX; 
            $svxrstat = `egrep -a -h "Authentication|Conection established|Heartbeat timeout|No route to host|Connection refused|Connection timed out|Locally ordered disconnect" $slogPath | tail -1`;}
-	if ($svxrstat=="" &&  file_exists(SVXLOGPATH.".hdd/".SVXLOGPREFIX.".1")) {
-           $slogPath = SVXLOGPATH.".hdd/".SVXLOGPREFIX.".1"; 
+	if ($svxrstat=="" && file_exists(SVXLOGPATH."/".SVXLOGPREFIX.".1")) {
+           $slogPath = SVXLOGPATH."/".SVXLOGPREFIX.".1"; 
            $svxrstat = `egrep -a -h "Authentication|Conection established|Heartbeat timeout|No route to host|Connection refused|Connection timed out|Locally ordered disconnect" $slogPath | tail -1`;}
            if(strpos($svxrstat,"Authentication OK") || strpos($svxrstat,"Conection established")){
               $svxrstatus="Connected";
@@ -82,8 +82,8 @@ function getEchoLinkProxy() {
 	if (file_exists(SVXLOGPATH."/".SVXLOGPREFIX)) {
            $elogPath = SVXLOGPATH."/".SVXLOGPREFIX; 
            $echoproxy = `grep -a -h "EchoLink proxy" $elogPath | tail -1`;}
-	if ($echoproxy=="" && file_exists(SVXLOGPATH.".hdd/".SVXLOGPREFIX.".1")) {
-           $elogPath = SVXLOGPATH.".hdd/".SVXLOGPREFIX.".1"; 
+	if ($echoproxy=="" && file_exists(SVXLOGPATH."/".SVXLOGPREFIX.".1")) {
+           $elogPath = SVXLOGPATH."/".SVXLOGPREFIX.".1"; 
            $echoproxy = `grep -a -h "EchoLink proxy" $elogPath | tail -1`;}
            if(strpos($echoproxy,"Connected to EchoLink proxy")){
               $proxy=substr($echoproxy,strpos($echoproxy,"Connected to EchoLink proxy")+27);
@@ -299,6 +299,17 @@ function getTXInfo() {
              return "<td style=\"background:#c3e5cc;\"><div style=\"margin-top:2px;margin-bottom:2px;color:#464646;font-weight:bold;\">Listening</div></td></tr>\n"; }
 }
 
+function get_string_between($string, $start, $end) {
+    $string = " ".$string;
+    $ini = strpos($string,$start);
+    if ($ini == 0) {
+	return "";
+    }
+    $ini += strlen($start);   
+    $len = strpos($string,$end,$ini) - $ini;
+    return substr($string,$ini,$len);
+}
+
 
 function getConfigItem($section, $key, $configs) {
 	// retrieves the corresponding config-entry within a [section]
@@ -314,16 +325,6 @@ function getConfigItem($section, $key, $configs) {
 	return substr($configs[$sectionpos], strlen($key) + 1);
 }
 
-function get_string_between($string, $start, $end) {
-    $string = " ".$string;
-    $ini = strpos($string,$start);
-    if ($ini == 0) {
-	return "";
-    }
-    $ini += strlen($start);   
-    $len = strpos($string,$end,$ini) - $ini;
-    return substr($string,$ini,$len);
-}
 
 $logLinesSVX = getSVXLog();
 $reverseLogLinesSVX = $logLinesSVX;

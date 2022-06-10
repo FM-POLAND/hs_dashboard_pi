@@ -1,7 +1,7 @@
 <?php 
 include_once __DIR__.'/tools.php';
 include_once __DIR__.'/config.php';         
-include_once __DIR__.'functions.php';
+include_once __DIR__.'/functions.php';
 $progname = basename($_SERVER['SCRIPT_FILENAME'],".php");
 
 $rawuptime = shell_exec('cat /proc/uptime');
@@ -18,18 +18,16 @@ if ($load < 75) { $cpuLoadHTML = "<td style=\"background: #1d1\">".$load."&nbsp;
 if ($load >= 75) { $cpuLoadHTML = "<td style=\"background: #fa0\">".$load."&nbsp;%</td>\n"; }
 if ($load >= 85) { $cpuLoadHTML = "<td style=\"background: #f00;color: white;\"><b>".$load."&nbsp;% </b></td>\n"; }
 
-if (file_exists('/sys/class/thermal/thermal_zone0/temp')) {
-$cpuTempCRaw = exec('cat /sys/class/thermal/thermal_zone0/temp');
+
+$cpuTempCRaw = exec('sensors | grep -i "Core 0" | grep "$1" | sed -re "s/.*:[^+]*?[+]([.0-9]+)[ °]C.*/\1/g"');
 if ($cpuTempCRaw !="") {
-// if ($cpuTempCRaw > 1000) { 
-$cpuTempC = round(abs($cpuTempCRaw)/ 1000)+CPU_TEMP_OFFSET; 
-//} else { $cpuTempC = round($cpuTempCRaw); }
+ $cpuTempC=$cpuTempCRaw; 
  $cpuTempF = round(+$cpuTempC * 9 / 5 + 32);
  if ($cpuTempC < 55) { $cpuTempHTML = "<td style=\"background: #1d1;\">".$cpuTempC."&deg;C</td>\n"; }
  if ($cpuTempC >= 55) { $cpuTempHTML = "<td style=\"background: #fa0;\">".$cpuTempC."&deg;C</td>\n"; }
  if ($cpuTempC >= 70) { $cpuTempHTML = "<td style=\"background: #f00;color:white;\">".$cpuTempC."&deg;C </td>\n"; }
  } else { $cpuTempHTML = "<td style=\"background: #white\">---</td>\n"; }
-} else { $cpuTempHTML = "<td style=\"background: #white\">---</td>\n"; }
+
 ?>
 <p style="margin-bottom:10px;margin-top:4px;"><a target=_blank href=esm><span style="font-weight: bold;font-size:14px;">Hardware Info</span></a></p>
 <fieldset style="box-shadow:0 0 10px #999;background-color:#e8e8e8e8; width:855px;margin-top:0px;margin-bottom:10px;margin-left:6px;margin-right:0px;font-size:12px;border-top-left-radius: 10px; border-top-right-radius: 10px;border-bottom-left-radius: 10px; border-bottom-right-radius: 10px;">
@@ -41,9 +39,7 @@ $cpuTempC = round(abs($cpuTempCRaw)/ 1000)+CPU_TEMP_OFFSET;
     <th><span>&nbsp;<b>Disk&nbsp;<br> used</b></span></th>
     <th><span>&nbsp;<b>Memory&nbsp;<br> used</b></span></th>
     <th><span><b>CPU Usage</b></span></th>
-<?php if (file_exists('/sys/class/thermal/thermal_zone0/temp')) {
-    echo "<th><span><b>CPU Temp</b></span></th>"; }
-?>
+    <th><span><b>CPU Temp</b></span></th>
   </tr>
   <tr height="24px">
     <td><?php echo php_uname('n');?></td>
@@ -53,7 +49,8 @@ $cpuTempC = round(abs($cpuTempCRaw)/ 1000)+CPU_TEMP_OFFSET;
     <td><?php echo $free_mem;?></td>
 <!--    <td><?php echo $load;?>&nbsp;%<br>(<?php echo round($cpuLoad[0],1);?> / <?php echo round($cpuLoad[1],1);?> / <?php echo round($cpuLoad[2],1);?>)</td> -->
    <?php  echo $cpuLoadHTML;  ?>
-   <?php if (file_exists('/sys/class/thermal/thermal_zone0/temp')) { echo $cpuTempHTML; } ?>
+   <?php echo $cpuTempHTML;  ?>
   </tr>
 </table>
 </fieldset>
+

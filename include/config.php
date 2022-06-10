@@ -8,31 +8,25 @@ error_reporting(0);
 define("FMNETWORK", "FM POLAND");
 //
 // Select only one URL for SVXReflector API to get connected Nodes
-//
-// FM Poland API
+
+// FM POLAND API
 define("URLSVXRAPI", "http://svxlink.pl:888/api/");
 //
 // Empty address API do not show connected nodes to svxreflector 
-//define("URLSVXRAPI", "");
+// define("URLSVXRAPI", "");
 //
 // Put url address to your svxreflector wihc offer information of status
 //define("URLSVXRAPI", "http://192.168.1.33:9999/status");
 //
-//
-// Orange Pi Zero LTS version requires CPU_TEMP_OFFSET value 30 
-// to display CPU TEMPERATURE correctly
-define("CPU_TEMP_OFFSET","0");
-//
-// Path and file name of confguration
+// path and file name of configuration
 define("SVXCONFPATH", "/etc/svxlink");
 define("SVXCONFIG", "svxlink.conf");
 //
-// Path and file name of log
+// path and file name of log
 define("SVXLOGPATH", "/var/log");
 define("SVXLOGPREFIX", "svxlink");
 //
-//
-// Define where is located menu wit buttons TOP or BOTTOM
+// define where is located menu wit buttons TOP or BOTTOM
 define("MENUBUTTON", "TOP");
 //
 // Button keys define: description button, DTMF command or command, color of button
