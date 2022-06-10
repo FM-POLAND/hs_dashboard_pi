@@ -8,12 +8,12 @@ error_reporting(0);
 define("FMNETWORK", "FM POLAND");
 //
 // Select only one URL for SVXReflector API to get connected Nodes
-
-// FM POLAND API
+//
+// FM Poland API
 define("URLSVXRAPI", "http://svxlink.pl:888/api/");
 //
 // Empty address API do not show connected nodes to svxreflector 
-// define("URLSVXRAPI", "");
+//define("URLSVXRAPI", "");
 //
 // Put url address to your svxreflector wihc offer information of status
 //define("URLSVXRAPI", "http://192.168.1.33:9999/status");
@@ -21,10 +21,11 @@ define("URLSVXRAPI", "http://svxlink.pl:888/api/");
 // path and file name of configuration
 define("SVXCONFPATH", "/etc/svxlink");
 define("SVXCONFIG", "svxlink.conf");
-//
+
 // path and file name of log
 define("SVXLOGPATH", "/var/log");
 define("SVXLOGPREFIX", "svxlink");
+//
 //
 // define where is located menu wit buttons TOP or BOTTOM
 define("MENUBUTTON", "TOP");

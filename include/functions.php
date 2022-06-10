@@ -1,6 +1,5 @@
 <?php
 
-
 function getSVXLog() {
 	// Open Logfile and copy loglines into LogLines-Array()
 	$logLines = array();
@@ -85,6 +84,7 @@ function getEchoLinkProxy() {
 	if ($echoproxy=="" && file_exists(SVXLOGPATH."/".SVXLOGPREFIX.".1")) {
            $elogPath = SVXLOGPATH."/".SVXLOGPREFIX.".1"; 
            $echoproxy = `grep -a -h "EchoLink proxy" $elogPath | tail -1`;}
+
            if(strpos($echoproxy,"Connected to EchoLink proxy")){
               $proxy=substr($echoproxy,strpos($echoproxy,"Connected to EchoLink proxy")+27);
               $eproxy="Connected to proxy<br><span style=\"color:brown;font-weight:bold;\">".$proxy."</span>";
@@ -167,6 +167,7 @@ function getSVXTGTMP() {
          else {$tgselect=""; }
         return $tgselect;
 }
+
 
 function initModuleArray() {
     $modules = Array();
