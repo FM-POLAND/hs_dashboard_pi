@@ -1,2 +1,2 @@
-# hs_dasboard_pi
+# hs_dashboard_pi
 HotSpot dashboard repository inspired by pi star dashboard
