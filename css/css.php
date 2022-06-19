@@ -516,7 +516,65 @@ input[type=text] {
   margin: 4px 4px;
   cursor: pointer;
   border-radius: 4px;
+}
 
+.green_id
+{
+  background: none;
+  border: none;
+  color: darkgreen;
+  font-weight: 600;
+  font-size: 13px;
+  padding: 1px 8px;
+  text-decoration: none;
+  margin: 1px 8px;
+  cursor: pointer;
+}
+
+.green_id:hover
+{
+  background: lightgreen;
+}
+
+.yellow_id
+{
+  background: none;
+  border: none;
+  color: yellow;
+  font-weight: 600;
+  font-size: 13px;
+  padding: 1px 2px;
+  text-decoration: none;
+  margin: 1px 2px;
+  cursor: pointer;
+}
+
+.yellow_id:hover
+{
+  background: green;
+}
+
+.mh_call
+{
+  font-size: 12.5px;
+  font-weight: bold;
+  color: #464646;
+  vertical-align: middle;
+  padding: 1px 8px;
+  padding: 1px 8px;
+}
+
+.qrz_link
+{
+  vertical-align: middle;
+  font-size: 12.5px;
+  padding: 1px 8px;
+  padding: 1px 8px;
+}
+
+.qrz_link:hover
+{
+  background: lightblue;
 }
 
 .blue

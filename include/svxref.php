@@ -48,9 +48,10 @@ foreach ($nodes['nodes'] as $key =>$value)
    echo $nodes['nodes'][$key]['nodeLocation']."</span><br>";
       }
    echo "&nbsp;&nbsp;Monitored TGs:<br><span style='color:yellow;margin-left:10px;margin-right:10px;'>";
+   echo "<form method=\"post\">";
    foreach ($nodes['nodes'][$key]['monitoredTGs'] as $item)
-     { echo $item." "; }
-   echo "</span></span></span></span>";
+     { echo "<input type=submit id=jmpto name=jmpto class=yellow_id value=".$item." />"; }
+   echo "</form></span></span></span></span>";
  }
 ?>
 </center>

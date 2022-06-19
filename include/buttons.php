@@ -109,6 +109,11 @@ if (SHOWPTT=="TRUE") {
    exec($exec,$output);
    echo "<meta http-equiv='refresh' content='0'>";
     }
+  if (isset($_POST["jmpto"])) {
+   $exec= "echo '91" . $_POST['jmpto'] . "#' > /tmp/dtmf_svx";
+   exec($exec,$output);
+   echo "<meta http-equiv='refresh' content='0'>";
+    }
 ?>
 <p style="margin-bottom:-2px;"></p>
 </div>
