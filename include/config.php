@@ -33,7 +33,7 @@ define("SVXLOGPREFIX", "svxlink");
 //
 //
 // Define where is located menu wit buttons TOP or BOTTOM
-define("MENUBUTTON", "TOP");
+define("MENUBUTTON", "BOTTOM");
 //
 // Button keys define: description button, DTMF command or command, color of button
 //
