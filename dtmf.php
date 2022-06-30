@@ -2,6 +2,18 @@
 $progname = basename($_SERVER['SCRIPT_FILENAME'],".php");
 include_once 'include/config.php';
 include_once 'include/tools.php';
+
+// migrate to external class tbc
+$svxConfigFile = '/etc/svxlink/svxlink.conf';
+    if (fopen($svxConfigFile,'r'))
+       { $svxconfig = parse_ini_file($svxConfigFile,true,INI_SCANNER_RAW);
+         $callsign = $svxconfig['ReflectorLogic']['CALLSIGN'];}
+    else { $callsign="N0CALL";}
+//
+
+
+
+
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -23,7 +35,10 @@ include_once 'include/tools.php';
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Architects+Daughter&family=Fredoka+One&family=Tourney&family=Oswald&display=swap" rel="stylesheet">
 <link rel="shortcut icon" href="images/favicon.ico" sizes="16x16 32x32" type="image/png">
-    <title>SVXLink Dashboard</title>
+
+<?php echo ("<title>" . $callsign ." ". FMNETWORK . " Dashboard</title>"); ?>
+
+
 <?php include_once "include/browserdetect.php"; ?>
     <script type="text/javascript" src="scripts/jquery.min.js"></script>
     <script type="text/javascript" src="scripts/functions.js"></script>
@@ -58,15 +73,7 @@ $svxConfigFile = '/etc/svxlink/svxlink.conf';
 </div></div>
 </div>
 
-<p style="padding-right: 5px; text-align: right; color: #000000;">
-    <a href="/" style="color: #0000ff;">Dashboard</a> |
-    <a href="/node.php" style="color: #0000ff;">Nodes</a> |
-    <a href="/tg.php" style="color: #0000ff;">Talk Groups</a> |
-    <a href="/dtmf.php" style="color: #0000ff;">Dtmf</a>
-</p>
-
-
-
+<?php include_once __DIR__."/include/top_menu.php"; ?>
 
 <div class="content"><center>
 <div style="margin-top:8px;">

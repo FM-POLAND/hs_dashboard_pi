@@ -72,6 +72,7 @@ $svxConfigFile = '/etc/svxlink/svxlink.conf';
 </div>
 
 <?php include_once __DIR__."/include/top_menu.php"; ?>
+
 <div class="content"><center>
 <div style="margin-top:8px;">
 </div></center>
@@ -99,33 +100,14 @@ include_once __DIR__."/include/buttons.php";
     echo '</div>'."\n";
     echo '</td>'."\n";
 
-    echo '<td valign="top" style="height:auto;border:none;  background-color:#f1f1f1;">';
-    echo '<div class="content">'."\n";
-    echo '<script type="text/javascript">'."\n";
 
-    if (URLSVXRAPI!="") {
-    echo 'function reloadSVXREF(){'."\n";
-    echo '  $("#svxref").load("include/svxref.php",function(){ setTimeout(reloadSVXREF,90000) });'."\n";
-    echo '}'."\n";
-    echo 'setTimeout(reloadSVXREF,90000);'."\n";
-     }
+    echo '<td valign="center" style="height:auto;border:none;  background-color:#f1f1f1;">';
 
-    echo 'function reloadLastHerd(){'."\n";
-    echo '  $("#lastHerd").load("include/lh_small.php",function(){ setTimeout(reloadLastHerd,3000) });'."\n";
-    echo '}'."\n";
-    echo 'setTimeout(reloadLastHerd,3000);'."\n";
+    echo '<iframe src="/wifi"  width="680" height="500" title="audio"></iframe>';
 
-    echo '$(window).trigger(\'resize\');'."\n";
-    echo '</script>'."\n";
-    echo '<center><div id="lastHerd" style="margin-bottom:30px;">'."\n";
-    include 'include/lh_small.php';
-    echo '</div></center>'."\n";
-    echo "<br />\n";
-    if (URLSVXRAPI!="") {
-    echo '<center><div id="svxref" style="margin-bottom:30px;">'."\n";
-    include 'include/svxref.php';
-    echo '</div></center>'."\n";
-    }
+
+
+
     echo '</td>';
 ?>
 </tr></table>
