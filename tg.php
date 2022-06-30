@@ -22,9 +22,8 @@ include_once 'include/tools.php';
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Architects+Daughter&family=Fredoka+One&family=Tourney&family=Oswald&display=swap" rel="stylesheet">
-<link rel="shortcut icon" href="images/favicon.ico" sizes="16x16 32x32" type="image/png">    
-
-<title>SVXLink Dashboard</title>
+<link rel="shortcut icon" href="images/favicon.ico" sizes="16x16 32x32" type="image/png">
+    <title>SVXLink Dashboard</title>
 <?php include_once "include/browserdetect.php"; ?>
     <script type="text/javascript" src="scripts/jquery.min.js"></script>
     <script type="text/javascript" src="scripts/functions.js"></script>
@@ -59,12 +58,15 @@ $svxConfigFile = '/etc/svxlink/svxlink.conf';
 </p></center>
 </div></div>
 </div>
+
+
 <p style="padding-right: 5px; text-align: right; color: #000000;">
     <a href="/" style="color: #0000ff;">Dashboard</a> |
     <a href="/node.php" style="color: #0000ff;">Nodes</a> |
-    <a href="/tg.php" style="color: #0000ff;">Talk Groups</a> | 
+    <a href="/tg.php" style="color: #0000ff;">Talk Groups</a> |
     <a href="/dtmf.php" style="color: #0000ff;">Dtmf</a>
 </p>
+
 
 
 <div class="content"><center>
@@ -106,14 +108,14 @@ include_once __DIR__."/include/buttons.php";
      }
 
     echo 'function reloadLastHerd(){'."\n";
-    echo '  $("#lastHerd").load("include/lh.php",function(){ setTimeout(reloadLastHerd,3000) });'."\n";
+    echo '  $("#lastHerd").load("include/tg.php",function(){ setTimeout(reloadLastHerd,3000) });'."\n";
     echo '}'."\n";
     echo 'setTimeout(reloadLastHerd,3000);'."\n";
 
     echo '$(window).trigger(\'resize\');'."\n";
     echo '</script>'."\n";
     echo '<center><div id="lastHerd" style="margin-bottom:30px;">'."\n";
-    include 'include/lh.php';
+    include 'include/tg.php';
     echo '</div></center>'."\n";
     echo "<br />\n";
     if (URLSVXRAPI!="") {

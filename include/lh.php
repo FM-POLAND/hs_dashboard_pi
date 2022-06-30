@@ -10,8 +10,10 @@ include_once __DIR__.'/tgdb.php';
   <table style="margin-top:3px;">
     <tr height=25px>
       <th width=150px>Time (<?php echo date('T')?>)</th>
-      <th width=160px>Callsign</th>
-      <th width=140px>TG #</th>
+      <th width=100px>Callsign</th>
+      <th width=100px>TG #</th>
+	<th width=30px> M </th>
+	<th width=30px> A </th>
       <th>TG Name</th>
     </tr>
 <?php
@@ -35,9 +37,17 @@ for ($i = 0;  ($i <= 15); $i++) { //Last 15 calls
                   $call = substr($listElem[1],0,$ssid);}
                   echo "<td $bgcolor align=\"left\">&nbsp;&nbsp;<a href=\"http://www.qrz.com/db/".$call."\" target=\"_blank\" class=\"qrz_link\"><b>$listElem[1]</b></a>&nbsp;$tximg</td>";
                }
-		echo "<td align=\"left\">&nbsp;<span style=\"color:#b5651d;font-weight:bold;\"><input type=submit id=jmpto name=jmpto class=green_id value=\"$listElem[2]\" /> </span></td>";
-               $tgnumber = substr($listElem[2],3);
-               $name=$tgdb_array[$tgnumber];
+		//echo "<td align=\"left\">&nbsp;<span style=\"color:#b5651d;font-weight:bold;\">$listElem[2]</span></td>";
+		$tgnumber = substr($listElem[2],3);
+                $name=$tgdb_array[$tgnumber];
+		echo "<td align=\"left\">&nbsp;<span style=\"color:#b5651d;font-weight:bold;\">$tgnumber</span></td>";
+		echo "<td><button type=submit id=jumptoM name=jmptoM class=monitor_id value=\"$listElem[2]\"><i class=\"material-icons\"style=\"font-size:15px;\">volume_up</i></button></td>";
+		//echo "<td onlick='monitorTmpTG(".$tgnumber.")'> M </a></td>";
+		//echo "<td><button> T </button></td>";
+                echo "<td><button type=submit id=jumptoA name=jmptoA class=active_id value=\"$listElem[2]\"><i class=\"material-icons\"style=\"font-size:15px;\">cell_tower</i></button></td>";
+	       //$tgnumber = substr($listElem[2],3);
+               //$name=$tgdb_array[$tgnumber];
+
                if ( $name==""){ $name ="------";}
                if ( $tgnumber>=1239900 and $tgnumber<= 1239999){ $name ="AUTO QSY";}
 		echo "<td style=\"font-weight:bold;color:#464646;\">&nbsp;<b>".$name."</b></td>";

@@ -2,6 +2,7 @@
 include_once __DIR__.'/config.php';          
 include_once __DIR__.'/tools.php';       
 include_once __DIR__.'/functions.php';    
+
 $url=URLSVXRAPI;
 if ($url!="") {
 //  Initiate curl
@@ -21,6 +22,8 @@ if(array_key_exists('Name', $nodes)) {
     $name=$nodes['Name'];
 } else { $name="";}
 ?>
+<span style="font-weight: bold;font-size:14px;">SVXReflector Nodes</span>
+
 <br>
 <fieldset style="width:620px;border:rgb(255, 156, 42) 2px groove; box-shadow: 5px 5px 20px rgb(255, 236, 214); background-color:#f1f1f1;margin-left:0px;margin-right:0px;border-top-left-radius: 10px; border-top-right-radius: 10px;border-bottom-left-radius: 10px; border-bottom-right-radius: 10px;">
 <div style="padding:0px;width:620px;background-image: linear-gradient(to bottom, #e9e9e9 50%, #bcbaba 100%);border-radius: 10px;-moz-border-radius:10px;-webkit-border-radius:10px;border: 1px solid LightGrey;margin-left:0px; margin-right:0px;margin-top:4px;margin-bottom:0px;line-height:1.6;white-space:normal;">
@@ -49,8 +52,32 @@ foreach ($nodes['nodes'] as $key =>$value)
       }
    echo "&nbsp;&nbsp;Monitored TGs:<br><span style='color:yellow;margin-left:10px;margin-right:10px;'>";
    echo "<form method=\"post\">";
+   echo "<BR><center>";
+   echo "<table style=\"width:150px\" >";
+   echo"<tr height=15px>";
+	echo "<th >TG#</th>";
+	echo "<th >M</th>";
+	echo "<th >A</th>";
+   echo"</tr>";
    foreach ($nodes['nodes'][$key]['monitoredTGs'] as $item)
-     { echo "<input type=submit id=jmpto name=jmpto class=yellow_id value=".$item." />"; }
+     {  
+	
+	echo "<tr><td align=\"left\">";
+	//echo "<span style=\"margin-left:0px;margin-right:0px; padding:0px 0;\">[";
+	//echo "<input type=submit id=jmptoM name=jmptoM class=black value=".$item." />";
+	echo "<span style=\"color:#b5651d;font-weight:bold; padding:1px 10px;\">$item</span>";
+	//echo "$item";
+	echo "</td><td>";
+	echo "<button type=submit id=jmptoM name=jmptoM class=monitor_id value=".$item."><i class=\"material-icons\"style=\"font-size:15px;\">volume_up</i></button>";
+	echo "</td><td>";
+	echo "<button type=submit id=jmptoA name=jmptoA class=active_id value=".$item."><i class=\"material-icons\"style=\"font-size:15px;\">cell_tower</i></button>";
+	//echo "]";
+	//echo "</span> ";
+	//echo "<BR>";
+	echo "</td></Tr>";
+}
+echo "</table>";
+echo "<br></center>";
    echo "</form></span></span></span></span>";
  }
 ?>

@@ -518,23 +518,44 @@ input[type=text] {
   border-radius: 4px;
 }
 
-.green_id
+.monitor_id
 {
   background: none;
-  border: none;
+  border: 1px;
   color: darkgreen;
   font-weight: 600;
   font-size: 13px;
-  padding: 1px 8px;
+  padding: 1px 1px;
   text-decoration: none;
-  margin: 1px 8px;
+  margin: 1px 1px;
   cursor: pointer;
 }
 
-.green_id:hover
+.monitor_id:hover
 {
   background: lightgreen;
 }
+
+
+.active_id
+{
+  background: none;
+  border: 1px;
+  color: darkblue;
+  font-weight: 600;
+  font-size: 13px;
+  padding: 1px 1px;
+  text-decoration: none;
+  margin: 1px 1px;
+  cursor: pointer;
+}
+
+.active_id:hover
+{
+  background: lightblue;
+}
+
+
 
 .yellow_id
 {

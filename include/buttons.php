@@ -114,6 +114,18 @@ if (SHOWPTT=="TRUE") {
    exec($exec,$output);
    echo "<meta http-equiv='refresh' content='0'>";
     }
+ if (isset($_POST["jmptoA"])) {
+   $exec= "echo '91" . $_POST['jmptoA'] . "#' > /tmp/dtmf_svx";
+   exec($exec,$output);
+   echo "<meta http-equiv='refresh' content='0'>";
+    }
+if (isset($_POST["jmptoM"])) {
+   $exec= "echo '94" . $_POST['jmptoM'] . "#' > /tmp/dtmf_svx";
+   exec($exec,$output);
+   echo "<meta http-equiv='refresh' content='0'>";
+    }
+
+
 ?>
 <p style="margin-bottom:-2px;"></p>
 </div>
