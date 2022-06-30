@@ -5,9 +5,9 @@ HotSpot dashboard repository inspired by pi star dashboard
 Some functions of main.ripnet can be limitted by user permitions.
 For full functionality use this code: 
 
-'''
+```
 sudo usermod -aG sudo svxlink
-'''
+```
 
 
 
