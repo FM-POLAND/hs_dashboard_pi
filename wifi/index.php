@@ -114,7 +114,7 @@ if (isset($_POST['btnSwitch']))
         $screen = null;
         $ssid = $_POST['ssid'];
 	//exec('nmcli dev wifi rescan');
-        $command = 'nmcli dev wifi connect ' .$ssid. ' 2>&1'; 
+        $command = "nmcli dev wifi connect \"" .$ssid. "\" 2>&1"; 
 	exec($command,$screen,$retval);
 }
 
@@ -125,7 +125,7 @@ if (isset($_POST['btnDelete']))
         $screen = null;
         $ssid = $_POST['ssid'];
         //exec('nmcli dev wifi rescan');
-        $command = 'nmcli con delete ' .$ssid. ' 2>&1';
+        $command = "nmcli con delete \"" .$ssid. "\" 2>&1";
         exec($command,$screen,$retval);
 }
 
