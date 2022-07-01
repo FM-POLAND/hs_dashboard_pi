@@ -137,7 +137,7 @@ if (isset($_POST['btnAdd']))
         $ssid = $_POST['ssid'];
         $password = $_POST['password'];
 	//exec('nmcli dev wifi rescan');
-        $command = "nmcli dev wifi connect " .$ssid. " password  \"" . $password . "\"  2>&1";
+        $command = "nmcli dev wifi connect \"" .$ssid. "\" password  \"" . $password . "\"  2>&1";
         exec($command,$screen,$retval);
 }
 
