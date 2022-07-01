@@ -63,8 +63,8 @@ textarea {
 <body style="background-color: #e1e1e1;font: 11pt arial, sans-serif;">
 <script src="web-audio-peak-meter.js"></script>
 <center>
-<fieldset style="border:#3083b8 2px groove;box-shadow:0 0 10px #999; background-color:#f1f1f1; width:600px;margin-top:15px;margin-left:0px;margin-right:5px;font-size:13px;border-top-left-radius: 10px; border-top-right-radius: 10px;border-bottom-left-radius: 10px; border-bottom-right-radius: 10px;">
-<div style="padding:0px;width:595px;background-image: linear-gradient(to bottom, #e9e9e9 50%, #bcbaba 100%);border-radius: 10px;-moz-border-radius:10px;-webkit-border-radius:10px;border: 1px solid LightGrey;margin-left:0px; margin-right:0px;margin-top:4px;margin-bottom:0px;line-height:1.6;white-space:normal;">
+<fieldset style="border:#3083b8 2px groove;box-shadow:0 0 10px #999; background-color:#f1f1f1; width:555px;margin-top:15px;margin-left:0px;margin-right:5px;font-size:13px;border-top-left-radius: 10px; border-top-right-radius: 10px;border-bottom-left-radius: 10px; border-bottom-right-radius: 10px;">
+<div style="padding:0px;width:550px;background-image: linear-gradient(to bottom, #e9e9e9 50%, #bcbaba 100%);border-radius: 10px;-moz-border-radius:10px;-webkit-border-radius:10px;border: 1px solid LightGrey;margin-left:0px; margin-right:0px;margin-top:4px;margin-bottom:0px;line-height:1.6;white-space:normal;">
 <center>
 <h1 id="web-audio-peak-meters" style="color:#00aee8;font: 18pt arial, sans-serif;font-weight:bold; text-shadow: 0.25px 0.25px gray;">Network Configurator</h1>
 
@@ -89,6 +89,17 @@ exec('nmcli  -t -f NAME  con show',$conns,$retval);
 
 // find the gateway
 $ipgw = null;
+
+$screen[0] = "Welcome to NETWORK configuration tool.";
+$screen[1] = "";
+$screen[2] = "Please use buttons for actions.";
+$screen[3] = "[Ping GW],[Ping Google],[Ping Reflector] works without parameter.";
+$screen[4] = "[Show Details] [Set Auto IP]  [conn UP]  [conn DOWN] works with |connection|.";
+$screen[5] = "[Set Static IP] needs |IP|/|CIDR| & |GW| & |DNS|.";
+$screen[6] = "Please use 24 for 255.255.255.0 in CIDR. ect.";
+$screen[7] = "For |IP| & |GW| & |DNS| please use IP notation like 192.168.1.2 ect.";
+$screen[8] = "";
+$screen[9] = "Have a Fun. Vy 73 de SP0DZ |shhh...:)";
 
 
 
@@ -215,9 +226,6 @@ if (isset($_POST['btnDown']))
         exec($command,$screen,$retval);
 }
 
-
-
-
 ?>
 
 <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>"> 
@@ -228,11 +236,10 @@ if (isset($_POST['btnDown']))
 	</tr>
 <tr>
 <Td>
-	 
 	<textarea name="scan" rows="10" cols="80"><?php 
 			echo implode("\n",$screen); ?></textarea>
 
- </td>
+</td>
 </tr>  
 </table> 
 </DIV>
@@ -240,26 +247,21 @@ if (isset($_POST['btnDown']))
 <table>
         <tr>
         <th width = "100px">Action</th>
-        <th width = "580px">Input</th>
+        <th width = "380px">Input</th>
 	<th width = "100px">Action</th>
         </tr>
 <tr>
 <Td>
-
-<p style="margin-bottom:0px;"></p>
-
-        
-	<button name="btnPingGw" type="submit" class="red" onclick="func()" id="runRec" type="button" value="List" style="height:45px;font-size:12px;">Ping GW</button>
+	<button name="btnDetails" type="submit" class="red" style="height:30px; width:105px; font-size:12px;">Show Details</button>        
+	<BR>
+	<button name="btnPingGw" type="submit" class="red" style="height:30px; width:105px; font-size:12px;">Ping GW</button>
  	<br>
-	<button name="btnPingGoogle" type="submit" class="red" onclick="func()" id="runRec" type="button" value="List" style="height:45px;font-size:12px;">Ping Google</button>
+	<button name="btnPingGoogle" type="submit" class="red" style="height:30px; width:105px; font-size:12px;">Ping Google</button>
 	<br>
-        <button name="btnPingRef" type="submit" class="red" onclick="func()" id="runRec" type="button" value="List" style="height:45px;font-size:12px;">Ping Reflector</button>
+        <button name="btnPingRef" type="submit" class="red" style="height:30px; width:105px; font-size:12px;">Ping Reflector</button>
 
 </tD><TD>
-
-
-	my connection: 
-
+	connection: 
    <select name="sAconn">
 	
 <?php
@@ -270,29 +272,24 @@ foreach ($conns as $conn){
 ?>
 
   </select>
-<button name="btnAuto" type="submit" class="red" onclick="func()" id="runRec" type="button" value="List" style="height:45px;font-size:12px;">Set Auto IP</button>
-<BR>
 	
-<br>	
-please use CIDR=24 for 255.255.255.0 mask ect.
+<br><br>	
+	IP: <input type="text" name="myIp" style="width: 150px;" value="<?php echo $myIp;?>">
+        /<input type="text" name="cidr" style="width: 50px;" value="<?php echo $cidr;?>">
 <BR>
-	my IP: <input type="text" name="myIp" style="width: 150px;" value="<?php echo $myIp;?>">
-	CIDR: <input type="text" name="cidr" style="width: 50px;" value="<?php echo $cidr;?>">
-<BR>
-        gw: <input type="text" name="gw" style="width: 120px;" value="<?php echo $gw;?>">
-        dns: <input type="text" name="dns" style="width: 120px;" value="<?php echo $dns;?>">
-
-<BR>
-<button name="btnStatic" type="submit" class="red" onclick="func()" id="runRec" type="button" value="List" style="height:45px;font-size:12px;">Set Static IP</button>
-
+        GW: <input type="text" name="gw" style="width: 120px;" value="<?php echo $gw;?>">
+<BR> 
+       DNS: <input type="text" name="dns" style="width: 120px;" value="<?php echo $dns;?>">
 </td>
-<td>
-        <button name="btnDetails" type="submit" class="red" onclick="func()" id="runRec" type="button" value="List" style="height:45px;font-size:12px;">Show Details</button>
+<td> 
+	<button name="btnAuto" type="submit" class="red" style="height:30px; width:105px; font-size:12px;">Set Auto IP</button>
 	<BR>
-	<button name="btnUp" type="submit" class="red" onclick="func()" id="runRec" type="button" value="List" style="height:45px;font-size:12px;">conn UP</button>
+	<button name="btnUp" type="submit" class="red" style="height:30px; width:105px; font-size:12px;">conn UP</button>
 	<BR>
-        
-	<button name="btnDown" type="submit" class="red" onclick="func()" id="runRec" type="button" value="List" style="height:45px;font-size:12px;">conn DOWN</button>
+	<button name="btnDown" type="submit" class="red" style="height:30px; width:105px; font-size:12px;">conn DOWN</button>
+	<BR>
+	<button name="btnStatic" type="submit" class="red" style="height:30px; width:105px; font-size:12px;">Set Static IP</$
+
 </td>
 </tr>
 </table>

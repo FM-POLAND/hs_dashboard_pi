@@ -83,9 +83,13 @@ include_once __DIR__."/include/buttons.php";
 }
 ?>
 <?php
-    echo '<table style="margin-bottom:0px;border:0; border-collapse:collapse; cellspacing:0; cellpadding:0; background-color:#f1f1f1;"><tr style="border:none;background-color:#f1f1f1;">';
-    echo '<td width="200px" valign="top" class="hide" style="height:auto;border:0;background-color:#f1f1f1;">';
-    echo '<div class="nav" style="margin-bottom:10px;margin-top:10px;">'."\n";
+    echo '<table style="margin-bottom:0px;border:0;  cellspacing:0; cellpadding:0;">';
+	//<tr style="border:none;background-color:#f1f1f1;">';
+    
+    echo '<tr style="border:none;">';
+	//echo'<tr>';
+    echo '<td width="100px" valign="top" class="hide" style="height:auto;border:0;background-color:#f1f1f1;">';
+    //echo '<div class="nav" style="margin-bottom:10px;margin-top:10px;">'."\n";
 
     echo '<script type="text/javascript">'."\n";
     echo 'function reloadStatusInfo(){'."\n";
@@ -94,21 +98,17 @@ include_once __DIR__."/include/buttons.php";
     echo 'setTimeout(reloadStatusInfo,3000);'."\n";
     echo '$(window).trigger(\'resize\');'."\n";
     echo '</script>'."\n";
-    echo '<div id="statusInfo" style="margin-bottom:30px;">'."\n";
+    //\echo '<div id="statusInfo" style="margin-bottom:30px;">'."\n";
     include 'include/status.php';
-    echo '</div>'."\n";
-    echo '</div>'."\n";
+    //echo '</div>'."\n";
+    //echo '</div>'."\n";
     echo '</td>'."\n";
 
-
-    echo '<td valign="center" style="height:auto;border:none;  background-color:#f1f1f1;">';
-
-    echo '<iframe src="/wifi"  width="680" height="500" title="audio"></iframe>';
-
-
-
-
+   // echo '<td valign="center" style="height:455px;width:620px; border:none;  background-color:#f1f1f1;">';
+    echo '<td valign="center" style="height:455px;width:620px; border:none; background-color:#f1f1f1;">';
+    echo '<iframe src="/wifi"  width="615px" height="450px" style="background-color:#f1f1f1;"></iframe>';
     echo '</td>';
+ 
 ?>
 </tr></table>
 <?php

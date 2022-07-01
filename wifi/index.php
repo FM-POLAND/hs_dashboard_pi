@@ -61,11 +61,8 @@ textarea {
 </style>
 </head>
 <body style="background-color: #e1e1e1;font: 11pt arial, sans-serif;">
-<script src="web-audio-peak-meter.js"></script>
-<center>
-<fieldset style="border:#3083b8 2px groove;box-shadow:0 0 10px #999; background-color:#f1f1f1; width:600px;margin-top:15px;margin-left:0px;margin-right:5px;font-size:13px;border-top-left-radius: 10px; border-top-right-radius: 10px;border-bottom-left-radius: 10px; border-bottom-right-radius: 10px;">
-<div style="padding:0px;width:595px;background-image: linear-gradient(to bottom, #e9e9e9 50%, #bcbaba 100%);border-radius: 10px;-moz-border-radius:10px;-webkit-border-radius:10px;border: 1px solid LightGrey;margin-left:0px; margin-right:0px;margin-top:4px;margin-bottom:0px;line-height:1.6;white-space:normal;">
-<center>
+<fieldset style="border:#3083b8 2px groove;box-shadow:0 0 10px #999; background-color:#f1f1f1; width:555px;margin-top:15px;margin-left:0px;margin-right:5px;font-size:13px;border-top-left-radius: 10px; border-top-right-radius: 10px;border-bottom-left-radius: 10px; border-bottom-right-radius: 10px;">
+<div style="padding:0px;width:550px;background-image: linear-gradient(to bottom, #e9e9e9 50%, #bcbaba 100%);border-radius: 10px;-moz-border-radius:10px;-webkit-border-radius:10px;border: 1px solid LightGrey;margin-left:0px; margin-right:0px;margin-top:4px;margin-bottom:0px;line-height:1.6;white-space:normal;">
 <h1 id="web-audio-peak-meters" style="color:#00aee8;font: 18pt arial, sans-serif;font-weight:bold; text-shadow: 0.25px 0.25px gray;">WiFi Configurator</h1>
 
 
@@ -81,8 +78,14 @@ textarea {
 //  }
 //}}
 
-
-
+$screen[0] = "Welcome to WIFI configuration tool.";
+$screen[1] = "";
+$screen[2] = "Please use buttons for actions.";
+$screen[3] = "[Air Scan],[Conn List],[WiFi Status],[WiFi On] works without parameter.";
+$screen[4] = "[Switch to SSID] or [Delete SSID] needs |SSID (network name)|.";
+$screen[5] = "[Add Network & Connect] needs |SSID (network name)| & |Password| & wifi network.";
+$screen[6] = "";
+$screen[7] = "Have a Fun. Vy 73 de SP0DZ |shhh...:)";
 
 
 if (isset($_POST['btnScan']))
@@ -181,7 +184,6 @@ if (isset($_POST['btnWifiOn']))
 	 
 	<textarea name="scan" rows="10" cols="80"><?php 
 			echo implode("\n",$screen); ?></textarea>
-
  </td>
 </tr>  
 </table> 
@@ -189,34 +191,31 @@ if (isset($_POST['btnWifiOn']))
 
 <table>
         <tr>
-        <th width = "100px">Action</th>
-        <th width = "580px">Input</th>
-	<th width = "100px">Action</th>
+        <th width = "110px">Action</th>
+        <th width = "380px">Input</th>
+	<th width = "110px">Action</th>
         </tr>
 <tr>
 <Td>
-
-<p style="margin-bottom:0px;"></p>
-
-        <button name="btnScan" type="submit" class="red" onclick="func()" id="runRec" type="button" value="List" style="height:45px;font-size:12px;">Air Scan</button>
+        <button name="btnScan" type="submit" class="red" style="height:30px;width:105px;font-size:12px;">Air Scan</button>
  	<br>
-	<button name="btnConnList" type="submit" class="red" onclick="func()" id="runRec" type="button" value="List" style="height:45px;font-size:12px;">Conn List</button>
+	<button name="btnConnList" type="submit" class="red" style="height:30px; width:105px;font-size:12px;">Conn List</button>
+	<BR>
+	<button name="btnWifiStatus" type="submit" class="red"  style="height:30px; width:105px; font-size:12px;">WiFi Status</button>
 </tD><TD>
 
 SSID (network name): <input type="text" name="ssid" value="<?php echo $ssid;?>">
 <BR>
 Password: <input type="password" name="password" value="<?php echo $password;?>">
 <BR>
-<button name="btnWifiStatus" type="submit" class="red" onclick="func()" id="runRec" type="button" value="List" style="height:45px;font-size:12px;">WiFi Status</button>
-<button name="btnAdd" type="submit" class="red" onclick="func()" id="runRec" type="button" value="List" style="height:45px;font-size:12px;">Add Network & Connect</button>
-<button name="btnWifiOn" type="submit" class="red" onclick="func()" id="runRec" type="button" value="List" style="height:45px;font-size:12px;">WiFi On</button> 
-
+<button name="btnAdd" type="submit" class="red" style="height:30px;font-size:12px;">Add Network & Connect</button>
 </td>
 <td>
-        <button name="btnSwitch" type="submit" class="red" onclick="func()" id="runRec" type="button" value="List" style="height:45px;font-size:12px;">Switch to SSID</button>
+        <button name="btnSwitch" type="submit" class="red" style="height:30px; width:105px; font-size:12px;">Switch to SSID</button>
         <br>
-        <button name="btnDelete" type="submit" class="red" onclick="func()" id="runRec" type="button" value="List" style="height:45px;font-size:12px;">Delete SSID</button>
-
+        <button name="btnDelete" type="submit" class="red" style="height:30px; width:105px; font-size:12px;">Delete SSID</button>
+	<br>
+	<button name="btnWifiOn" type="submit" class="red"  style="height:30px; width:105px; font-size:12px;">WiFi On</button>
 </td>
 </tr>
 </table>

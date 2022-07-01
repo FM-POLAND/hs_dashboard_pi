@@ -83,7 +83,7 @@ include_once __DIR__."/include/buttons.php";
 <?php
     echo '<table style="margin-bottom:0px;border:0; border-collapse:collapse; cellspacing:0; cellpadding:0; background-color:#f1f1f1;"><tr style="border:none;background-color:#f1f1f1;">';
     echo '<td width="200px" valign="top" class="hide" style="height:auto;border:0;background-color:#f1f1f1;">';
-    echo '<div class="nav" style="margin-bottom:10px;margin-top:10px;">'."\n";
+    echo '<div class="nav" style="margin-bottom:1px;margin-top:1px;">'."\n";
 
     echo '<script type="text/javascript">'."\n";
     echo 'function reloadStatusInfo(){'."\n";
@@ -98,17 +98,8 @@ include_once __DIR__."/include/buttons.php";
     echo '</div>'."\n";
     echo '</td>'."\n";
 
-
-
-
-
-    echo '<td valign="center" style="height:auto;border:none;  background-color:#f1f1f1;">';
-
-    echo '<iframe src="/network"  width="700" height="500" title="audio"></iframe>';
-
-
-
-
+    echo '<td valign="middle"  style="height:495px; width=620px; text-align: center; border:none;  background-color:#f1f1f1;">';
+    echo '<iframe src="/network"  style="width:615px; height:490px"></iframe>';
     echo '</td>';
 ?>
 </tr></table>
