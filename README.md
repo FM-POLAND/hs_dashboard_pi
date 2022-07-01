@@ -9,9 +9,10 @@ For full functionality use this code:
 sudo usermod -aG sudo svxlink
 ```
 
-
-
-
+To activate mDNS (host.local) use:
+```
+ sudo apt-get install avahi-daemon avahi-utils
+```
 
 
 
