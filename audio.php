@@ -34,10 +34,10 @@ $svxConfigFile = '/etc/svxlink/svxlink.conf';
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Architects+Daughter&family=Fredoka+One&family=Tourney&family=Oswald&display=swap" rel="stylesheet">
 <link rel="shortcut icon" href="images/favicon.ico" sizes="16x16 32x32" type="image/png">
-
+ 
 <?php echo ("<title>" . $callsign ." ". FMNETWORK . " Dashboard</title>"); ?>
 
-<?php include_once "include/browserdetect.php"; ?>
+ <?php include_once "include/browserdetect.php"; ?>
     <script type="text/javascript" src="scripts/jquery.min.js"></script>
     <script type="text/javascript" src="scripts/functions.js"></script>
     <script type="text/javascript" src="scripts/pcm-player.min.js"></script>
@@ -72,6 +72,7 @@ $svxConfigFile = '/etc/svxlink/svxlink.conf';
 </div>
 
 <?php include_once __DIR__."/include/top_menu.php"; ?>
+
 <div class="content"><center>
 <div style="margin-top:8px;">
 </div></center>
@@ -99,33 +100,17 @@ include_once __DIR__."/include/buttons.php";
     echo '</div>'."\n";
     echo '</td>'."\n";
 
-    echo '<td valign="top" style="height:auto;border:none;  background-color:#f1f1f1;">';
-    echo '<div class="content">'."\n";
-    echo '<script type="text/javascript">'."\n";
 
-    if (URLSVXRAPI!="") {
-    echo 'function reloadSVXREF(){'."\n";
-    echo '  $("#svxref").load("include/svxref.php",function(){ setTimeout(reloadSVXREF,90000) });'."\n";
-    echo '}'."\n";
-    echo 'setTimeout(reloadSVXREF,90000);'."\n";
-     }
 
-    echo 'function reloadLastHerd(){'."\n";
-    echo '  $("#lastHerd").load("include/lh_small.php",function(){ setTimeout(reloadLastHerd,3000) });'."\n";
-    echo '}'."\n";
-    echo 'setTimeout(reloadLastHerd,3000);'."\n";
 
-    echo '$(window).trigger(\'resize\');'."\n";
-    echo '</script>'."\n";
-    echo '<center><div id="lastHerd" style="margin-bottom:30px;">'."\n";
-    include 'include/lh_small.php';
-    echo '</div></center>'."\n";
-    echo "<br />\n";
-    if (URLSVXRAPI!="") {
-    echo '<center><div id="svxref" style="margin-bottom:30px;">'."\n";
-    include 'include/svxref.php';
-    echo '</div></center>'."\n";
-    }
+
+    echo '<td valign="center" style="height:auto;border:none;  background-color:#f1f1f1;">';
+
+    echo '<iframe src="/audio"  width="600" height="500" title="audio"></iframe>';
+
+
+
+
     echo '</td>';
 ?>
 </tr></table>
