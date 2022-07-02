@@ -91,7 +91,7 @@ if (isset($_POST['btnPower']))
 
         $retval = null;
         $screen = null;
-        $sAconn = $_POST['sAconn'];
+        //$sAconn = $_POST['sAconn'];
         //$password = $_POST['password'];
         //exec('nmcli dev wifi rescan');
         $command = "sudo shutdown -h now 2>&1";
@@ -103,7 +103,7 @@ if (isset($_POST['btnSvxlink']))
 
         $retval = null;
         $screen = null;
-        $sAconn = $_POST['sAconn'];
+        //$sAconn = $_POST['sAconn'];
         //$password = $_POST['password'];
         //exec('nmcli dev wifi rescan');
         $command = "sudo service svxlink restart 2>&1";
@@ -115,7 +115,7 @@ if (isset($_POST['btnRestart']))
 
         $retval = null;
         $screen = null;
-        $sAconn = $_POST['sAconn'];
+        //$sAconn = $_POST['sAconn'];
         //$password = $_POST['password'];
         //exec('nmcli dev wifi rescan');
         $command = "sudo shutdown -r now 2>&1";

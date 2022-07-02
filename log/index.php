@@ -84,7 +84,7 @@ textarea {
 // load the connlist
 $retval = null;
 $conns = null;
-exec('nmcli  -t -f NAME  con show',$conns,$retval);
+//exec('nmcli  -t -f NAME  con show',$conns,$retval);
 
 // find the gateway
 $ipgw = null;
@@ -109,10 +109,10 @@ if (isset($_POST['btnLog']))
 
         $retval = null;
         $screen = null;
-        $sAconn = $_POST['sAconn'];
+        //$sAconn = $_POST['sAconn'];
         //$password = $_POST['password'];
         //exec('nmcli dev wifi rescan');
-        $command = "tail -v -n 500 /var/log/svxlink 2>&1";
+        $command = "tail -n 500 /var/log/svxlink |tac 2>&1";
         exec($command,$screen,$retval);
 }
 
