@@ -16,7 +16,7 @@ To activate mDNS (host.local) use:
 
 
 
-The svxlink dashboard created by SP2ONG
+The svxlink dashboard created by SP2ONG, SP0DZ
 
 and some ideas from:
 
@@ -25,4 +25,4 @@ https://github.com/ea1jay/tetrasvxdashboard
 https://github.com/kc1awv/SvxLink-Dashboard
 
 
-Waldek SP2ONG 2021
+
