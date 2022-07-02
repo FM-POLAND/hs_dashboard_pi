@@ -140,8 +140,7 @@ if (MENUBUTTON=="BOTTOM") {
 include_once __DIR__."/include/buttons.php"; }
 ?>
 <!--- Please do not remove copyright info -->
-<center><span title="Dashboard v20220522" style="font: 7pt arial, sans-serif;">SvxLink Dashboard ©  SP2ONG <?php $cdate=date("Y"); if ($cdate > "2021") {$cdate="2021-".date("Y");} echo $cdate; ?>
-<!-- SVXLink Dashboard SP2ONG version 20220605 -->
+<center><span title="Dashboard v20220702" style="font: 7pt arial, sans-serif;">SvxLink Dashboard ©  SP2ONG, SP0DZ <?php $cdate=date("Y"); if ($cdate > "2021") {$cdate="2021-".date("Y");} echo $cdate; ?>
 	</div>
 </div>
 </fieldset>
