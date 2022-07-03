@@ -4,15 +4,15 @@ include_once 'include/config.php';
 include_once 'include/tools.php';
 
 // migrate to external class tbc
+
 $svxConfigFile = '/etc/svxlink/svxlink.conf';
     if (fopen($svxConfigFile,'r'))
        { $svxconfig = parse_ini_file($svxConfigFile,true,INI_SCANNER_RAW);
-         $callsign = $svxconfig['ReflectorLogic']['CALLSIGN'];}
-    else { $callsign="N0CALL";}
-//
-
-
-
+         $callsign = $svxconfig['ReflectorLogic']['CALLSIGN'];
+         $fmnetwork =$svxconfig['ReflectorLogic']['FMNET'];   }
+else { $callsign="N0CALL"; 
+       $fmnetwork="no registered";
+	}
 
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
@@ -36,7 +36,7 @@ $svxConfigFile = '/etc/svxlink/svxlink.conf';
 <link href="https://fonts.googleapis.com/css2?family=Architects+Daughter&family=Fredoka+One&family=Tourney&family=Oswald&display=swap" rel="stylesheet">
 <link rel="shortcut icon" href="images/favicon.ico" sizes="16x16 32x32" type="image/png">
 
-<?php echo ("<title>" . $callsign ." ". FMNETWORK . " Dashboard</title>"); ?>
+<?php echo ("<title>" . $callsign ." ". $fmnetwork . " Dashboard</title>"); ?>
 
 
 <?php include_once "include/browserdetect.php"; ?>
@@ -68,7 +68,7 @@ $svxConfigFile = '/etc/svxlink/svxlink.conf';
 ?>
 <span style="font-size: 32px;letter-spacing:4px;font-family: &quot;Fredoka One&quot;, sans-serif;font-weight:500;color:DarkOrange"><?php echo $callsign; ?></span>
 <p style="margin-top:0px;margin-bottom:0px;">
-<span style="font-size: 30px;font-family: 'Architects Daughter', 'Helvetica Neue', Helvetica, Arial, sans-serif;letter-spacing: 3px;font-weight: 600;background: #3083b8;"><?php echo FMNETWORK; ?></span>
+<span style="font-size: 30px;font-family: 'Architects Daughter', 'Helvetica Neue', Helvetica, Arial, sans-serif;letter-spacing: 3px;font-weight: 600;background: #3083b8;"><?php echo $fmnetwork; ?></span>
 </p></center>
 </div></div>
 </div>

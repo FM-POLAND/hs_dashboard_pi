@@ -3,7 +3,6 @@ $progname = basename($_SERVER['SCRIPT_FILENAME'],".php");
 include_once 'include/config.php';
 include_once 'include/tools.php';
 
-
 // migrate to external class tbc
 
 $svxConfigFile = '/etc/svxlink/svxlink.conf';
@@ -37,10 +36,10 @@ else { $callsign="N0CALL";
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Architects+Daughter&family=Fredoka+One&family=Tourney&family=Oswald&display=swap" rel="stylesheet">
 <link rel="shortcut icon" href="images/favicon.ico" sizes="16x16 32x32" type="image/png">
- 
+
 <?php echo ("<title>" . $callsign ." ". $fmnetwork . " Dashboard</title>"); ?>
 
- <?php include_once "include/browserdetect.php"; ?>
+<?php include_once "include/browserdetect.php"; ?>
     <script type="text/javascript" src="scripts/jquery.min.js"></script>
     <script type="text/javascript" src="scripts/functions.js"></script>
     <script type="text/javascript" src="scripts/pcm-player.min.js"></script>
@@ -88,7 +87,7 @@ include_once __DIR__."/include/buttons.php";
 <?php
     echo '<table style="margin-bottom:0px;border:0; border-collapse:collapse; cellspacing:0; cellpadding:0; background-color:#f1f1f1;"><tr style="border:none;background-color:#f1f1f1;">';
     echo '<td width="200px" valign="top" class="hide" style="height:auto;border:0;background-color:#f1f1f1;">';
-    echo '<div class="nav" style="margin-bottom:10px;margin-top:10px;">'."\n";
+    echo '<div class="nav" style="margin-bottom:1px;margin-top:1px;">'."\n";
 
     echo '<script type="text/javascript">'."\n";
     echo 'function reloadStatusInfo(){'."\n";
@@ -103,17 +102,8 @@ include_once __DIR__."/include/buttons.php";
     echo '</div>'."\n";
     echo '</td>'."\n";
 
-
-
-
-
-    echo '<td valign="center" style="height:auto;border:none;  background-color:#f1f1f1;">';
-
-    echo '<iframe src="/audio"  width="600" height="500" title="audio"></iframe>';
-
-
-
-
+    echo '<td valign="middle"  style="height:495px; width=620px; text-align: center; border:none;  background-color:#f1f1f1;">';
+    echo '<iframe src="/nodeInfo"  style="width:615px; height:490px"></iframe>';
     echo '</td>';
 ?>
 </tr></table>

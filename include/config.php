@@ -40,25 +40,25 @@ define("MENUBUTTON", "BOTTOM");
 // DTMF keys
 // syntax: 'KEY number,'Description','DTMF code','color button' 
 //
-define("KEY1", array('TG 260','91260#','green'));
-define("KEY2", array('TG 2600','912600#','green'));
-define("KEY3", array('TG 7783','917783#','green'));
-define("KEY4", array('EL-SR4D-R','2# 453582#','purple'));
-define("KEY5", array('METAR','5#','blue'));
+define("KEY1", array( ' D1 ','D1#','green'));
+define("KEY2", array(' D2 ','D2#','green'));
+define("KEY3", array(' D3 ','D3#','orange'));
+define("KEY4", array(' D4 ','D4#','orange'));
+define("KEY5", array(' D5 ','D5#','red'));
 // additional DTMF keys
-define("KEY6", array('','','purple'));
-define("KEY7", array('','','blue'));
+define("KEY6", array(' D6 ','D6#','red'));
+define("KEY7", array(' D7 ','D7#','purple'));
 //
 // command "shutdown now" 
-define("KEY8", array('POWER OFF','sudo poweroff','red'));
+define("KEY8", array(' D8 ','D8#','purple'));
 //
 // Set SHOWPTT to TRUE if you want use microphone connected
 // to sound card and use buttons on dashboard PTT ON & PTT OFF
 // Set SHOWPTT to FALSE to disable display PTT buttons
 // In most cases you can switch to FALSE
-define("SHOWPTT","TRUE");
+//define("SHOWPTT","TRUE");
 //
-define("KEY9", array('PTT ON','echo "O" >/tmp/SQL','orange'));
-define("KEY10", array('PTT OFF','echo "Z" >/tmp/SQL','orange'));
+define("KEY9", array(' D9 ','D9#','blue'));
+define("KEY10", array(" D0 ","D0#","blue"));
 //
 ?>
