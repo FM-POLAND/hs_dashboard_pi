@@ -6,6 +6,9 @@
 	<a href="/audio.php" style="color: #0000ff;">Audio</a> | 
 	<a href="/wifi.php" style="color: #0000ff;">Wifi</a> | 
 	<a href="/network.php" style="color: #0000ff;">Network</a> |
+	<a href="/svxlink.php" style="color: #0000ff;">SVXLink</a> |
+	<a href="/nodeInfo.php" style="color: #0000ff;">Node Info</a> |
+	<a href="/rf.php" style="color: #0000ff;">Rf</a> |
 	<a href="/log.php" style="color: #0000ff;">Log</a> |
 	<a href="/power.php" style="color: #0000ff;">Power</a>
 </p>

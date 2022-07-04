@@ -45,25 +45,49 @@ if ($net1 == TRUE || $net2 == TRUE || $net3 == TRUE || $net4 == TRUE) {
         }
 
  if(array_key_exists('button8', $_POST)) {
-        $exec="".KEY8[1]."";
+        $exec= "echo '" . KEY8[1] . "' > /tmp/dtmf_svx";
             exec($exec,$output);
             echo "<meta http-equiv='refresh' content='0'>";
         }
 
-if (SHOWPTT=="TRUE") {
-
  if(array_key_exists('button9', $_POST)) {
-        $exec="".KEY9[1]."";
+        $exec= "echo '" . KEY9[1] . "' > /tmp/dtmf_svx";
             exec($exec,$output);
             echo "<meta http-equiv='refresh' content='0'>";
         }
  if(array_key_exists('button10', $_POST)) {
-        $exec="".KEY10[1]."";
+        $exec= "echo '" . KEY10[1] . "' > /tmp/dtmf_svx";
             exec($exec,$output);
             echo "<meta http-equiv='refresh' content='0'>";
         }
- }
-?>    
+/*
+// if(array_key_exists('button8', $_POST)) {
+//        $exec="".KEY8[1]."";
+//            exec($exec,$output);
+//            echo "<meta http-equiv='refresh' content='0'>";
+//        }
+
+//if (SHOWPTT=="TRUE") {
+
+// if(array_key_exists('button9', $_POST)) {
+//        $exec="".KEY9[1]."";
+//            exec($exec,$output);
+//           echo "<meta http-equiv='refresh' content='0'>";
+//        }
+// if(array_key_exists('button10', $_POST)) {
+//        $exec="".KEY10[1]."";
+//            exec($exec,$output);
+//            echo "<meta http-equiv='refresh' content='0'>";
+//        }
+// }
+//
+//
+*/
+?> 
+
+
+
+   
 <fieldset style="box-shadow:0 0 10px #999;background-color:#e8e8e8e8; width:855px;margin-top:5px;margin-bottom:14px;margin-left:6px;margin-right:0px;font-size:12px;border-top-left-radius: 10px; border-top-right-radius: 10px;border-bottom-left-radius: 10px; border-bottom-right-radius: 10px;">
 <div style="padding:0px;width:100%;background-image: linear-gradient(to bottom, #e9e9e9 50%, #bcbaba 100%);border-radius: 10px;-moz-border-radius:10px;-webkit-border-radius:10px;border: 1px solid LightGrey;margin-left:0px; margin-right:0px;margin-top:4px;margin-bottom:0px;white-space:normal;">
 <p style="margin-bottom:0px;"></p>
@@ -79,21 +103,31 @@ if (SHOWPTT=="TRUE") {
 	    class=<?php echo KEY4[2] ?> value='<?php echo KEY4[0] ?>' />
         <input type="submit" name="button5"
 	    class=<?php echo KEY5[2] ?> value='<?php echo KEY5[0] ?>' />
+	<input type="submit" name="button6"
+            class=<?php echo KEY6[2] ?> value='<?php echo KEY6[0] ?>' />
+	<input type="submit" name="button7"
+            class=<?php echo KEY7[2] ?> value='<?php echo KEY7[0] ?>' />
+	<input type="submit" name="button8"
+            class=<?php echo KEY8[2] ?> value='<?php echo KEY8[0] ?>' />
+	<input type="submit" name="button9"
+            class=<?php echo KEY9[2] ?> value='<?php echo KEY9[0] ?>' />
+	<input type="submit" name="button10"
+            class=<?php echo KEY10[2] ?> value='<?php echo KEY10[0] ?>' />
 <?php	
-    if (KEY6[0]!="") {
-        echo "<input type=\"submit\" name=\"button6\" class=".KEY6[2]." value='".KEY6[0]."' />";
-        }
-    if (KEY7[0]!="") {
-        echo "<input type=\"submit\" name=\"button7\" class=".KEY7[2]."  value='".KEY7[0]."' />";
-        }
-    if (SHOWPTT=="TRUE") {
-        echo "<input type=\"submit\" name=\"button9\" class=".KEY9[2]." value='".KEY9[0]."' />";
-        echo "<input type=\"submit\" name=\"button10\" class=".KEY10[2]." value='".KEY10[0]."' />";
-       }
+//    if (KEY6[0]!="") {
+//        echo "<input type=\"submit\" name=\"button6\" class=".KEY6[2]." value='".KEY6[0]."' />";
+//        }
+//    if (KEY7[0]!="") {
+//        echo "<input type=\"submit\" name=\"button7\" class=".KEY7[2]."  value='".KEY7[0]."' />";
+//        }
+
+  //  if (SHOWPTT=="TRUE") {
+  //      echo "<input type=\"submit\" name=\"button9\" class=".KEY9[2]." value='".KEY9[0]."' />";
+  //      echo "<input type=\"submit\" name=\"button10\" class=".KEY10[2]." value='".KEY10[0]."' />";
+  //     }
+
 ?>
-       <input type="submit" name="button8"
-	    class=<?php echo KEY8[2] ?> value='<?php echo KEY8[0] ?>' />
-   </center>
+ </center>
     </form>
 <p style="margin: 0 auto;"></p>
 <form action="" method="POST" style="margin-top:4px;">
