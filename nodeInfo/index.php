@@ -61,238 +61,163 @@ textarea {
 </style>
 </head>
 <body style="background-color: #e1e1e1;font: 11pt arial, sans-serif;">
-<script src="web-audio-peak-meter.js"></script>
 <center>
 <fieldset style="border:#3083b8 2px groove;box-shadow:0 0 10px #999; background-color:#f1f1f1; width:555px;margin-top:15px;margin-left:0px;margin-right:5px;font-size:13px;border-top-left-radius: 10px; border-top-right-radius: 10px;border-bottom-left-radius: 10px; border-bottom-right-radius: 10px;">
 <div style="padding:0px;width:550px;background-image: linear-gradient(to bottom, #e9e9e9 50%, #bcbaba 100%);border-radius: 10px;-moz-border-radius:10px;-webkit-border-radius:10px;border: 1px solid LightGrey;margin-left:0px; margin-right:0px;margin-top:4px;margin-bottom:0px;line-height:1.6;white-space:normal;">
 <center>
-<h1 id="web-audio-peak-meters" style="color:#00aee8;font: 18pt arial, sans-serif;font-weight:bold; text-shadow: 0.25px 0.25px gray;">Network Configurator</h1>
+<h1 id="web-audio-peak-meters" style="color:#00aee8;font: 18pt arial, sans-serif;font-weight:bold; text-shadow: 0.25px 0.25px gray;">Node Info Configurator</h1>
 
 
 <?php 
+//sp0dz based on:
+//https://programmierfrage.com/items/convert-array-to-an-ini-file
+function build_ini_string(array $a) {
+    $out = '';
+    $sectionless = '';
+    foreach($a as $rootkey => $rootvalue){
+        if(is_array($rootvalue)){
+            // find out if the root-level item is an indexed or associative array
+            $indexed_root = array_keys($rootvalue) == range(0, count($rootvalue) - 1);
+            // associative arrays at the root level have a section heading
+            if(!$indexed_root) $out .= PHP_EOL."[$rootkey]".PHP_EOL;
+            // loop through items under a section heading
+            foreach($rootvalue as $key => $value){
+                if(is_array($value)){
+                    // indexed arrays under a section heading will have their key omitted
+                    $indexed_item = array_keys($value) == range(0, count($value) - 1);
+                    foreach($value as $subkey=>$subvalue){
+                        // omit subkey for indexed arrays
+                        if($indexed_item) $subkey = "";
+                        // add this line under the section heading
+                        $out .= "{$key}[$subkey] = $subvalue" . PHP_EOL;
+                    }
+                }else{
+                    if($indexed_root){
+                        // root level indexed array becomes sectionless
+                        $sectionless .= "{$rootkey}[] = $value" . PHP_EOL;
+                    }else{
+                        // plain values within root level sections
+                        $out .= "$key = $value" . PHP_EOL;
+                    }
+                }
+            }
 
-
-
-//if ($_SERVER["REQUEST_METHOD"] == "POST") {
-//  if (empty($_POST["ssid"])) {
-//     echo "Name is required";
-//  } else {
-//    $ssid = $_POST["ssid"]);
-//  }
-//}}
-
-
-// load the connlist
-$retval = null;
-$conns = null;
-exec('nmcli  -t -f NAME  con show',$conns,$retval);
-
-// find the gateway
-$ipgw = null;
-
-$screen[0] = "Welcome to NETWORK configuration tool.";
-$screen[1] = "";
-$screen[2] = "Please use buttons for actions.";
-$screen[3] = "[Ping GW],[Ping Google],[Ping Reflector] works without parameter.";
-$screen[4] = "[Show Details] [Set Auto IP]  [conn UP]  [conn DOWN] works with |connection|.";
-$screen[5] = "[Set Static IP] needs |IP|/|CIDR| & |GW| & |DNS|.";
-$screen[6] = "Please use 24 for 255.255.255.0 in CIDR. ect.";
-$screen[7] = "For |IP| & |GW| & |DNS| please use IP notation like 192.168.1.2 ect.";
-$screen[8] = "";
-$screen[9] = "Have a Fun. Vy 73 de SP0DZ |shhh...:)";
-
-
-
-
-if (isset($_POST['btnPingGw']))
-    {
-        $retval = null;
-	$screen = null;
-	$sAconn = $_POST['sAconn'];
-	$ipgw = null;
-	//$ipgw_str =implode("\n",$ipgw);
-	exec("nmcli -g ipv4.gateway con show \"" .$sAconn. "\" 2>&1",$ipgw,$retval);
-	$ipgw_str =implode("\n",$ipgw);
-	exec("ping ". $ipgw_str ." -c 1 2>&1",$screen,$retval);
-}
-
-if (isset($_POST['btnPingGoogle']))
-    {
-        
-	$retval = null;
-	$screen = null;
-	//exec('nmcli dev wifi rescan');
-        exec('ping 8.8.8.8 -c 1 2>&1',$screen,$retval);
+        }else{
+            // root level sectionless values
+            $sectionless .= "$rootkey = $rootvalue" . PHP_EOL;
+        }
+    }
+    return $sectionless.$out;
 }
 
 
-//tbc - load the data from ini RF.
+//$svxConfigFile = '/etc/svxlink/svxlink.conf';
+$nodeInfoFile = '/etc/svxlink/node_info.json';
+//$svxConfigFile = '/var/www/html/svxlink.conf';    
 
-if (isset($_POST['btnPingRef']))
+
+if (fopen($nodeInfoFile,'r'))
+{
+	$filedata = file_get_contents($nodeInfoFile);
+	$nodeInfo = json_decode($filedata,true);
+	//print_r($nodeInfo);
+};
+
+
+
+//if (fopen($svxConfigFile,'r'))
+//      {
+
+//        $svxconfig = parse_ini_file($svxConfigFile,true,INI_SCANNER_RAW);
+//};
+
+
+
+if (isset($_POST['btnSave']))
     {
-
-        $retval = null;
-        $screen = null;
-        //$ssid = $_POST['ssid'];
-	//exec('nmcli dev wifi rescan');
-        $command = 'nmap svxlink.pl -p 5295 2>&1'; 
-	exec($command,$screen,$retval);
-}
+	$nodeInfo["Location"] = $_POST['inLocation']; $nodeInfo["Locator"] = $_POST['inLocator'];$nodeInfo["SysOp"] = $_POST['inSysOp'];
+	$nodeInfo["LAT"] = $_POST['inLAT']; $nodeInfo["LONG"] = $_POST['inLONG'];$nodeInfo["RXFREQ"] = $_POST['inRXFREQ'];
+	$nodeInfo["TXFREQ"] = $_POST['inTXFREQ']; $nodeInfo["Website"] = $_POST['inWebsite'];$nodeInfo["Mode"] = $_POST['inMode'];
+	$nodeInfo["Type"] = $_POST['inType']; $nodeInfo["Echolink"] = $_POST['inEcholink'];$nodeInfo["nodeLocation"] = $_POST['innodeLocation'];
+	$nodeInfo["Sysop"] = $_POST['inSysop']; $nodeInfo["Verbund"] = $_POST['inVerbund'];$nodeInfo["CTCSS"] = $_POST['inCTCSS'];
 
 
-if (isset($_POST['btnAuto']))
-    {
-
-        $retval = null;
-        $screen = null;
-	$sAconn = $_POST['sAconn'];
-        //$ssid = $_POST['ssid'];
-        //$password = $_POST['password'];
-	//exec('nmcli dev wifi rescan');
-        //$command = "nmcli radio  2>&1";
-	
-	$command = "nmcli con mod \"" .$sAconn. "\" ipv4.method auto 2>&1";
-        exec($command,$screen,$retval);
-	$command = "nmcli -p -f ipv4,general con show \"" .$sAconn. "\" 2>&1";
-        exec($command,$screen,$retval);
-
-
-
-}
-
-
-if (isset($_POST['btnStatic']))
-    {
-
-        $retval = false;
-        $screen = null;
-        $sAconn = $_POST['sAconn'];
-	$myIp = $_POST['myIp'];
-	$cidr = $_POST['cidr'];
-	$gw = $_POST['gw'];
-	$dns = $_POST['dns'];
-
-        $command = "nmcli con mod \"" .$sAconn."\" ipv4.method manual 2>&1";
-        if (!$retval) exec($command,$screen,$retval);
-
-	$command = "nmcli con mod \"" .$sAconn. "\" ipv4.addresses " .$myIp. "\/" .$cidr. " 2>&1";
-        if (!$retval) exec($command,$screen,$retval);
-
-	$command = "nmcli con mod \"" .$sAconn. "\" ipv4.gateway " .$gw. " 2>&1";
-        if (!$retval) exec($command,$screen,$retval);
-
-	$command = "nmcli con mod \"" .$sAconn. "\" ipv4.dns \"" .$dns. "\" 2>&1";
-        if (!$retval) exec($command,$screen,$retval);
-
-        $command = "nmcli -p -f ipv4,general con show \"" .$sAconn. "\" 2>&1";
-	if (!$retval) exec($command,$screen,$retval);
-
-}
-
-
-
-if (isset($_POST['btnDetails']))
-    {
+	$jsonNodeInfo = json_encode($nodeInfo);
+	file_put_contents("/var/www/html/nodeInfo/node_info.json", $jsonNodeInfo ,FILE_USE_INCLUDE_PATH);
 
         $retval = null;
         $screen = null;
-        $sAconn = $_POST['sAconn'];
-        //$password = $_POST['password'];
-        //exec('nmcli dev wifi rescan');
-        $command = "nmcli -p -f ipv4,general con show \"" .$sAconn. "\" 2>&1";
-        exec($command,$screen,$retval);
-}
 
-if (isset($_POST['btnUp']))
-    {
 
-        $retval = null;
-        $screen = null;
-        $sAconn = $_POST['sAconn'];
-        //$password = $_POST['password'];
-        //exec('nmcli dev wifi rescan');
-        $command = "nmcli con up \"" .$sAconn. "\" 2>&1";
-        exec($command,$screen,$retval);
-}
-if (isset($_POST['btnDown']))
-    {
+	///file manipulation section
+		//archive the current config
+		exec('sudo cp /etc/svxlink/node_info.json /etc/svxlink/node_info.json.' .date("YmdThis") ,$screen,$retval);
+		//move generated file to current config
+		exec('sudo mv /var/www/html/nodeInfo/node_info.json /etc/svxlink/node_info.json', $screen, $retval);
+        	//Service SVXlink restart
+       		exec('sudo service svxlink restart 2>&1',$screen,$retval);
 
-        $retval = null;
-        $screen = null;
-        $sAconn = $_POST['sAconn'];
-        //$password = $_POST['password'];
-        //exec('nmcli dev wifi rescan');
-        $command = "nmcli con down \"" .$sAconn. "\" 2>&1";
-        exec($command,$screen,$retval);
-}
+};
 
+//  	$svxconfig = parse_ini_file($svxConfigFile,true,INI_SCANNER_RAW);
+//        $inCallsign = $svxconfig['ReflectorLogic']['CALLSIGN'];
+
+
+	$inLocation = $nodeInfo["Location"];$inLocator = $nodeInfo["Locator"]; $inSysOp = $nodeInfo["SysOp"];
+	$inLAT = $nodeInfo["LAT"];$inLONG = $nodeInfo["LONG"]; $inRXFREQ = $nodeInfo["RXFREQ"];
+	$inTXFREQ = $nodeInfo["TXFREQ"];$inWebsite = $nodeInfo["Website"]; $inMode = $nodeInfo["Mode"];
+	$inType = $nodeInfo["Type"];$inEcholink = $nodeInfo["Echolink"]; $innodeLocation = $nodeInfo["nodeLocation"];
+	$inSysop = $nodeInfo["Sysop"];$inVerbund = $nodeInfo["Verbund"]; $inCTCSS = $nodeInfo["CTCSS"];
 ?>
 
-<form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>"> 
-<DIV style="height:150px">
-<table>
-	<tr>
-	<th>Screen</th> 
-	</tr>
-<tr>
-<Td>
-	<textarea name="scan" rows="10" cols="80"><?php 
-			echo implode("\n",$screen); ?></textarea>
-
-</td>
-</tr>  
-</table> 
-</DIV>
+<form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
 
 <table>
         <tr>
-        <th width = "100px">Action</th>
-        <th width = "380px">Input</th>
+        <th width = "380px">Node Info Input</th>
 	<th width = "100px">Action</th>
         </tr>
 <tr>
-<Td>
-	<button name="btnDetails" type="submit" class="red" style="height:30px; width:105px; font-size:12px;">Show Details</button>        
-	<BR>
-	<button name="btnPingGw" type="submit" class="red" style="height:30px; width:105px; font-size:12px;">Ping GW</button>
- 	<br>
-	<button name="btnPingGoogle" type="submit" class="red" style="height:30px; width:105px; font-size:12px;">Ping Google</button>
-	<br>
-        <button name="btnPingRef" type="submit" class="red" style="height:30px; width:105px; font-size:12px;">Ping Reflector</button>
-
-</tD><TD>
-	connection: 
-   <select name="sAconn">
-	
-<?php
-  
-foreach ($conns as $conn){
-   echo "<option value=\"".$conn ."\">" .$conn."</option>";
-}; 
-?>
-
-  </select>
-	
-<br><br>	
-	IP: <input type="text" name="myIp" style="width: 150px;" value="<?php echo $myIp;?>">
-        /<input type="text" name="cidr" style="width: 50px;" value="<?php echo $cidr;?>">
+<TD>
+	Location: <input type="text" name="inLocation" style="width: 150px;" value="<?php echo $inLocation;?>">
 <BR>
-        GW: <input type="text" name="gw" style="width: 120px;" value="<?php echo $gw;?>">
+        Locator: <input type="text" name="inLocator" style="width: 150px;" value="<?php echo $inLocator;?>">
 <BR> 
-       DNS: <input type="text" name="dns" style="width: 120px;" value="<?php echo $dns;?>">
+       	SysOp: <input type="text" name="inSysOp" style="width: 150px;" value="<?php echo $inSysOp;?>">
+<BR>
+	Lat: <input type="text" name="inLAT" style="width: 150px;" value="<?php echo $inLAT;?>">
+<BR>
+	Long: <input type="text" name="inLONG" style="width: 150px;" value="<?php echo $inLONG;?>">
+<BR>
+	Rq Freq: <input type="text" name="inRXFREQ" style="width: 150px;" value="<?php echo $inRXFREQ;?>">
+<BR>
+	Tx Freq: <input type="text" name="inTXFREQ" style="width: 150px;" value="<?php echo $inTXFREQ;?>">
+<BR>
+        Website: <input type="text" name="inWebsite" style="width: 150px;" value="<?php echo $inWebsite;?>">
+<BR>
+        Mode: <input type="text" name="inMode" style="width: 150px;" value="<?php echo $inMode;?>">
+<BR>
+        Type: <input type="text" name="inType" style="width: 150px;" value="<?php echo $inType;?>">
+<BR>
+        EchoLink: <input type="text" name="inEcholink" style="width: 150px;" value="<?php echo $inEcholink;?>">
+<BR>
+        Node Location: <input type="text" name="innodeLocation" style="width: 150px;" value="<?php echo $innodeLocation;?>">
+<BR>
+        Sysop: <input type="text" name="inSysop" style="width: 150px;" value="<?php echo $inSysop;?>">
+<BR>
+        Verbund: <input type="text" name="inVerbund" style="width: 150px;" value="<?php echo $inVerbund;?>">
+<BR>
+        CTCSS: <input type="text" name="inCTCSS" style="width: 150px;" value="<?php echo $inCTCSS;?>">
+
+
+
 </td>
 <td> 
-	<button name="btnAuto" type="submit" class="red" style="height:30px; width:105px; font-size:12px;">Set Auto IP</button>
-	<BR>
-	<button name="btnUp" type="submit" class="red" style="height:30px; width:105px; font-size:12px;">conn UP</button>
-	<BR>
-	<button name="btnDown" type="submit" class="red" style="height:30px; width:105px; font-size:12px;">conn DOWN</button>
-	<BR>
-	<button name="btnStatic" type="submit" class="red" style="height:30px; width:105px; font-size:12px;">Set Static IP</$
-
+	<button name="btnSave" type="submit" class="red" style="height:100px; width:105px; font-size:12px;">Save <BR><Br> & <BR><BR> ReLoad</button>
 </td>
 </tr>
 </table>
+
 
 </form>
 
