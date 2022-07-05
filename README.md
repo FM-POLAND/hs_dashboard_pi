@@ -2,7 +2,7 @@
 HotSpot dashboard repository inspired by pi star dashboard
 
 
-(re) innstallation script
+(re) installation script
 
 ```
 cd /var/www
@@ -12,7 +12,7 @@ unzip main.zip
 rm main.zip
 rm -R html
 mv hs_dashboard_pi-main html
-chown svxlink -r html
+chown svxlink -R html
 ```
 
 Some functions of main.ripnet can be limitted by user permitions.
