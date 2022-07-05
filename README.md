@@ -15,7 +15,7 @@ mv hs_dashboard_pi-main html
 chown svxlink -R html
 ```
 
-Some functions of main.ripnet can be limitted by user permitions.
+Some functions of network mangement or configuration file changes can be limitted by user permitions.
 For full functionality use this code: 
 
 ```
