@@ -66,7 +66,7 @@ textarea {
 <fieldset style="border:#3083b8 2px groove;box-shadow:0 0 10px #999; background-color:#f1f1f1; width:555px;margin-top:15px;margin-left:0px;margin-right:5px;font-size:13px;border-top-left-radius: 10px; border-top-right-radius: 10px;border-bottom-left-radius: 10px; border-bottom-right-radius: 10px;">
 <div style="padding:0px;width:550px;background-image: linear-gradient(to bottom, #e9e9e9 50%, #bcbaba 100%);border-radius: 10px;-moz-border-radius:10px;-webkit-border-radius:10px;border: 1px solid LightGrey;margin-left:0px; margin-right:0px;margin-top:4px;margin-bottom:0px;line-height:1.6;white-space:normal;">
 <center>
-<h1 id="web-audio-peak-meters" style="color:#00aee8;font: 18pt arial, sans-serif;font-weight:bold; text-shadow: 0.25px 0.25px gray;">Network Configurator</h1>
+<h1 id="web-audio-peak-meters" style="color:#00aee8;font: 18pt arial, sans-serif;font-weight:bold; text-shadow: 0.25px 0.25px gray;">RF Module Configurator</h1>
 
 
 <?php 
@@ -85,212 +85,276 @@ textarea {
 // load the connlist
 $retval = null;
 $conns = null;
-exec('nmcli  -t -f NAME  con show',$conns,$retval);
 
 // find the gateway
-$ipgw = null;
+//$ipgw = null;
 
-$screen[0] = "Welcome to NETWORK configuration tool.";
-$screen[1] = "";
-$screen[2] = "Please use buttons for actions.";
-$screen[3] = "[Ping GW],[Ping Google],[Ping Reflector] works without parameter.";
-$screen[4] = "[Show Details] [Set Auto IP]  [conn UP]  [conn DOWN] works with |connection|.";
-$screen[5] = "[Set Static IP] needs |IP|/|CIDR| & |GW| & |DNS|.";
-$screen[6] = "Please use 24 for 255.255.255.0 in CIDR. ect.";
-$screen[7] = "For |IP| & |GW| & |DNS| please use IP notation like 192.168.1.2 ect.";
-$screen[8] = "";
-$screen[9] = "Have a Fun. Vy 73 de SP0DZ |shhh...:)";
+$RfConfFile = '/opt/sa818/sa818.json';
+
+if (fopen($RfConfFile,'r'))
+{
+        $filedata = file_get_contents($RfConfFile);
+        $RfData = json_decode($filedata,true);
+       // print_r($RfData);
+};
 
 
+$screen[0] = "Welcome to SA818 RF MODULE configuration tool.";
+$screen[1] = "Please use buttons for actions.";
+$screen[2] = "Actions are limited to section data only.";
+$screen[3] = "Have a Fun. Vy 73 de SP0DZ |shhh...:)";
 
 
-if (isset($_POST['btnPingGw']))
+
+
+if (isset($_POST['btnDetect']))
     {
+
         $retval = null;
+        $screen_top = null;
 	$screen = null;
-	$sAconn = $_POST['sAconn'];
-	$ipgw = null;
-	//$ipgw_str =implode("\n",$ipgw);
-	exec("nmcli -g ipv4.gateway con show \"" .$sAconn. "\" 2>&1",$ipgw,$retval);
-	$ipgw_str =implode("\n",$ipgw);
-	exec("ping ". $ipgw_str ." -c 1 2>&1",$screen,$retval);
-}
-
-if (isset($_POST['btnPingGoogle']))
-    {
-        
-	$retval = null;
-	$screen = null;
-	//exec('nmcli dev wifi rescan');
-        exec('ping 8.8.8.8 -c 1 2>&1',$screen,$retval);
-}
-
-
-//tbc - load the data from ini RF.
-
-if (isset($_POST['btnPingRef']))
-    {
-
-        $retval = null;
-        $screen = null;
-        //$ssid = $_POST['ssid'];
-	//exec('nmcli dev wifi rescan');
-        $command = 'nmap svxlink.pl -p 5295 2>&1'; 
-	exec($command,$screen,$retval);
-}
-
-
-if (isset($_POST['btnAuto']))
-    {
-
-        $retval = null;
-        $screen = null;
-	$sAconn = $_POST['sAconn'];
-        //$ssid = $_POST['ssid'];
-        //$password = $_POST['password'];
-	//exec('nmcli dev wifi rescan');
-        //$command = "nmcli radio  2>&1";
+	$screen_small = null;
 	
-	$command = "nmcli con mod \"" .$sAconn. "\" ipv4.method auto 2>&1";
-        exec($command,$screen,$retval);
-	$command = "nmcli -p -f ipv4,general con show \"" .$sAconn. "\" 2>&1";
-        exec($command,$screen,$retval);
+        $port = $_POST['port'];
 
-
+	$command_top = "ls -1 /dev/ttyS* /dev/ttyUSB* 2>&1";
+	exec($command_top,$screen_top,$retval);
+	
+	//print_r($screen_top); 
+	//print_r("<BR>");
+	$retval = null;
+	
+	$i = 0;
+	foreach ($screen_top as $port_test)
+	{ 
+		$screen[$i] = "Detection for:" .$port_test; 
+		$command = "sa818 --port \"" .$port_test. "\" version 2>&1";
+        	exec($command,$screen_small,$retval);
+		
+		//print_r($screen_small);
+		if (!$retval)
+		{
+			$port = $port_test;
+			$screen[$i] = $screen[$i] . " BINGO !"; 
+		}
+		$i = $i+1;
+	};
 
 }
 
 
-if (isset($_POST['btnStatic']))
+
+if (isset($_POST['btnVersion']))
     {
-
-        $retval = false;
+        $retval = null;
         $screen = null;
-        $sAconn = $_POST['sAconn'];
-	$myIp = $_POST['myIp'];
-	$cidr = $_POST['cidr'];
-	$gw = $_POST['gw'];
-	$dns = $_POST['dns'];
-
-        $command = "nmcli con mod \"" .$sAconn."\" ipv4.method manual 2>&1";
-        if (!$retval) exec($command,$screen,$retval);
-
-	$command = "nmcli con mod \"" .$sAconn. "\" ipv4.addresses " .$myIp. "\/" .$cidr. " 2>&1";
-        if (!$retval) exec($command,$screen,$retval);
-
-	$command = "nmcli con mod \"" .$sAconn. "\" ipv4.gateway " .$gw. " 2>&1";
-        if (!$retval) exec($command,$screen,$retval);
-
-	$command = "nmcli con mod \"" .$sAconn. "\" ipv4.dns \"" .$dns. "\" 2>&1";
-        if (!$retval) exec($command,$screen,$retval);
-
-        $command = "nmcli -p -f ipv4,general con show \"" .$sAconn. "\" 2>&1";
+        $port = $_POST['port'];
+        $command = "sa818 --port \"" .$port. "\" version 2>&1";
 	if (!$retval) exec($command,$screen,$retval);
-
+	//if ($retval) echo("NOK");
+	if (!$retval) {
+		$RfData['port']=$port;
+		$jsonRfData = json_encode($RfData);
+        	file_put_contents("/var/www/html/rf/sa818.json", $jsonRfData ,FILE_USE_INCLUDE_PATH);
+                //archive the current config
+                exec('sudo cp /opt/sa818/sa818.json /opt/sa818/sa818.json.' .date("YmdThis") ,$screen,$retval);
+                //move generated file to current config
+                exec('sudo mv /var/www/html/rf/sa818.json /opt/sa818/sa818.json', $screen, $retval);
+	}
 }
 
 
 
-if (isset($_POST['btnDetails']))
+if (isset($_POST['btnRadio']))
     {
 
         $retval = null;
         $screen = null;
-        $sAconn = $_POST['sAconn'];
-        //$password = $_POST['password'];
-        //exec('nmcli dev wifi rescan');
-        $command = "nmcli -p -f ipv4,general con show \"" .$sAconn. "\" 2>&1";
-        exec($command,$screen,$retval);
+        $port = $_POST['port'];
+	$freq = $_POST['freq'];
+	$offset = $_POST['offset'];
+	$squelch = $_POST['squelch'];
+	$ctcss = $_POST['ctcss'];
+	$tail = $_POST['tail'];
+
+        $command = "sa818 --port \"" .$port. "\" radio --frequency \"" .$freq. "\" --offset \"" .$offset. "\" --squelch \"" .$squelch. "\" --ctcss \"" .$ctcss. "\" --close-tail \"" .$tail. "\" 2>&1";
+        if (!$retval) exec($command,$screen,$retval);
+
+	if (!$retval) {
+                $RfData['port']=$port;$RfData['freq']=$freq;$RfData['offset']=$offset;$RfData['squelch']=$squelch;$RfData['ctcss']=$ctcss;$RfData['tail']=$tail;
+                $jsonRfData = json_encode($RfData);
+                file_put_contents("/var/www/html/rf/sa818.json", $jsonRfData ,FILE_USE_INCLUDE_PATH);
+                //archive the current config
+                exec('sudo cp /opt/sa818/sa818.json /opt/sa818/sa818.json.' .date("YmdThis") ,$screen,$retval);
+                //move generated file to current config
+                exec('sudo mv /var/www/html/rf/sa818.json /opt/sa818/sa818.json', $screen, $retval);
+        }
 }
 
-if (isset($_POST['btnUp']))
+if (isset($_POST['btnFilters']))
     {
 
-        $retval = null;
+	$retval = null;
         $screen = null;
-        $sAconn = $_POST['sAconn'];
-        //$password = $_POST['password'];
-        //exec('nmcli dev wifi rescan');
-        $command = "nmcli con up \"" .$sAconn. "\" 2>&1";
-        exec($command,$screen,$retval);
-}
-if (isset($_POST['btnDown']))
-    {
+	$port = $_POST['port'];
+        $fEmph = $_POST['fEmph'];
+        $fLow = $_POST['fLow'];
+        $fHigh = $_POST['fHigh'];
 
-        $retval = null;
-        $screen = null;
-        $sAconn = $_POST['sAconn'];
-        //$password = $_POST['password'];
-        //exec('nmcli dev wifi rescan');
-        $command = "nmcli con down \"" .$sAconn. "\" 2>&1";
-        exec($command,$screen,$retval);
+        $command = "sa818 --port \"" .$port. "\" filters  --emphasis \"" .$fEmph. "\" --lowpass \"" .$fLow. "\" --highpass \"" .$fHigh. "\" 2>&1";
+        if (!$retval) exec($command,$screen,$retval);
+	        if (!$retval) {
+                $RfData['port']=$port;$RfData['fEmph']=$fEmph; $RfData['fLow']=$fLow;$RfData['fHigh']=$fHigh;
+                $jsonRfData = json_encode($RfData);
+                file_put_contents("/var/www/html/rf/sa818.json", $jsonRfData ,FILE_USE_INCLUDE_PATH);
+                //archive the current config
+                exec('sudo cp /opt/sa818/sa818.json /opt/sa818/sa818.json.' .date("YmdThis") ,$screen,$retval);
+                //move generated file to current config
+                exec('sudo mv /var/www/html/rf/sa818.json /opt/sa818/sa818.json', $screen, $retval);
+        }
+
 }
+
+
+
+
+if (isset($_POST['btnVol']))
+    {
+	
+	 $retval = null;
+        $screen = null;
+        $port = $_POST['port'];
+        $volume = $_POST['volume'];
+
+        $command = "sa818 --port \"" .$port. "\" volume  --level \"" .$volume. "\" 2>&1";
+        if (!$retval) exec($command,$screen,$retval);
+                if (!$retval) {
+                $RfData['volume']=$volume;
+                $jsonRfData = json_encode($RfData);
+                file_put_contents("/var/www/html/rf/sa818.json", $jsonRfData ,FILE_USE_INCLUDE_PATH);
+                //archive the current config
+                exec('sudo cp /opt/sa818/sa818.json /opt/sa818/sa818.json.' .date("YmdThis") ,$screen,$retval);
+                //move generated file to current config
+                exec('sudo mv /var/www/html/rf/sa818.json /opt/sa818/sa818.json', $screen, $retval);
+        }
+
+}
+
+
+//load json
+
+$port = $RfData['port']; 
+$freq = $RfData['freq'];$offset=$RfData['offset'];$ctcss=$RfData['ctcss'];$tail=$RfData['tail'];$squelch=$RfData['squelch'];
+$fEmph = $RfData['fEmph'];$fLow=$RfData['fLow'];$fHigh=$RfData['fHigh'];
+$volume = $RfData['volume'];
+
+
+// default section
+// port
+if ($port === "" || is_null($port)) $port = "/dev/ttyS1";
+
+//radio
+if ($freq === "" || is_null($freq)) $freq = "433.5375";
+if ($offset === "" || is_null($offset)) $offset = "0.0";
+if ($ctcss === "" || is_null($ctcss)) $ctcss = "77.0";
+if ($tail === "" || is_null($tail)) $tail = "yes";
+if ($squelch === "" || is_null($squelch)) $squelch = "5";
+
+//filter
+if ($fEmph === "" || is_null($fEmph)) $fEmph = "no";
+if ($fLow === "" || is_null($fLow)) $fLow = "yes";
+if ($fHigh === "" || is_null($fHigh)) $fHigh = "yes";
+
+//
+if ($volume === "" || is_null($volume)) $volume = "8";
+
 
 ?>
 
 <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>"> 
-<DIV style="height:150px">
+<DIV style="height:77px">
 <table>
 	<tr>
 	<th>Screen</th> 
 	</tr>
 <tr>
 <Td>
-	<textarea name="scan" rows="10" cols="80"><?php 
+	<textarea name="scan" rows="4" cols="80"><?php 
 			echo implode("\n",$screen); ?></textarea>
 
 </td>
+
+
+
 </tr>  
 </table> 
 </DIV>
 
 <table>
         <tr>
-        <th width = "100px">Action</th>
-        <th width = "380px">Input</th>
+        <th width = "380px">Port</th>
 	<th width = "100px">Action</th>
         </tr>
 <tr>
+<Td> 
+   <button name="btnDetect" type="submit" class="red"style="height:30px; width:105px; font-size:12px;">Detect</button> 
+	Port: <input type "text" name="port" style="width: 150px" value="<?php echo $port;?>"
+</TD>
+<td>
+<button name="btnVersion" type="submit" class="red" style="height:30px; width:105px; font-size:12px;">Get Version</button>
+</TD>
+</tr>
+</table>
+
+<table>
+        <tr>
+        <th width = "380px">Radio</th>
+        <th width = "100px">Action</th>
+        </tr>
+<tr>
 <Td>
-	<button name="btnDetails" type="submit" class="red" style="height:30px; width:105px; font-size:12px;">Show Details</button>        
-	<BR>
-	<button name="btnPingGw" type="submit" class="red" style="height:30px; width:105px; font-size:12px;">Ping GW</button>
- 	<br>
-	<button name="btnPingGoogle" type="submit" class="red" style="height:30px; width:105px; font-size:12px;">Ping Google</button>
-	<br>
-        <button name="btnPingRef" type="submit" class="red" style="height:30px; width:105px; font-size:12px;">Ping Reflector</button>
+   	Freq: <input type "text" name="freq" style="width: 180px" value="<?php echo $freq;?>">
+	Shift: <input type "text" name="offset" style="width: 50px" value="<?php echo $offset;?>"> <br>
+   	Ctcss: <input type "text" name="ctcss" style="width: 50px" value="<?php echo $ctcss;?>">
+	Squelch: <input type "text" name="squelch" style="width: 50px" value="<?php echo $squelch;?>">
+	Tail: <input type "text" name="tail" style="width: 50px" value="<?php echo $tail;?>">
+</TD>
+<td>
+<button name="btnRadio" type="submit" class="red" style="height:30px; width:105px; font-size:12px;">Set Radio</button>
+</TD>
+</tr>
+</table>
 
-</tD><TD>
-	connection: 
-   <select name="sAconn">
-	
-<?php
-  
-foreach ($conns as $conn){
-   echo "<option value=\"".$conn ."\">" .$conn."</option>";
-}; 
-?>
+<table>
+        <tr>
+        <th width = "380px">Disable Filters</th>
+        <th width = "100px">Action</th>
+        </tr>
+<tr>
+<Td>
+   Emphasis: <input type "text" name="fEmph" style="width: 50px" value="<?php echo $fEmph;?>">
+   Low: <input type "text" name="fLow" style="width: 50px" value="<?php echo $fLow;?>">
+   High: <input type "text" name="fHigh" style="width: 50px" value="<?php echo $fHigh;?>">
 
-  </select>
-	
-<br><br>	
-	IP: <input type="text" name="myIp" style="width: 150px;" value="<?php echo $myIp;?>">
-        /<input type="text" name="cidr" style="width: 50px;" value="<?php echo $cidr;?>">
-<BR>
-        GW: <input type="text" name="gw" style="width: 120px;" value="<?php echo $gw;?>">
-<BR> 
-       DNS: <input type="text" name="dns" style="width: 120px;" value="<?php echo $dns;?>">
-</td>
-<td> 
-	<button name="btnAuto" type="submit" class="red" style="height:30px; width:105px; font-size:12px;">Set Auto IP</button>
-	<BR>
-	<button name="btnUp" type="submit" class="red" style="height:30px; width:105px; font-size:12px;">conn UP</button>
-	<BR>
-	<button name="btnDown" type="submit" class="red" style="height:30px; width:105px; font-size:12px;">conn DOWN</button>
-	<BR>
-	<button name="btnStatic" type="submit" class="red" style="height:30px; width:105px; font-size:12px;">Set Static IP</$
+</TD>
+<td>
+<button name="btnFilters" type="submit" class="red" style="height:30px; width:105px; font-size:12px;">Set Filters</button>
+</TD>
+</tr>
+</table>
 
-</td>
+<table>
+        <tr>
+        <th width = "380px">Volume</th>
+        <th width = "100px">Action</th>
+        </tr>
+<tr>
+<Td>
+   Volume: <input type "text" name="volume" style="width: 50px" value="<?php echo $volume;?>">
+</TD>
+<td>
+<button name="btnVol" type="submit" class="red" style="height:30px; width:105px; font-size:12px;">Set Vol</button>
+</TD>
 </tr>
 </table>
 
