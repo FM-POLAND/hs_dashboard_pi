@@ -27,7 +27,7 @@ To activate mDNS (host.local) use:
  sudo apt-get install avahi-daemon avahi-utils
 ```
 
-RF configurator is based on sa818 programming library
+RF configurator is based on sa818 programming library (https://github.com/0x9900/SA818)
 ```
 sudo pip install sa818
 ```
