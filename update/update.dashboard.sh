@@ -17,6 +17,7 @@ echo "--- Dashboard Pi - backup ---"
 cp -R /var/www/html    /var/www/html.$(date +"%Y%m%dT%H%M%s")
 
 echo "--- Dashboard Pi - migration ---"
+echo "###-FINISH-####"
 cp /var/www/html/update/screen.log /opt/screen.log
 
 rm -R /var/www/html
