@@ -28,7 +28,6 @@ To activate mDNS (host.local) use:
 ```
 
 RF configurator is based on sa818 programming library (https://github.com/0x9900/SA818)
-Use this lines to install the sa818:
 ```
 sudo apt install python3
 sudo apt install python3-pip
