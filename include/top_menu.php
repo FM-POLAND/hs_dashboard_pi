@@ -10,5 +10,6 @@
 	<a href="/nodeInfo.php" style="color: #0000ff;">Node Info</a> |
 	<a href="/rf.php" style="color: #0000ff;"> Rf</a> |
 	<a href="/log.php" style="color: #0000ff;">Log</a> |
+	<a href="/update.php" style="color: #0000ff;">Update</a> |
 	<a href="/power.php" style="color: #0000ff;">Power</a>
 </p>
