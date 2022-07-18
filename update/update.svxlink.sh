@@ -13,35 +13,36 @@ echo "--- user & group manipulation ---"
 addgroup gpio
 useradd -rG audio,daemon,dialout,gpio svxlink
 
-echo "--- svxlink download ---"
+echo "--- svxlink tag download ---"
 tagname=$(curl -sl https://api.github.com/repos/sm0svx/svxlink/releases/latest | jq -r .tag_name)
 #name=$(curl -sl https://api.github.com/repos/sm0svx/svxlink/releases/latest | jq -r .name)
 #published=$(curl -sl https://api.github.com/repos/sm0svx/svxlink/releases/latest | jq -r .published_at)
 #body=$(curl -sl https://api.github.com/repos/sm0svx/svxlink/releases/latest | jq -r .body)
-zipball=$(curl -sl https://api.github.com/repos/sm0svx/svxlink/releases/latest | jq -r .zipball_url)
+#zipball=$(curl -sl https://api.github.com/repos/sm0svx/svxlink/releases/latest | jq -r .zipball_url)
 
 cd /opt
-rm src -R
+rm -R src
 mkdir src
 cd src
-wget $zipball
-unzip *
-mv sm0svx-svxlink* svxlink
+#wget $zipball
+#unzip *
+#mv sm0svx-svxlink* svxlink
 echo "--- svxlink compilation ---"
 #cd /opt
 
 
 #mkdir src
 #cd src
-#git clone http://github.com/sm0svx/svxlink.git
+git clone http://github.com/sm0svx/svxlink.git
 mkdir svxlink/src/build
 cd svxlink/src/build
 cmake -DUSE_QT=OFF -DCMAKE_INSTALL_PREFIX=/usr -DSYSCONF_INSTALL_DIR=/etc -DLOCAL_STATE_DIR=/var ..
-make -j4
+make -j4 -l2
 make install
 ldconfig
 
 echo $tagname > /opt/version.svxlink 
+cd /opt
 rm -R /opt/src
 sudo service svxlink restart
 
