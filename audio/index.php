@@ -94,7 +94,7 @@ echo ']" type="audio/wav"></audio></div>';
 <?php
     if (isset($_POST['recAudio']))
     {
-         exec('/opt/audiotest/record.sh');
+         exec('/opt/fmpoland/audiotest/record.sh');
          header("Refresh:0; url=index.php");
     }
 ?>
