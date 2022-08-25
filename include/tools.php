@@ -70,6 +70,14 @@ function isProcessRunning($processName, $full = false, $refresh = false) {
   return false;
 }
 
+function aloop() {
+      $check_al=exec("lsmod|grep snd_aloop|awk '{print $1}'");
+      if (strpos($check_al, "snd_aloop") !== false) {
+         return true;
+      } else {
+      return false; }
+}
+
 function cidr_match($ip, $cidr) {
     $outcome = false;
     $pattern = '/^(([01]?\d?\d|2[0-4]\d|25[0-5])\.){3}([01]?\d?\d|2[0-4]\d|25[0-5])\/(\d{1}|[0-2]{1}\d{1}|3[0-2])$/';
