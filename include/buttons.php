@@ -113,6 +113,12 @@ if ($net1 == TRUE || $net2 == TRUE || $net3 == TRUE || $net4 == TRUE) {
             class=<?php echo KEY9[2] ?> value='<?php echo KEY9[0] ?>' />
 	<input type="submit" name="button10"
             class=<?php echo KEY10[2] ?> value='<?php echo KEY10[0] ?>' />
+<?php
+if (isProcessRunning('node')) {
+echo '&nbsp;&nbsp;<button class="button link" onclick="playAudioToggle(8080, this)"><b>&nbsp;&nbsp;&nbsp;<img src=images/speaker.png alt="" style="vertical-align:middle">&nbsp;&nbsp;RX Monitor&nbsp;&nbsp;&nbsp;</b></button>';
+}
+?>
+
 <?php	
 //    if (KEY6[0]!="") {
 //        echo "<input type=\"submit\" name=\"button6\" class=".KEY6[2]." value='".KEY6[0]."' />";
