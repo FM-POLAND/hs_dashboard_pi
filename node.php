@@ -27,9 +27,9 @@ else { $callsign="N0CALL";
     <meta name="language" content="English" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="SVXLink" />
-    <meta name="Author" content="Waldek SP2ONG" />
-    <meta name="Description" content="Dashboard for SVXLink by SP2ONG" />
-    <meta name="KeyWords" content="SVXLink,SP2ONG" />
+    <meta name="Author" content="SP2ONG, SP0DZ" />
+    <meta name="Description" content="Dashboard for SVXLink by SP2ONG, SP0DZ" />
+    <meta name="KeyWords" content="SVXLink,SP2ONG, SP0DZ" />
     <meta http-equiv="cache-control" content="max-age=0" />
     <meta http-equiv="cache-control" content="no-cache, no-store, must-revalidate" />
     <meta http-equiv="expires" content="0" />
@@ -152,8 +152,7 @@ if (MENUBUTTON=="BOTTOM") {
 include_once __DIR__."/include/buttons.php"; }
 ?>
 <!--- Please do not remove copyright info -->
-<center><span title="Dashboard v20220522" style="font: 7pt arial, sans-serif;">SvxLink Dashboard ©  SP2ONG <?php $cdate=date("Y"); if ($cdate > "2021") {$cdate="2021-".date("Y");} echo $cdate; ?>
-<!-- SVXLink Dashboard SP2ONG version 20220605 -->
+<center><span title="Dashboard " style="font: 7pt arial, sans-serif;">SvxLink Dashboard ©  SP2ONG, SP0DZ <?php $cdate=date("Y"); if ($cdate > "2021") {$cdate="2021-".date("Y");} echo $cdate; ?>
 	</div>
 </div>
 </fieldset>
