@@ -98,6 +98,18 @@ if (isset($_POST['btnPower']))
         exec($command,$screen,$retval);
 }
 
+if (isset($_POST['btnLcd']))
+    {
+
+        $retval = null;
+        $screen = null;
+        //$sAconn = $_POST['sAconn'];
+        //$password = $_POST['password'];
+        //exec('nmcli dev wifi rescan');
+        $command = "sudo service oled2svx restart 2>&1";
+        exec($command,$screen,$retval);
+}
+
 if (isset($_POST['btnSvxlink']))
     {
 
@@ -109,6 +121,10 @@ if (isset($_POST['btnSvxlink']))
         $command = "sudo service svxlink restart 2>&1";
         exec($command,$screen,$retval);
 }
+
+
+
+
 
 if (isset($_POST['btnRestart']))
     {
@@ -128,11 +144,19 @@ if (isset($_POST['btnRestart']))
 
 <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>"> 
 	
-	<button name="btnSvxlink" type="submit" class="red" style="height:50px; width:400px; font-size:12px;">Restart SVXlink Service</button>
+	<button name="btnSvxlink" type="submit" class="red" style="height:30px; width:400px; font-size:12px;">Restart SVXlink Service</button>
 	<BR>
-	<button name="btnRestart" type="submit" class="red" style="height:50px; width:400px; font-size:12px;">Restart Device</button>
+	<button name="btnLcd" type="submit" class="red" style="height:30px; width:400px; font-size:12px;">Restart Lcd Service</button>
 	<BR>
-	<button name="btnPower" type="submit" class="red" style="height:50px; width:400px; font-size:12px;">Power OFF</button>
+	<button name="btnRestart" type="submit" class="red" style="height:30px; width:400px; font-size:12px;">Restart Device</button>
+        <BR>
+	
+	<button name="btnPower" type="submit" class="red" style="height:30px; width:400px; font-size:12px;">Power OFF</button>
+
+
+
+
+
 </form>
 
 <p style="margin: 0 auto;"></p>
