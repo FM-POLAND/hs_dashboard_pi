@@ -130,14 +130,21 @@ if (isset($_POST['btnSave']))
         $screen = null;
         //$ini = build_ini_string($svxconfig);
         //fopen($svxConfigFile,w);
-        $svxconfig['ReflectorLogic']['PORT'] = $_POST['inReflectorPort'];
+        
+	$svxconfig['GLOBAL']['DEFAULT_LANG'] = $_POST['inGlobalDefaultLang'];
+	
+	$svxconfig['ReflectorLogic']['DEFAULT_LANG'] = $_POST['inReflectorDefaultLang'];
+	$svxconfig['ReflectorLogic']['PORT'] = $_POST['inReflectorPort'];
+	$svxconfig['ReflectorLogic']['API'] = $_POST['inReflectorApi'];
         $svxconfig['ReflectorLogic']['HOST'] = $_POST['inReflectorServer'];
         $svxconfig['ReflectorLogic']['DEFAULT_TG'] = $_POST['inDefaultTg'];
         $svxconfig['ReflectorLogic']['MONITOR_TGS'] = $_POST['inMonitorTgs'];
         $svxconfig['ReflectorLogic']['AUTH_KEY'] = $_POST['inPassword'];
         $svxconfig['ReflectorLogic']['FMNET'] = $_POST['inFmNetwork'];
         $svxconfig['ReflectorLogic']['CALLSIGN'] = $_POST['inCallsign'];
+	
 
+	$svxconfig['SimplexLogic']['DEFAULT_LANG'] = $_POST['inSimplexDefaultLang'];
         $svxconfig['SimplexLogic']['CALLSIGN'] = $_POST['inCallsignSimplex'];
 	
 	$svxconfig['Macros']['0'] = $_POST['inMD0'];
@@ -189,8 +196,13 @@ if (isset($_POST['btnSave']))
   //    { 
 
 //	$svxconfig = parse_ini_file($svxConfigFile,true,INI_SCANNER_RAW);
-        $inCallsign = $svxconfig['ReflectorLogic']['CALLSIGN'];
+        
+	$inGlobalDefaultLang = $svxconfig['GLOBAL']['DEFAULT_LANG'];
+	
+	$inReflectorDefaultLang = $svxconfig['ReflectorLogic']['DEFAULT_LANG'];
+	$inCallsign = $svxconfig['ReflectorLogic']['CALLSIGN'];
 	$inReflectorServer =$svxconfig['ReflectorLogic']['HOST'];
+	$inReflectorApi =$svxconfig['ReflectorLogic']['API'];
 	$inReflectorPort =$svxconfig['ReflectorLogic']['PORT'];
 	$inDefaultTg =$svxconfig['ReflectorLogic']['DEFAULT_TG'];
 	$inMonitorTgs =$svxconfig['ReflectorLogic']['MONITOR_TGS'];
@@ -198,6 +210,7 @@ if (isset($_POST['btnSave']))
 	$inFmNetwork =$svxconfig['ReflectorLogic']['FMNET'];
 
 	$inCallsignSimplex = $svxconfig['SimplexLogic']['CALLSIGN'];
+	$inSimplexDefaultLang = $svxconfig['SimplexLogic']['DEFAULT_LANG'];
 
 	$inMD0 =$svxconfig['Macros']['0'];
 	$inMD1 =$svxconfig['Macros']['1'];
@@ -234,6 +247,23 @@ $conns = null;
 
 <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
 
+
+<table>
+        <tr>
+        <th width = "380px">Global Input</th>
+        <th width = "100px">Action</th>
+        </tr>
+<tr>
+<TD>
+        Default Language: <input type="text" name="inGlobalDefaultLang" style="width: 150px;" value="<?php echo $inGlobalDefaultLang;?>">
+</TD>
+<td>
+        <button name="btnSave" type="submit" class="red" style="height:100px; width:105px; font-size:12px;">Save <BR><Br> & <BR><BR> ReLoad</button>
+</td>
+
+</tr>
+</table>
+
 <table>
         <tr>
         <th width = "380px">Reflector Input</th>
@@ -241,6 +271,8 @@ $conns = null;
         </tr>
 <tr>
 <TD>
+	Default Language: <input type="text" name="inReflectorDefaultLang" style="width: 150px;" value="<?php echo $inReflectorDefaultLang;?>">
+<BR>
 	FM Network: <input type="text" name="inFmNetwork" style="width: 150px;" value="<?php echo $inFmNetwork;?>">
 <BR>
         Callsign: <input type="text" name="inCallsign" style="width: 150px;" value="<?php echo $inCallsign;?>">
@@ -254,6 +286,8 @@ $conns = null;
 	Reflector Server: <input type="text" name="inReflectorServer" style="width: 150px;" value="<?php echo $inReflectorServer;?>">
 <BR>
 	Reflector Port: <input type="text" name="inReflectorPort" style="width: 150px;" value="<?php echo $inReflectorPort;?>">
+<BR>
+        Reflector Api: <input type="text" name="inReflectorApi" style="width: 150px;" value="<?php echo $inReflectorApi;?>">
 
 </td>
 <td> 
@@ -273,6 +307,9 @@ $conns = null;
         </tr>
 <tr>
 <TD>
+
+	Default Language: <input type="text" name="inSimplexDefaultLang" style="width: 150px;" value="<?php echo $inSimplexDefaultLang;?>">
+<BR>
         Callsign: <input type="text" name="inCallsignSimplex" style="width: 150px;" value="<?php echo $inCallsignSimplex;?>">
 </td>
 <td>
