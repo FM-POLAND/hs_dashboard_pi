@@ -2,15 +2,27 @@
 // Report all errors except E_NOTICE
 // error_reporting(E_ALL & ~E_NOTICE);
 // disable all 
+
+$svxConfigFile = '/etc/svxlink/svxlink.conf';
+    if (fopen($svxConfigFile,'r'))
+       { $svxconfig = parse_ini_file($svxConfigFile,true,INI_SCANNER_RAW);
+         $refApi = $svxconfig['ReflectorLogic']['API'];
+         $fmnetwork =$svxconfig['ReflectorLogic']['FMNET'];   }
+else { $callsign="N0CALL";
+       $fmnetwork="no registered";
+        }
+
+
+
 error_reporting(0);
 
 // Define name of your FM Network
-define("FMNETWORK", "FM POLAND");
+define("FMNETWORK", $fmnetwork);
 //
 // Select only one URL for SVXReflector API to get connected Nodes
 //
 // FM Poland API
-define("URLSVXRAPI", "http://svxlink.pl:888/api/");
+define("URLSVXRAPI", $refApi);
 //
 // Empty address API do not show connected nodes to svxreflector 
 //define("URLSVXRAPI", "");
