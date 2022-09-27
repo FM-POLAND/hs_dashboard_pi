@@ -3,6 +3,33 @@ include_once __DIR__.'/config.php';
 include_once __DIR__.'/tools.php';        
 include_once __DIR__.'/functions.php';    
 include_once __DIR__.'/tgdb.php';    
+$svxConfigFile = '/etc/svxlink/svxlink.conf';
+    if (fopen($svxConfigFile,'r'))
+       { $svxconfig = parse_ini_file($svxConfigFile,true,INI_SCANNER_RAW);  
+         $tgUri = $svxconfig['ReflectorLogic']['TG_URI'];
+}
+
+
+
+if (isset($_POST['btnUpdateTgs']))
+    {
+
+        $retval = null;
+        $screen = null;
+        //$sAconn = $_POST['sAconn'];
+        //$password = $_POST['password'];
+        //exec('nmcli dev wifi rescan');
+        $command = "sudo wget ".$tgUri." 2>&1";
+        exec($command,$screen,$retval);
+	//if ($retval) {
+	//echo "*";
+	$command2 = "sudo mv /var/www/html/tgdb.txt /var/www/html/include/tgdb.php 2>&1";
+        exec($command2,$screen,$retval);
+	//}
+        //$_SESSION['refresh']=True; header("Refresh: 3");
+
+};
+
 ?>
 <span style="font-weight: bold;font-size:14px;">Talk Groups</span>
 <fieldset style=" width:620px;box-shadow:0 0 10px #999;background-color:#e8e8e8e8;margin-top:10px;margin-left:0px;margin-right:0px;font-size:12px;border-top-left-radius: 10px; border-top-right-radius: 10px;border-bottom-left-radius: 10px; border-bottom-right-radius: 10px;">
@@ -26,5 +53,7 @@ foreach ($tgdb_array as $tg => $tgname)
 };
 
 ?>
-  </table></form>
+  </table>
+<button name="btnUpdateTgs" type="submit" class="red" style="height:30px; width:120px; font-size:12px;">Update Tgs</button>
+</form>
 </fieldset>

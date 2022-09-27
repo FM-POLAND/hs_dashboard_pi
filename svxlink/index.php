@@ -142,7 +142,7 @@ if (isset($_POST['btnSave']))
         $svxconfig['ReflectorLogic']['AUTH_KEY'] = $_POST['inPassword'];
         $svxconfig['ReflectorLogic']['FMNET'] = $_POST['inFmNetwork'];
         $svxconfig['ReflectorLogic']['CALLSIGN'] = $_POST['inCallsign'];
-	
+	$svxconfig['ReflectorLogic']['TG_URI'] = $_POST['inReflectorTgUri'];
 
 	$svxconfig['SimplexLogic']['DEFAULT_LANG'] = $_POST['inSimplexDefaultLang'];
         $svxconfig['SimplexLogic']['CALLSIGN'] = $_POST['inCallsignSimplex'];
@@ -208,6 +208,7 @@ if (isset($_POST['btnSave']))
 	$inMonitorTgs =$svxconfig['ReflectorLogic']['MONITOR_TGS'];
 	$inPassword =$svxconfig['ReflectorLogic']['AUTH_KEY'];
 	$inFmNetwork =$svxconfig['ReflectorLogic']['FMNET'];
+	$inReflectorTgUri = $svxconfig['ReflectorLogic']['TG_URI'];
 
 	$inCallsignSimplex = $svxconfig['SimplexLogic']['CALLSIGN'];
 	$inSimplexDefaultLang = $svxconfig['SimplexLogic']['DEFAULT_LANG'];
@@ -288,6 +289,8 @@ $conns = null;
 	Reflector Port: <input type="text" name="inReflectorPort" style="width: 150px;" value="<?php echo $inReflectorPort;?>">
 <BR>
         Reflector Api: <input type="text" name="inReflectorApi" style="width: 150px;" value="<?php echo $inReflectorApi;?>">
+<BR>
+        Reflector TgUri: <input type="text" name="inReflectorTgUri" style="width: 150px;" value="<?php echo $inReflectorTgUri;?>">
 
 </td>
 <td> 
