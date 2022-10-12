@@ -172,8 +172,7 @@ if (isset($_POST['btnStatic']))
 	$gw = $_POST['gw'];
 	$dns = $_POST['dns'];
 
-        $command = "nmcli con mod \"" .$sAconn."\" ipv4.method manual 2>&1";
-        if (!$retval) exec($command,$screen,$retval);
+
 
 	$command = "nmcli con mod \"" .$sAconn. "\" ipv4.addresses " .$myIp. "\/" .$cidr. " 2>&1";
         if (!$retval) exec($command,$screen,$retval);
@@ -182,6 +181,9 @@ if (isset($_POST['btnStatic']))
         if (!$retval) exec($command,$screen,$retval);
 
 	$command = "nmcli con mod \"" .$sAconn. "\" ipv4.dns \"" .$dns. "\" 2>&1";
+        if (!$retval) exec($command,$screen,$retval);
+
+        $command = "nmcli con mod \"" .$sAconn."\" ipv4.method manual 2>&1";
         if (!$retval) exec($command,$screen,$retval);
 
         $command = "nmcli -p -f ipv4,general con show \"" .$sAconn. "\" 2>&1";

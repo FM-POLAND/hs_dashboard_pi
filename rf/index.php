@@ -327,7 +327,7 @@ if ($volume === "" || is_null($volume)) $volume = "8";
 
 <table>
         <tr>
-        <th width = "380px">Disable Filters</th>
+        <th width = "380px">Enable Filters</th>
         <th width = "100px">Action</th>
         </tr>
 <tr>
