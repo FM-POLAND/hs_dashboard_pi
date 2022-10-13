@@ -254,7 +254,15 @@ if (isset($_POST['btnUpdateDashboard']))
 	exec($command,$screen,$retval);
 	$command = "sudo nice -n 19 sh /opt/update.dashboard.sh > /var/www/html/update/screen.log 2>&1 &";
         exec($command,$screen,$retval);
-
+        //exec('nmcli dev wifi rescan');
+        $command3 = "sudo wget ".$tgUri." 2>&1";
+        exec($command3,$screen,$retval);
+	//if ($retval) {
+	//echo "*";
+	$command4 = "sudo mv /var/www/html/tgdb.txt /var/www/html/include/tgdb.php 2>&1";
+        exec($command4,$screen,$retval);
+	//}
+        //$_SESSION['refresh']=True; header("Refresh: 3");
         $_SESSION['refresh']=True; header("Refresh: 3");
 
 };
