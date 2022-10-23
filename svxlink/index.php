@@ -339,7 +339,7 @@ $conns = null;
 <BR>
         Macro D5: <input type="text" name="inMD5" style="width: 150px;" value="<?php echo $inMD5;?>">
 <BR>
-        Macro D5: <input type="text" name="inMD6" style="width: 150px;" value="<?php echo $inMD6;?>">
+        Macro D6: <input type="text" name="inMD6" style="width: 150px;" value="<?php echo $inMD6;?>">
 <BR>
         Macro D7: <input type="text" name="inMD7" style="width: 150px;" value="<?php echo $inMD7;?>">
 <BR>
