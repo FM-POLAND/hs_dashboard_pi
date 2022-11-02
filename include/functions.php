@@ -60,14 +60,14 @@ function getSVXStatusLog() {
 function getSVXRstatus() {
 	if (file_exists(SVXLOGPATH."/".SVXLOGPREFIX)) {
            $slogPath = SVXLOGPATH."/".SVXLOGPREFIX; 
-           $svxrstat = `egrep -a -h "Authentication|Conection established|Heartbeat timeout|No route to host|Connection refused|Connection timed out|Locally ordered disconnect" $slogPath | tail -1`;}
+           $svxrstat = `egrep -a -h "Authentication|Connection established|Heartbeat timeout|No route to host|Connection refused|Connection timed out|Locally ordered disconnect|Deactivating link|Activating link" $slogPath | tail -1`;}
 	if ($svxrstat=="" &&  file_exists(SVXLOGPATH.".hdd/".SVXLOGPREFIX.".1")) {
            $slogPath = SVXLOGPATH.".hdd/".SVXLOGPREFIX.".1"; 
-           $svxrstat = `egrep -a -h "Authentication|Conection established|Heartbeat timeout|No route to host|Connection refused|Connection timed out|Locally ordered disconnect" $slogPath | tail -1`;}
-           if(strpos($svxrstat,"Authentication OK") || strpos($svxrstat,"Conection established")){
+           $svxrstat = `egrep -a -h "Authentication|Connection established|Heartbeat timeout|No route to host|Connection refused|Connection timed out|Locally ordered disconnect|Deactivating link|Activating link" $slogPath | tail -1`;}
+           if(strpos($svxrstat,"Authentication OK") || strpos($svxrstat,"Connection established") || strpos($svxrstat,"Activating link")){
               $svxrstatus="Connected";
             }
-           elseif (strpos($svxrstat,"Heartbeat timeout") || strpos($svxrstat,"No route to host") || strpos($svxrstat,"Connection refused") || strpos($svxrstat,"Connection timed out") || strpos($svxrstat,"Locally ordered disconnect")) { $svxrstatus="Not connected";}
+           elseif (strpos($svxrstat,"Heartbeat timeout") || strpos($svxrstat,"No route to host") || strpos($svxrstat,"Connection refused") || strpos($svxrstat,"Connection timed out") || strpos($svxrstat,"Locally ordered disconnect") || strpos($svxrstat,"Deactivating link")) { $svxrstatus="Not connected";}
            else { $svxrstatus="No status";}
       return $svxrstatus;
 }
