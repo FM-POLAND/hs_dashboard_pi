@@ -181,41 +181,94 @@ if (isset($_POST['btnSave']))
         </tr>
 <tr>
 <TD>
-	Location: <input type="text" name="inLocation" style="width: 150px;" value="<?php echo $inLocation;?>">
-<BR>
-        Locator: <input type="text" name="inLocator" style="width: 150px;" value="<?php echo $inLocator;?>">
-<BR> 
-       	SysOp: <input type="text" name="inSysOp" style="width: 150px;" value="<?php echo $inSysOp;?>">
-<BR>
-	Lat: <input type="text" name="inLAT" style="width: 150px;" value="<?php echo $inLAT;?>">
-<BR>
-	Long: <input type="text" name="inLONG" style="width: 150px;" value="<?php echo $inLONG;?>">
-<BR>
-	Rq Freq: <input type="text" name="inRXFREQ" style="width: 150px;" value="<?php echo $inRXFREQ;?>">
-<BR>
-	Tx Freq: <input type="text" name="inTXFREQ" style="width: 150px;" value="<?php echo $inTXFREQ;?>">
-<BR>
-        Website: <input type="text" name="inWebsite" style="width: 150px;" value="<?php echo $inWebsite;?>">
-<BR>
-        Mode: <input type="text" name="inMode" style="width: 150px;" value="<?php echo $inMode;?>">
-<BR>
-        Type: <input type="text" name="inType" style="width: 150px;" value="<?php echo $inType;?>">
-<BR>
-        EchoLink: <input type="text" name="inEcholink" style="width: 150px;" value="<?php echo $inEcholink;?>">
-<BR>
-        Node Location: <input type="text" name="innodeLocation" style="width: 150px;" value="<?php echo $innodeLocation;?>">
-<BR>
-        Sysop: <input type="text" name="inSysop" style="width: 150px;" value="<?php echo $inSysop;?>">
-<BR>
-        Verbund: <input type="text" name="inVerbund" style="width: 150px;" value="<?php echo $inVerbund;?>">
-<BR>
- 	LinkedTo: <input type="text" name="inLinkedTo" style="width: 150px;" value="<?php echo $inLinkedTo;?>">
 
-<BR>
-        CTCSS: <input type="text" name="inCTCSS" style="width: 150px;" value="<?php echo $inCTCSS;?>">
-
-
-
+<Table style="border-collapse: collapse; border: none;">
+        <tr style="border: none;">
+                <th width = "30%"></th>
+                <th width = "70%"></th>
+        </tr>
+        <tr style="border: none;"> 
+        <td style="border: none;">Location
+        </td>
+        <td style="border: none;">
+        <input type="text" name="inLocation" style="width:98%" value="<?php echo $inLocation;?>">
+        </td></tr>
+        <tr style="border: none;"> 
+        <td style="border: none;">Locator</td>
+        <td style="border: none;">
+        <input  type="text" name="inLocator" style="width:98%" value="<?php echo $inLocator;?>">
+        </td></tr>
+        <tr style="border: none;"> 
+        <td style="border: none;">SysOp</td>
+        <td style="border: none;">
+        <input  type="text" name="inSysOp" style="width:98%" value="<?php echo $inSysOp;?>">
+        </td></tr>
+        <tr style="border: none;"> 
+        <td style="border: none;">Lat</td>
+        <td style="border: none;">
+        <input  type="text" name="inLAT" style="width:98%" value="<?php echo $inLAT;?>">
+        </td></tr>
+        <tr style="border: none;"> 
+        <td style="border: none;">Long</td>
+        <td style="border: none;">
+        <input  type="text" name="inLONG" style="width:98%" value="<?php echo $inLONG;?>">
+        </td></tr>
+        <tr style="border: none;"> 
+        <td style="border: none;">Rq Freq</td>
+        <td style="border: none;">
+        <input  type="text" name="inRXFREQ" style="width:98%" value="<?php echo $inRXFREQ;?>">
+        </td></tr>
+        <tr style="border: none;"> 
+        <td style="border: none;">Tx Freq</td>
+        <td style="border: none;">
+        <input  type="text" name="inTXFREQ" style="width:98%" value="<?php echo $inTXFREQ;?>">
+        </td></tr>
+        <tr style="border: none;"> 
+        <td style="border: none;">Website</td>
+        <td style="border: none;">
+        <input  type="text" name="inWebsite" style="width:98%" value="<?php echo $inWebsite;?>">
+        </td></tr>
+        <tr style="border: none;"> 
+        <td style="border: none;">Mode</td>
+        <td style="border: none;">
+        <input  type="text" name="inMode" style="width:98%" value="<?php echo $inMode;?>">
+        </td></tr>
+        <tr style="border: none;"> 
+        <td style="border: none;">Type</td>
+        <td style="border: none;">
+        <input  type="text" name="inType" style="width:98%" value="<?php echo $inType;?>">
+        </td></tr>
+        <tr style="border: none;"> 
+        <td style="border: none;">EchoLink</td>
+        <td style="border: none;">
+        <input  type="text" name="inEcholink" style="width:98%" value="<?php echo $inEcholink;?>">
+        </td></tr>
+        <tr style="border: none;"> 
+        <td style="border: none;">Node Location</td>
+        <td style="border: none;">
+        <input  type="text" name="innodeLocation" style="width:98%" value="<?php echo $innodeLocation;?>">
+        </td></tr>
+        <tr style="border: none;"> 
+        <td style="border: none;">Sysop</td>
+        <td style="border: none;">
+        <input  type="text" name="inSysop" style="width:98%" value="<?php echo $inSysop;?>">
+        </td></tr>
+        <tr style="border: none;"> 
+        <td style="border: none;">Verbund</td>
+        <td style="border: none;">
+        <input  type="text" name="inVerbund" style="width:98%" value="<?php echo $inVerbund;?>">
+        </td></tr>
+        <tr style="border: none;"> 
+        <td style="border: none;">LinkedTo</td>
+        <td style="border: none;">
+        <input  type="text" name="inLinkedTo" style="width:98%" value="<?php echo $inLinkedTo;?>">
+        </td></tr>
+        <tr style="border: none;"> 
+        <td style="border: none;">CTCSS</td>
+        <td style="border: none;">
+        <input  type="text" name="inCTCSS" style="width:98%" value="<?php echo $inCTCSS;?>">
+        </td></tr>
+    </table>
 </td>
 <td> 
 	<button name="btnSave" type="submit" class="red" style="height:100px; width:105px; font-size:12px;">Save <BR><Br> & <BR><BR> ReLoad</button>

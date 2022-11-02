@@ -111,16 +111,24 @@ function build_ini_string(array $a) {
 }
 
 
-
 $svxConfigFile = '/etc/svxlink/svxlink.conf';
-//$svxConfigFile = '/var/www/html/svxlink.conf';    
-
-
+$init_pei_tail = ";AT+CTSP=1,3,131;AT+CTSP=1,3,130;AT+CTSP=1,3,138;AT+CTSP=1,2,20;AT+CTSP=2,0,0;AT+CTSP=1,3,24;AT+CTSP=1,3,25;AT+CTSP=1,3,3;AT+CTSP=1,3,10;AT+CTSP=1,1,11;AT+CTSDC=0,0,0,1,1,0,1,1,0,0";
 if (fopen($svxConfigFile,'r'))
       {
 
         $svxconfig = parse_ini_file($svxConfigFile,true,INI_SCANNER_RAW);
+        //$svxconfig['TetraLogic']['INIT_PEI'] = $svxconfig['TetraLogic']['INIT_PEI'] . $init_pei_tail;    
 };
+
+
+$logics = explode(",",$svxconfig['GLOBAL']['LOGICS']);
+foreach ($logics as $key) {
+ // echo "<tr><td style=\"background:#ffffed;\"><span style=\"color:#b5651d;font-weight: bold;\">".$key."</span></td></tr>";
+  if ($key == "SimplexLogic") $isSimplex = true;
+  if ($key == "TetraLogic") $isTetra = true; 
+}
+
+
 
 
 
@@ -128,11 +136,16 @@ if (isset($_POST['btnSave']))
     {
         $retval = null;
         $screen = null;
+
+        // tail is hardcoded - if need to be changed should be consider to build tetra-device config json file 
+        // $init_pei_tail = ";AT+CTSP=1,3,131;AT+CTSP=1,3,130;AT+CTSP=1,3,138;AT+CTSP=1,2,20;AT+CTSP=2,0,0;AT+CTSP=1,3,24;AT+CTSP=1,3,25;AT+CTSP=1,3,3;AT+CTSP=1,3,10;AT+CTSP=1,1,11;AT+CTSDC=0,0,0,1,1,0,1,1,0,0";
         //$ini = build_ini_string($svxconfig);
         //fopen($svxConfigFile,w);
         
 	$svxconfig['GLOBAL']['DEFAULT_LANG'] = $_POST['inGlobalDefaultLang'];
-	
+	$svxconfig['GLOBAL']['LOGICS'] = $_POST['inGlobalLogics'];
+        $svxconfig['GLOBAL']['RF_MODULE'] = $_POST['inGlobalRf'];
+
 	$svxconfig['ReflectorLogic']['DEFAULT_LANG'] = $_POST['inReflectorDefaultLang'];
 	$svxconfig['ReflectorLogic']['PORT'] = $_POST['inReflectorPort'];
 	$svxconfig['ReflectorLogic']['API'] = $_POST['inReflectorApi'];
@@ -144,9 +157,26 @@ if (isset($_POST['btnSave']))
         $svxconfig['ReflectorLogic']['CALLSIGN'] = $_POST['inCallsign'];
 	$svxconfig['ReflectorLogic']['TG_URI'] = $_POST['inReflectorTgUri'];
 
+        if ($isSimplex){
 	$svxconfig['SimplexLogic']['DEFAULT_LANG'] = $_POST['inSimplexDefaultLang'];
-        $svxconfig['SimplexLogic']['CALLSIGN'] = $_POST['inCallsignSimplex'];
-	
+        $svxconfig['SimplexLogic']['CALLSIGN'] = $_POST['inSimplexCallsign'];
+        $svxconfig['SimplexLogic']['MODULES'] = $_POST['inSimplexModules'];
+        };
+        if ($isTetra){
+	$svxconfig['TetraLogic']['DEFAULT_LANG'] = $_POST['inTetraDefaultLang'];
+        $svxconfig['TetraLogic']['CALLSIGN'] = $_POST['inTetraCallsign'];
+        $svxconfig['TetraLogic']['MODULES'] = $_POST['inTetraModules'];
+        $svxconfig['TetraLogic']['BAUD'] = $_POST['inTetraBaud'];
+        $svxconfig['TetraLogic']['PORT'] = $_POST['inTetraPort'];
+        $svxconfig['TetraLogic']['ISSI'] = $_POST['inTetraIssi'];
+        $svxconfig['TetraLogic']['GSSI'] = $_POST['inTetraGssi'];
+        $svxconfig['TetraLogic']['MNC'] = $_POST['inTetraMnc'];
+        $svxconfig['TetraLogic']['MCC'] = $_POST['inTetraMcc'];           //addin the tail 
+        $svxconfig['TetraLogic']['INIT_PEI'] = $_POST['inTetraInitPei'] . $init_pei_tail;      
+        $svxconfig['TetraLogic']['APRSPATH'] = $_POST['inTetraAprspath']; 
+        $svxconfig['TetraLogic']['TETRA_MODE'] = $_POST['inTetraMode']; 
+        };
+
 	$svxconfig['Macros']['0'] = $_POST['inMD0'];
         $svxconfig['Macros']['1'] = $_POST['inMD1'];
 	$svxconfig['Macros']['2'] = $_POST['inMD2'];
@@ -188,7 +218,18 @@ if (isset($_POST['btnSave']))
 
 }
 
+
+//if (fopen($svxConfigFile,'r'))
+//      {
+
+//        $svxconfig = parse_ini_file($svxConfigFile,true,INI_SCANNER_RAW);
+//};
+
 //$svxConfigFile = '/etc/svxlink/svxlink.conf';
+//$svxConfigFile = '/var/www/html/svxlink.conf';    
+
+
+
 
 
 
@@ -198,6 +239,8 @@ if (isset($_POST['btnSave']))
 //	$svxconfig = parse_ini_file($svxConfigFile,true,INI_SCANNER_RAW);
         
 	$inGlobalDefaultLang = $svxconfig['GLOBAL']['DEFAULT_LANG'];
+        $inGlobalLogics = $svxconfig['GLOBAL']['LOGICS'];
+        $inGlobalRf = $svxconfig['GLOBAL']['RF_MODULE'];
 	
 	$inReflectorDefaultLang = $svxconfig['ReflectorLogic']['DEFAULT_LANG'];
 	$inCallsign = $svxconfig['ReflectorLogic']['CALLSIGN'];
@@ -210,8 +253,26 @@ if (isset($_POST['btnSave']))
 	$inFmNetwork =$svxconfig['ReflectorLogic']['FMNET'];
 	$inReflectorTgUri = $svxconfig['ReflectorLogic']['TG_URI'];
 
-	$inCallsignSimplex = $svxconfig['SimplexLogic']['CALLSIGN'];
+        if ($isSimplex){ 
+	$inSimplexCallsign = $svxconfig['SimplexLogic']['CALLSIGN'];
 	$inSimplexDefaultLang = $svxconfig['SimplexLogic']['DEFAULT_LANG'];
+        $inSimplexModules = $svxconfig['SimplexLogic']['MODULES'];
+        };
+
+        if ($isTetra){
+        $inTetraCallsign = $svxconfig['TetraLogic']['CALLSIGN'];
+	$inTetraDefaultLang = $svxconfig['TetraLogic']['DEFAULT_LANG'];
+        $inTetraModules = $svxconfig['TetraLogic']['MODULES'];
+        $inTetraBaud = $svxconfig['TetraLogic']['BAUD'];
+        $inTetraPort = $svxconfig['TetraLogic']['PORT'];
+        $inTetraIssi = $svxconfig['TetraLogic']['ISSI'];
+        $inTetraGssi = $svxconfig['TetraLogic']['GSSI'];
+        $inTetraMnc = $svxconfig['TetraLogic']['MNC'];
+        $inTetraMcc = $svxconfig['TetraLogic']['MCC'];          // fix for non standard ADI's use of ini - uncoment if needed.
+        $inTetraInitPei = $svxconfig['TetraLogic']['INIT_PEI']; //.";AT+CTSP=1,3,131;AT+CTSP=1,3,130;AT+CTSP=1,3,138;AT+CTSP=1,2,20;AT+CTSP=2,0,0;AT+CTSP=1,3,24;AT+CTSP=1,3,25;AT+CTSP=1,3,3;AT+CTSP=1,3,10;AT+CTSP=1,1,11;AT+CTSDC=0,0,0,1,1,0,1,1,0,0";      
+        $inTetraAprspath = $svxconfig['TetraLogic']['APRSPATH'];
+        $inTetraMode = $svxconfig['TetraLogic']['TETRA_MODE'];
+        };
 
 	$inMD0 =$svxconfig['Macros']['0'];
 	$inMD1 =$svxconfig['Macros']['1'];
@@ -256,7 +317,26 @@ $conns = null;
         </tr>
 <tr>
 <TD>
-        Default Language: <input type="text" name="inGlobalDefaultLang" style="width: 150px;" value="<?php echo $inGlobalDefaultLang;?>">
+        <Table style="border-collapse: collapse; border: none;">
+        <tr style="border: none;">
+                <th width = "30%"></th>
+                <th width = "70%"></th>
+        </tr>
+        <tr style="border: none;"> 
+        <td style="border: none;">Default Language</td>
+        <td style="border: none;"><input type="text" name="inGlobalDefaultLang" style="width:98%" value="<?php echo $inGlobalDefaultLang;?>"></td>
+        </tr>
+        <tr style="border: none;">
+        <td style="border: none;">Logics</td>
+        <td style="border: none;"> <input type="text" name="inGlobalLogics" style="width:98%" value="<?php echo $inGlobalLogics;?>"></td>
+        </tr>
+        </tr>
+        <tr style="border: none;">
+        <td style="border: none;">RF Module</td>
+        <td style="border: none;"> <input type="text" name="inGlobalRf" style="width:98%" value="<?php echo $inGlobalRf;?>"></td>
+        </tr>
+        </table>
+
 </TD>
 <td>
         <button name="btnSave" type="submit" class="red" style="height:100px; width:105px; font-size:12px;">Save <BR><Br> & <BR><BR> ReLoad</button>
@@ -272,55 +352,72 @@ $conns = null;
         </tr>
 <tr>
 <TD>
-	Default Language: <input type="text" name="inReflectorDefaultLang" style="width: 150px;" value="<?php echo $inReflectorDefaultLang;?>">
-<BR>
-	FM Network: <input type="text" name="inFmNetwork" style="width: 150px;" value="<?php echo $inFmNetwork;?>">
-<BR>
-        Callsign: <input type="text" name="inCallsign" style="width: 150px;" value="<?php echo $inCallsign;?>">
-<BR> 
-       	Password: <input type="password" name="inPassword" style="width: 150px;" value="<?php echo $inPassword;?>">
-<BR>
-	Default TG: <input type="text" name="inDefaultTg" style="width: 150px;" value="<?php echo $inDefaultTg;?>">
-<BR>
-	Monitor TGs: <input type="text" name="inMonitorTgs" style="width: 150px;" value="<?php echo $inMonitorTgs;?>">
-<BR>
-	Reflector Server: <input type="text" name="inReflectorServer" style="width: 150px;" value="<?php echo $inReflectorServer;?>">
-<BR>
-	Reflector Port: <input type="text" name="inReflectorPort" style="width: 150px;" value="<?php echo $inReflectorPort;?>">
-<BR>
-        Reflector Api: <input type="text" name="inReflectorApi" style="width: 150px;" value="<?php echo $inReflectorApi;?>">
-<BR>
-        Reflector TgUri: <input type="text" name="inReflectorTgUri" style="width: 150px;" value="<?php echo $inReflectorTgUri;?>">
+
+<table style="border-collapse: collapse; border: none;">
+        <tr style="border: none;">
+                <th width = "30%"></th>
+                <th width = "70%"></th>
+        </tr>
+        <tr style="border: none;"> 
+        <td style="border: none;">Default Language</td>
+        <td style="border: none;">
+        <input type="text" name="inReflectorDefaultLang" style="width:98%" value="<?php echo $inReflectorDefaultLang;?>">
+        </td></tr>
+        <tr style="border: none;"> 
+        <td style="border: none;">FM Network</td>
+        <td style="border: none;"><input type="text" name="inFmNetwork" style="width:98%" value="<?php echo $inFmNetwork;?>">
+        </td></tr>
+        <tr style="border: none;"> 
+        <td style="border: none;">Callsign</td>
+        <td style="border: none;"><input type="text" name="inCallsign" style="width:98%" value="<?php echo $inCallsign;?>">
+        </td></tr>
+        <tr style="border: none;"> 
+        <td style="border: none;">Password</td>
+        <td style="border: none;"><input type="password" name="inPassword" style="width:98%" value="<?php echo $inPassword;?>">
+        </td></tr>
+        <tr style="border: none;"> 
+        <td style="border: none;">Default TG</td>
+        <td style="border: none;"><input type="text" name="inDefaultTg" style="width:98%" value="<?php echo $inDefaultTg;?>">
+        </td></tr>
+        <tr style="border: none;"> 
+        <td style="border: none;">Monitor TGs</td>
+        <td style="border: none;"><input type="text" name="inMonitorTgs" style="width:98%" value="<?php echo $inMonitorTgs;?>">
+        </td></tr>
+        <tr style="border: none;"> 
+        <td style="border: none;">Reflector Server</td>
+        <td style="border: none;"><input type="text" name="inReflectorServer" style="width:98%" value="<?php echo $inReflectorServer;?>">
+        </td></tr>
+        <tr style="border: none;"> 
+        <td style="border: none;">Reflector Port</td>
+        <td style="border: none;"><input type="text" name="inReflectorPort" style="width:98%" value="<?php echo $inReflectorPort;?>">
+        </td></tr>
+        <tr style="border: none;"> 
+        <td style="border: none;">Reflector Api</td>
+        <td style="border: none;"><input type="text" name="inReflectorApi" style="width:98%" value="<?php echo $inReflectorApi;?>">
+        </td></tr>
+        <tr style="border: none;"> 
+        <td style="border: none;">Reflector TgUri</td>
+        <td style="border: none;"><input type="text" name="inReflectorTgUri" style="width:98%" value="<?php echo $inReflectorTgUri;?>">
+        </td></tr>
+</table>
 
 </td>
 <td> 
-	<button name="btnSave" type="submit" class="red" style="height:100px; width:105px; font-size:12px;">Save <BR><Br> & <BR><BR> ReLoad</button>
+	<button name="btnSave" type="submit" class="red" style="height:100px; width:105px; font-size:12px;">Save <br> 
+        <Br> & <BR><BR> ReLoad</button>
 </td>
 </tr>
 </table>
 
 
+<?php 
+if ($isTetra){ include "tetra.php" ;};
+if ($isSimplex){ include "simplex.php" ;};
 
+//include "simplex.php";
+//include "tetra.php";
 
-
-<table>
-        <tr>
-        <th width = "380px">Simplex Input</th>
-        <th width = "100px">Action</th>
-        </tr>
-<tr>
-<TD>
-
-	Default Language: <input type="text" name="inSimplexDefaultLang" style="width: 150px;" value="<?php echo $inSimplexDefaultLang;?>">
-<BR>
-        Callsign: <input type="text" name="inCallsignSimplex" style="width: 150px;" value="<?php echo $inCallsignSimplex;?>">
-</td>
-<td>
-        <button name="btnSave" type="submit" class="red" style="height:100px; width:105px; font-size:12px;">Save <BR><Br> & <BR><BR> ReLoad</button>
-</td>
-</tr>
-</table>
-
+?>
 
 <table>
         <tr>
@@ -329,43 +426,58 @@ $conns = null;
         </tr>
 <tr>
 <TD>
-        Macro D1: <input type="text" name="inMD1" style="width: 150px;" value="<?php echo $inMD1;?>">
-<BR>
-        Macro D2: <input type="text" name="inMD2" style="width: 150px;" value="<?php echo $inMD2;?>">
-<BR>
-        Macro D3: <input type="text" name="inMD3" style="width: 150px;" value="<?php echo $inMD3;?>">
-<BR>
-        Macro D4: <input type="text" name="inMD4" style="width: 150px;" value="<?php echo $inMD4;?>">
-<BR>
-        Macro D5: <input type="text" name="inMD5" style="width: 150px;" value="<?php echo $inMD5;?>">
-<BR>
-        Macro D6: <input type="text" name="inMD6" style="width: 150px;" value="<?php echo $inMD6;?>">
-<BR>
-        Macro D7: <input type="text" name="inMD7" style="width: 150px;" value="<?php echo $inMD7;?>">
-<BR>
-        Macro D8: <input type="text" name="inMD8" style="width: 150px;" value="<?php echo $inMD8;?>">
-<BR>
-        Macro D9: <input type="text" name="inMD9" style="width: 150px;" value="<?php echo $inMD9;?>">
-<BR>
-        Macro D0: <input type="text" name="inMD0" style="width: 150px;" value="<?php echo $inMD0;?>">
-<BR>
-
+        
+<table style="border-collapse: collapse; border: none;">
+        <tr style="border: none;">
+                <th width = "30%"></th>
+                <th width = "70%"></th>
+        </tr>
+        <tr style="border: none;"> 
+        <td style="border: none;">Macro D1</td>
+        <td style="border: none;"><input type="text" name="inMD1" style="width:98%" value="<?php echo $inMD1;?>">
+        </td></tr>
+        <tr style="border: none;"> 
+        <td style="border: none;">Macro D2</td>
+        <td style="border: none;"><input type="text" name="inMD2" style="width:98%" value="<?php echo $inMD2;?>">
+        <tr style="border: none;"> 
+        <td style="border: none;">Macro D3</td>
+        <td style="border: none;"><input type="text" name="inMD3" style="width:98%" value="<?php echo $inMD3;?>">
+        </td></tr>
+        <tr style="border: none;"> 
+        <td style="border: none;">Macro D4</td>
+        <td style="border: none;"><input type="text" name="inMD4" style="width:98%" value="<?php echo $inMD4;?>">
+        </td></tr>
+        <tr style="border: none;"> 
+        <td style="border: none;">Macro D5</td>
+        <td style="border: none;"><input type="text" name="inMD5" style="width:98%" value="<?php echo $inMD5;?>">
+        </td></tr>
+        <tr style="border: none;"> 
+        <td style="border: none;">Macro D6</td>
+        <td style="border: none;"><input type="text" name="inMD6" style="width:98%" value="<?php echo $inMD6;?>">
+        </td></tr>
+        <tr style="border: none;"> 
+        <td style="border: none;">Macro D7</td>
+        <td style="border: none;"><input type="text" name="inMD7" style="width:98%" value="<?php echo $inMD7;?>">
+        </td></tr>
+        <tr style="border: none;"> 
+        <td style="border: none;">Macro D8</td>
+        <td style="border: none;"><input type="text" name="inMD8" style="width:98%" value="<?php echo $inMD8;?>">
+        </td></tr>
+        <tr style="border: none;"> 
+        <td style="border: none;">Macro D9</td>
+        <td style="border: none;"><input type="text" name="inMD9" style="width:98%" value="<?php echo $inMD9;?>">
+        </td></tr>
+        <tr style="border: none;"> 
+        <td style="border: none;">Macro D0</td>
+        <td style="border: none;"><input type="text" name="inMD0" style="width:98%" value="<?php echo $inMD0;?>">
+        </td></tr>
+</table>
 </td>
 <td>
         <button name="btnSave" type="submit" class="red" style="height:100px; width:105px; font-size:12px;">Save <BR><Br> & <BR><BR> ReLoad</button>
 </td>
 </tr>
 </table>
-
-
-
-
-
-
-
-
-
-
 
 
 
