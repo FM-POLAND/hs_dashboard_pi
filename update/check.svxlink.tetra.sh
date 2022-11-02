@@ -1,5 +1,5 @@
 echo "###-START-###"
-echo "Fm branch"
+echo "Tetra branch"
 tagname=$(curl -sl https://api.github.com/repos/sm0svx/svxlink/releases/latest | jq -r .tag_name)
 name=$(curl -sl https://api.github.com/repos/sm0svx/svxlink/releases/latest | jq -r .name) 
 published=$(curl -sl https://api.github.com/repos/sm0svx/svxlink/releases/latest | jq -r .published_at)

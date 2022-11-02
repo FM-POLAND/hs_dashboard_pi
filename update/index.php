@@ -69,12 +69,20 @@ textarea {
 
 
 <?php 
+ini_set("allow_url_fopen", 1);
+session_start();
+$isTetra = false;
+$isSimplex = false;
 
 $svxConfigFile = '/etc/svxlink/svxlink.conf';
-    if (fopen($svxConfigFile,'r'))
-       { $svxconfig = parse_ini_file($svxConfigFile,true,INI_SCANNER_RAW);  
-         $tgUri = $svxconfig['ReflectorLogic']['TG_URI'];
-}
+if (fopen($svxConfigFile,'r')) {$svxconfig = parse_ini_file($svxConfigFile,true,INI_SCANNER_RAW); }
+$logics = explode(",",$svxconfig['GLOBAL']['LOGICS']);
+foreach ($logics as $key) {
+  if ($key == "SimplexLogic") $isSimplex = true;
+  if ($key == "TetraLogic") $isTetra = true; 
+};
+$tgUri = $svxconfig['ReflectorLogic']['TG_URI'];
+
 
 
 
@@ -85,8 +93,7 @@ $svxConfigFile = '/etc/svxlink/svxlink.conf';
 //    $ssid = $_POST["ssid"]);
 //  }
 //}}
-ini_set("allow_url_fopen", 1);
-session_start();
+
 // load the connlist
 $retval = null;
 $conns = null;
@@ -278,12 +285,11 @@ if (isset($_POST['btnChkSvxlink']))
 
         $retval = null;
         $screen = null;
-        $command = "sudo nice -n 19 sh check.svxlink.sh > /var/www/html/update/screen.log 2>&1 &";
+        $command = "sudo nice -n 19 sh check.svxlink.sh > /var/www/html/update/screen.log 2>&1 &"; //for any other cases
+        if ($isTetra){ $command = "sudo nice -n 19 sh check.svxlink.tetra.sh > /var/www/html/update/screen.log 2>&1 &";};        
         exec($command,$screen,$retval);
         $_SESSION['refresh']=True; header("Refresh: 3");
 }
-
-
 
 
 
@@ -295,6 +301,7 @@ if (isset($_POST['btnUpdateSvxlink']))
         $retval = null;
         $screen = null;
         $command = "sudo nice -n 19 sh update.svxlink.sh > /var/www/html/update/screen.log 2>&1 &";
+        if ($isTetra){ $command = "sudo nice -n 19 sh update.svxlink.tetra.sh > /var/www/html/update/screen.log 2>&1 &";};   
         exec($command,$screen,$retval);
 
         $_SESSION['refresh']=True; header("Refresh: 3");

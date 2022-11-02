@@ -1,5 +1,5 @@
 echo "###-START-###"
-echo "Fm branch"
+echo "TERTRA branch"
 echo "--- prepare by apt ---"
 
 apt install -y mc g++ cmake make libsigc++-2.0-dev libgsm1-dev libpopt-dev tcl tcl-dev 
@@ -14,6 +14,7 @@ addgroup gpio
 useradd -rG audio,daemon,dialout,gpio svxlink
 
 echo "--- svxlink tag download ---"
+echo "PLEASE IGNORE VERSION INFORMATION - just UPGRADE"
 tagname=$(curl -sl https://api.github.com/repos/sm0svx/svxlink/releases/latest | jq -r .tag_name)
 #name=$(curl -sl https://api.github.com/repos/sm0svx/svxlink/releases/latest | jq -r .name)
 #published=$(curl -sl https://api.github.com/repos/sm0svx/svxlink/releases/latest | jq -r .published_at)
@@ -33,7 +34,7 @@ echo "--- svxlink compilation ---"
 
 #mkdir src
 #cd src
-git clone http://github.com/sm0svx/svxlink.git
+git clone -b tetra-contrib https://github.com/dl1hrc/svxlink
 mkdir svxlink/src/build
 cd svxlink/src/build
 cmake -DUSE_QT=OFF -DCMAKE_INSTALL_PREFIX=/usr -DSYSCONF_INSTALL_DIR=/etc -DLOCAL_STATE_DIR=/var ..

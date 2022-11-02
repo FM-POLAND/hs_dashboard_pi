@@ -18,10 +18,14 @@ $svxConfigFile = SVXCONFPATH."/".SVXCONFIG;
 $logics = explode(",",$svxconfig['GLOBAL']['LOGICS']);
 foreach ($logics as $key) {
   echo "<tr><td style=\"background:#ffffed;\"><span style=\"color:#b5651d;font-weight: bold;\">".$key."</span></td></tr>";
+  if ($key == "SimplexLogic") $isSimplex = true;
+  if ($key == "TetraLogic") $isTetra = true; 
 }
 echo "</table>\n";
 echo "<table style=\"margin-top:2px;margin-bottom:13px;\">\n";
-$modules = explode(",",str_replace('Module','',$svxconfig['SimplexLogic']['MODULES']));
+if ($isSimplex) $modules = explode(",",str_replace('Module','',$svxconfig['SimplexLogic']['MODULES']));
+if ($isTetra) $modules = explode(",",str_replace('Module','',$svxconfig['TetraLogic']['MODULES']));
+
 $modecho = "False";
 if ($modules!="") {
 define("SVXMODULES",$modules);
@@ -30,7 +34,7 @@ $admodules = getActiveModules();
  foreach ($modules as $key) {
      if ($admodules[$key]=="On"){
     $activemod="<td style=\"background:MediumSeaGreen;color:#464646;font-weight: bold;\">";} else {
-    $activemod="<td style=\"background:#dadada;color:#b5651d;font-weight: bold;\">";}
+    $activemod="<td style=\"background:#ffffed;;color:#b5651d;font-weight: bold;\">";}
 
    echo "<tr>".$activemod."".$key."</td></tr>";
 
