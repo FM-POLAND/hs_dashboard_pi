@@ -34,13 +34,16 @@ echo "--- svxlink compilation ---"
 
 #mkdir src
 #cd src
-git clone -b tetra-contrib https://github.com/dl1hrc/svxlink
-mkdir svxlink/src/build
-cd svxlink/src/build
-cmake -DUSE_QT=OFF -DCMAKE_INSTALL_PREFIX=/usr -DSYSCONF_INSTALL_DIR=/etc -DLOCAL_STATE_DIR=/var ..
+git clone https://github.com/dl1hrc/svxlink.git
+cd svxlink/src
+git checkout tetra-contrib
+mkdir build
+cd build
+cmake -DUSE_QT=OFF -DCMAKE_INSTALL_PREFIX=/usr -DSYSCONF_INSTALL_DIR=/etc -DLOCAL_STATE_DIR=/var -DCMAKE_BUILD_TYPE=Release -DWITH_CONTRIB_TETRA_LOGIC=ON ..
+
 make -j4 -l2
 make install
-ldconfig
+#ldconfig
 
 echo $tagname > /opt/version.svxlink 
 cd /opt
