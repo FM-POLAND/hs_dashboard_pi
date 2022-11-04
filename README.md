@@ -38,7 +38,7 @@ sudo pip3 install sa818
 BUG warning!
 Wrapper has a bug. Any section needs to contain not only numbers parameters (like ex. MACROS).
 To avoid bug:
-Please add line some comment line with non numeric parameter like:
+Please add comment line with non numeric parameter like:
 ```
 # one = 1
 ```
