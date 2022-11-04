@@ -204,7 +204,7 @@ if (isset($_POST['btnSave']))
 	exec('sudo cp /etc/svxlink/svxlink.conf /etc/svxlink/svxlink.conf.' .date("YmdThis") ,$screen,$retval);
 	//move generated file to current config
 	exec('sudo mv /var/www/html/svxlink/svxlink.conf /etc/svxlink/svxlink.conf', $screen, $retval);
-	
+	exec('sudo cp /etc/svxlink/svxlink.conf /etc/svxlink/svxlink.d/TetraLogic.conf', $screen, $retval);
         //Service SVXlink restart
         exec('sudo service svxlink restart 2>&1',$screen,$retval);
 
