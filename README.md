@@ -42,6 +42,7 @@ Please add comment line with non numeric parameter like:
 ```
 # one = 1
 ```
+in INI files (svxlink.conf and TetraLogic.conf). 
 
 The svxlink dashboard created by SP2ONG, SP0DZ
 
