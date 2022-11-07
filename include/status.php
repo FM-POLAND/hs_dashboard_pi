@@ -97,7 +97,7 @@ if ($modecho=="True") {
   echo "</div></td></tr>";
   echo "<tr><th width=50%>TXing</th><td style=\"background:#ffffed;color:red;font-weight: bold;\">".$echotxing."</td></tr>";
   echo "</table>\n";
-  $svxEchoConfigFile = SVXCONFPATH."/".SVXCONFIG."/svxlink.d/ModuleEchoLink.conf";
+  $svxEchoConfigFile = "/etc/svxlink/svxlink.d/ModuleEchoLink.conf";
     if (fopen($svxEchoConfigFile,'r')) { 
        $svxeconfig = parse_ini_file($svxEchoConfigFile,true,INI_SCANNER_RAW);
        $eproxyd= $svxeconfig['ModuleEchoLink']['PROXY_SERVER']; 
