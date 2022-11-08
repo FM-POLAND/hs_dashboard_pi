@@ -285,7 +285,7 @@ function getTXInfo() {
                 
                 if (strpos($txstat, "ON")) { 
 	   	// $timestamp = substr($txstat, 0, 19);
-        //         //date_default_timezone_set('Europe/Warsaw');
+        //      //date_default_timezone_set('Europe/Warsaw');
                 // $tmss=strtotime($timestamp);
                 // $tmst=strtotime('now');
           	// $diff=$tmst-$tmss;
@@ -316,6 +316,38 @@ function getTXInfo() {
 }
 
 //}
+
+//2022-11-08 00:36:01: Rx1: Distortion detected! Please lower the input volume!
+
+function getRXPeak() {
+        $logPath = SVXLOGPATH."/".SVXLOGPREFIX;
+        if (file_exists(SVXLOGPATH."/".SVXLOGPREFIX)) { 
+                $txstat =`tail -100 $logPath | egrep -a -h "Distortion detected!" | tail -1`; 
+                //print($txstat);
+		$timestamp = substr($txstat, 0, 19);
+        //      //date_default_timezone_set('Europe/Warsaw');
+                $tmss=strtotime($timestamp);
+                $tmst=strtotime('now');
+                $diff=$tmst-$tmss;
+                // if ($diff>250)
+
+
+
+                if (strpos($txstat, "Distortion") && ($diff < 1) ) { 
+                return "<tr><td style=\"background:#ff6600;color:white;\"><div style=\"margin-top:2px;margin-bottom:2px;font-weight:bold;\">DISTORTION</div></td></tr>\n";
+                //return $txs;
+        }
+                return  "<td style=\"background:#c3e5cc;\"><div style=\"margin-top:2px;margin-bottom:2px;color:#464646;font-weight:bold;\">Peak OK</div></td></tr>\n";
+        }
+}
+
+//}
+
+
+
+
+
+
 
 
 function getConfigItem($section, $key, $configs) {

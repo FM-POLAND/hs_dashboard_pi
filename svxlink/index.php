@@ -187,7 +187,8 @@ if (isset($_POST['btnSave']))
 	$svxconfig['Macros']['7'] = $_POST['inMD7'];
 	$svxconfig['Macros']['8'] = $_POST['inMD8'];
 	$svxconfig['Macros']['9'] = $_POST['inMD9'];
-
+	
+	$svxconfig['Rx1']['PEAK_METER'] = $_POST['inRx1PeakMeter'];
         //$svxconfig['ReflectorLogic']['PORT'] = $_POST['inReflectorPort'];
         //$svxconfig['ReflectorLogic']['PORT'] = $_POST['inReflectorPort'];
         //$svxconfig['ReflectorLogic']['PORT'] = $_POST['inReflectorPort'];
@@ -284,6 +285,8 @@ if (isset($_POST['btnSave']))
 	$inMD7 =$svxconfig['Macros']['7'];
 	$inMD8 =$svxconfig['Macros']['8'];
 	$inMD9 =$svxconfig['Macros']['9'];
+
+	$inRx1PeakMeter = $svxconfig['Rx1']['PEAK_METER'];
 
 //}
 //    else { $callsign="N0CALL";}
@@ -478,6 +481,36 @@ if ($isSimplex){ include "simplex.php" ;};
 </td>
 </tr>
 </table>
+
+
+
+<table>
+        <tr>
+        <th width = "380px">Rx1 Input</th>
+        <th width = "100px">Action</th>
+        </tr>
+<tr>
+<TD>
+        
+<table style="border-collapse: collapse; border: none;">
+        <tr style="border: none;">
+                <th width = "30%"></th>
+                <th width = "70%"></th>
+        </tr>
+        <tr style="border: none;"> 
+        <td style="border: none;">Peak Meter</td>
+        <td style="border: none;"><input type="text" name="inRx1PeakMeter" style="width:98%" value="<?php echo $inRx1PeakMeter;?>">
+        </td></tr>
+
+
+</table>
+</td>
+<td>
+        <button name="btnSave" type="submit" class="red" style="height:100px; width:105px; font-size:12px;">Save <BR><Br> & <BR><BR> ReLoad</button>
+</td>
+</tr>
+</table>
+
 
 
 
