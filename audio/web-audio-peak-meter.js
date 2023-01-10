@@ -6,10 +6,10 @@ var webAudioPeakMeter = (function() {
     backgroundColor: 'white',
     tickColor: 'black',
     labelColor: 'black',
-    gradient: ['red 25%', '#ff0 30%', 'lime 40%', '#080 100%'],
-    dbRange: 37,
+    gradient: ['red 20%', '#ff0 40%', 'lime 60%', '#080 100%'],
+    dbRange: 50,
     dbTickSize: 5,
-    maskTransition: '1s',
+    maskTransition: '0.25s',
   };
   var tickWidth;
   var elementWidth;
@@ -94,13 +94,13 @@ var webAudioPeakMeter = (function() {
                                              channelLeft);
       channelLeft += channelWidth;
       maskSizes[i] = 0;
-      textLabels[i] = '-∞';
+      textLabels[i] = 'dB';
     }
     meterNode.onaudioprocess = updateMeter;
     meterElement.addEventListener('click', function() {
       for (var i = 0; i < channelCount; i++) {
         channelPeaks[i] = 0.0;
-        textLabels[i] = '-∞';
+        textLabels[i] = '';
       }
     }, false);
     paintMeter();
@@ -108,7 +108,7 @@ var webAudioPeakMeter = (function() {
 
   var createTicks = function(parent) {
     var numTicks = Math.floor(options.dbRange / options.dbTickSize);
-    var dbTickLabel = 0;
+    var dbTickLabel = 5;
     if (vertical) {
       var dbTickTop = options.fontSize + options.borderSize;
       for (var i = 0; i < numTicks; i++) {
@@ -170,7 +170,7 @@ var webAudioPeakMeter = (function() {
     label.style.color = options.labelColor;
     label.style.fontSize = options.fontSize + 'px';
     label.style.position = 'absolute';
-    label.textContent = '-∞';
+    label.textContent = '';
     if (vertical) {
       label.style.width = width + 'px';
       label.style.top = options.borderSize + 'px';
