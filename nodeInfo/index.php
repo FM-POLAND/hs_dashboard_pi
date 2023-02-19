@@ -140,7 +140,7 @@ if (isset($_POST['btnSave']))
 	$nodeInfo["TXFREQ"] = $_POST['inTXFREQ']; $nodeInfo["Website"] = $_POST['inWebsite'];$nodeInfo["Mode"] = $_POST['inMode'];
 	$nodeInfo["Type"] = $_POST['inType']; $nodeInfo["Echolink"] = $_POST['inEcholink'];$nodeInfo["nodeLocation"] = $_POST['innodeLocation'];
 	$nodeInfo["Sysop"] = $_POST['inSysop']; $nodeInfo["Verbund"] = $_POST['inVerbund'];$nodeInfo["CTCSS"] = $_POST['inCTCSS'];
-	$nodeInfo["LinkedTo"] = $_POST['inLinkedTo'];
+	$nodeInfo["LinkedTo"] = $_POST['inLinkedTo'];$nodeInfo["DefaultTg"] = $_POST['inDefaultTg'];
 
 	$jsonNodeInfo = json_encode($nodeInfo);
 	file_put_contents("/var/www/html/nodeInfo/node_info.json", $jsonNodeInfo ,FILE_USE_INCLUDE_PATH);
@@ -168,7 +168,7 @@ if (isset($_POST['btnSave']))
 	$inTXFREQ = $nodeInfo["TXFREQ"];$inWebsite = $nodeInfo["Website"]; $inMode = $nodeInfo["Mode"];
 	$inType = $nodeInfo["Type"];$inEcholink = $nodeInfo["Echolink"]; $innodeLocation = $nodeInfo["nodeLocation"];
 	$inSysop = $nodeInfo["Sysop"];$inVerbund = $nodeInfo["Verbund"]; $inCTCSS = $nodeInfo["CTCSS"];
-	$inLinkedTo = $nodeInfo["LinkedTo"];
+	$inLinkedTo = $nodeInfo["LinkedTo"];$inDefaultTg = $nodeInfo["DefaultTg"];
 
 ?>
 
@@ -268,6 +268,13 @@ if (isset($_POST['btnSave']))
         <td style="border: none;">
         <input  type="text" name="inCTCSS" style="width:98%" value="<?php echo $inCTCSS;?>">
         </td></tr>
+        </td></tr>
+        <tr style="border: none;"> 
+        <td style="border: none;">DefaultTG</td>
+        <td style="border: none;">
+        <input  type="text" name="inDefaultTg" style="width:98%" value="<?php echo $inDefaultTg;?>">
+        </td></tr>
+
     </table>
 </td>
 <td> 
