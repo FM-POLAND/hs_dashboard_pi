@@ -158,6 +158,8 @@ if (isset($_POST['btnSave']))
 	$svxconfig['ReflectorLogic']['TG_URI'] = $_POST['inReflectorTgUri'];
         $svxconfig['ReflectorLogic']['HOSTS'] = $_POST['inHostsServer'];
         $svxconfig['ReflectorLogic']['HOST_PORT'] = $_POST['inHostPort'];
+        $svxconfig['ReflectorLogic']['DNS_DOMAIN'] = $_POST['inDnsDomain'];
+                
 
         if ($isSimplex){
 	$svxconfig['SimplexLogic']['DEFAULT_LANG'] = $_POST['inSimplexDefaultLang'];
@@ -257,6 +259,8 @@ if (isset($_POST['btnSave']))
 	$inReflectorTgUri = $svxconfig['ReflectorLogic']['TG_URI'];
         $inHostPort =$svxconfig['ReflectorLogic']['HOST_PORT'];
         $inHostsServer =$svxconfig['ReflectorLogic']['HOSTS'];
+        $inDnsDomain =$svxconfig['ReflectorLogic']['DNS_DOMAIN'];
+               
 
         if ($isSimplex){ 
 	$inSimplexCallsign = $svxconfig['SimplexLogic']['CALLSIGN'];
@@ -389,6 +393,11 @@ $conns = null;
         <tr style="border: none;"> 
         <td style="border: none;">Monitor TGs</td>
         <td style="border: none;"><input type="text" name="inMonitorTgs" style="width:98%" value="<?php echo $inMonitorTgs;?>">
+        </td></tr>
+        <tr style="border: none;"> 
+        <td style="border: none;">Refl Dns Domain</td>
+        <td style="border: none;"><input type="text" name="inDnsDomain" style="width:98%" value="<?php echo $inDnsDomain;?>">
+        </td></tr>
         </td></tr>
         <tr style="border: none;"> 
         <td style="border: none;">Reflector Servers</td>
