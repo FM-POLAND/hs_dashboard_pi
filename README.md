@@ -24,7 +24,14 @@ sudo usermod -aG sudo svxlink
 
 To activate mDNS (host.local) use:
 ```
- sudo apt-get install avahi-daemon avahi-utils
+sudo apt-get install avahi-daemon avahi-utils
+
+cd /etc/avahi/services/
+wget -c https://raw.githubusercontent.com/lathiat/avahi/master/avahi-daemon/sftp-ssh.service
+wget -c https://raw.githubusercontent.com/lathiat/avahi/master/avahi-daemon/ssh.service
+cd -
+service avahi-daemon restart
+ 
 ```
 
 RF configurator is based on sa818 programming library (https://github.com/0x9900/SA818)
