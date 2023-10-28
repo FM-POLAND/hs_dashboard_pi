@@ -1,14 +1,32 @@
 ###-START-###
-Tetra branch
-null
-.......................................................
-Changes:
-.......................................................
-null
-.......................................................
-Version Name:  null
-Version Date:  null
-Server Version  null vs Installed Version 19.09.2
-.......................................................
-PLEASE IGNORE THIS INFORMATION
+--- sounds download ---
+update.sounds.sh: 5: cd: can't cd to /opt
+rm: invalid option -- ''
+Try 'rm --help' for more information.
+mkdir: cannot create directory 'src\r': File exists
+--- sounds download --
+--2023-10-28 23:53:25--  https://api.github.com/repos/SP0DZ/hotspot.default.sounds/zipball/v1.9.9%0D%0D
+Resolving api.github.com (api.github.com)... 140.82.121.6
+Connecting to api.github.com (api.github.com)|140.82.121.6|:443... connected.
+HTTP request sent, awaiting response... 302 Found
+Location: https://codeload.github.com/SP0DZ/hotspot.default.sounds/legacy.zip/v1.9.9%0D%0D [following]
+--2023-10-28 23:53:26--  https://codeload.github.com/SP0DZ/hotspot.default.sounds/legacy.zip/v1.9.9%0D%0D
+Resolving codeload.github.com (codeload.github.com)... 140.82.121.10
+Connecting to codeload.github.com (codeload.github.com)|140.82.121.10|:443... connected.
+HTTP request sent, awaiting response... 404 Not Found
+2023-10-28 23:53:27 ERROR 404: Not Found.
+
+unzip:  cannot find or open *, *.zip or *.ZIP.
+
+No zipfiles found.
+mv: cannot stat 'FM-POLAND-sounds*': No such file or directory
+--- sounds backup ---
+--- sounds migration ---
+rm: cannot remove '/usr/share/svxlink/sounds'$'\r': No such file or directory
+mv: cannot stat '/opt/src/sounds/usr/share/svxlink/sounds': No such file or directory
+chown: cannot access '/usr/share/svxlink'$'\r': No such file or directory
+--- sounds version update & cleanup ---
+rm: cannot remove '/opt/src'$'\r': No such file or directory
+--- SVXlink service restart
+svxlink: unrecognized service
 ###-FINISH-####
