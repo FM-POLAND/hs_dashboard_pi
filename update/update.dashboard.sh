@@ -1,8 +1,8 @@
 echo "###-START-###"
 
 echo "--- Dashboard Pi download URLs ---"
-tagname=$(curl -sl https://api.github.com/repos/FM-POLAND/hs_dashboard_pi/releases/latest | jq -r .tag_name)
-zipball=$(curl -sl https://api.github.com/repos/FM-POLAND/hs_dashboard_pi/releases/latest | jq -r .zipball_url)
+tagname=$(curl -sl https://api.github.com/repos/SP0DZ/hotspot.dashboard.pi/releases/latest | jq -r .tag_name)
+zipball=$(curl -sl https://api.github.com/repos/SP0DZ/hotspot.dashboard.pi/releases/latest | jq -r .zipball_url)
 
 cd /opt
 rm src -R
