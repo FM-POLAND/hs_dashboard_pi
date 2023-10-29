@@ -1,8 +1,8 @@
 echo "###-START-###"
 
 echo "--- config download ---"
-tagname=$(curl -sl https://api.github.com/repos/SP0DZ/hotspot.default.config/releases/latest | jq -r .tag_name)
-zipball=$(curl -sl https://api.github.com/repos/SP0DZ/hotspot.default.config/releases/latest | jq -r .zipball_url)
+tagname=$(curl -sl https://api.github.com/repos/SP0DZ/hotspot.fm-germany.config/releases/latest | jq -r .tag_name)
+zipball=$(curl -sl https://api.github.com/repos/SP0DZ/hotspot.fm-germany.config/releases/latest | jq -r .zipball_url)
 
 cd /opt
 rm src -R
@@ -11,7 +11,7 @@ cd src
 echo "--- config download --"
 wget $zipball
 unzip *
-mv SP0DZ-hotspot.default.config* config
+mv SP0DZ-hotspot.fm-germany.config* config
 
 echo "--- events - local - backup ---"
 cp -R /usr/share/svxlink/events.d/local    /usr/share/svxlink/events.d/local.$(date +"%Y%m%dT%H%M%s")
@@ -25,7 +25,7 @@ echo "--- config version update & cleanup ---"
 echo $tagname > /opt/version.config 
 
 cd /opt
-rm -R /opt/src
+#rm -R /opt/src
 echo "--- SVXlink service restart"
 sudo service svxlink restart
 
