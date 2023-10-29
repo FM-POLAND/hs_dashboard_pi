@@ -205,13 +205,21 @@ if (isset($_POST['btnUpdateSounds']))
         //$sAconn = $_POST['sAconn'];
         //$password = $_POST['password'];
         //exec('nmcli dev wifi rescan');
+        
+        if (strtoupper($fmNetwork) == "FM POLAND")
+        {
+                $command = "sudo nice -n 19 sh update.sounds.fm-poland.sh > /var/www/html/update/screen.log 2>&1 &";
+        } elseif (strtoupper($fmNetwork) == "FM GERMANY")
+        {
+                $command = "sudo nice -n 19 sh update.sounds.fm-germany.sh > /var/www/html/update/screen.log 2>&1 &";
+        }
+        else {
         $command = "sudo nice -n 19 sh update.sounds.sh > /var/www/html/update/screen.log 2>&1 &";
+        }
+	//$command = "sudo nice -n 19 sh update.sounds.sh > /var/www/html/update/screen.log 2>&1 &";
         exec($command,$screen,$retval);
 
         $_SESSION['refresh']=True; header("Refresh: 3");
-
-
-
 };
 
 
@@ -233,12 +241,12 @@ if (isset($_POST['btnChkConfig']))
         $command = "sudo nice -n 19 sh check.config.sh > /var/www/html/update/screen.log 2>&1 &";
         }
         //$command = "sudo nice -n 19 sh check.config.sh > /var/www/html/update/screen.log 2>&1 &";
-        //exec($command,$screen,$retval);
+        exec($command,$screen,$retval);
         $_SESSION['refresh']=True; header("Refresh: 3");
         //sleep(1);
         //$command = "tail -n 500 /var/www/html/update/screen.log |tac 2>&1";
         //exec($command,$screen,$retval);
-}
+};
 
 
 if (isset($_POST['btnUpdateConfig']))
@@ -249,7 +257,20 @@ if (isset($_POST['btnUpdateConfig']))
         //$sAconn = $_POST['sAconn'];
         //$password = $_POST['password'];
         //exec('nmcli dev wifi rescan');
+        
+	if (strtoupper($fmNetwork) == "FM POLAND")
+        {
+                $command = "sudo nice -n 19 sh update.config.fm-poland.sh > /var/www/html/update/screen.log 2>&1 &";
+        } elseif (strtoupper($fmNetwork) == "FM GERMANY")
+        {
+                $command = "sudo nice -n 19 sh update.config.fm-germany.sh > /var/www/html/update/screen.log 2>&1 &";
+        }
+        else {
         $command = "sudo nice -n 19 sh update.config.sh > /var/www/html/update/screen.log 2>&1 &";
+        }
+
+
+	//$command = "sudo nice -n 19 sh update.config.sh > /var/www/html/update/screen.log 2>&1 &";
         exec($command,$screen,$retval);
 
         $_SESSION['refresh']=True; header("Refresh: 3");
