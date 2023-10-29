@@ -1,160 +1,401 @@
-<?php
-$progname = basename($_SERVER['SCRIPT_FILENAME'],".php");
-include_once 'include/config.php';
-include_once 'include/tools.php';
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Audio Peak Meter</title>
+    <meta name="Author" content="Waldek SP2ONG" />
+    <meta name="Description" content="Audio Test Peak Meter for SVXLink by SP2ONG 2022" />
+    <meta name="KeyWords" content="SVXLink, SVXRelector,SP2ONG" />
+    <link href="/css/css.php" type="text/css" rel="stylesheet" />
+<style type="text/css">
+body {
+  background-color: #eee;
+  font-size: 18px;
+  font-family: Arial;
+  font-weight: 300;
+  margin: 2em auto;
+  max-width: 40em;
+  line-height: 1.5;
+  color: #444;
+  padding: 0 0.5em;
+}
+h1, h2, h3 {
+  line-height: 1.2;
+}
+a {
+  color: #607d8b;
+}
+.highlighter-rouge {
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: .2em;
+  font-size: .8em;
+  overflow-x: auto;
+  padding: .2em .4em;
+}
+pre {
+  margin: 0;
+  padding: .6em;
+  overflow-x: auto;
+}
+
+#player {
+    position:relative;
+    width:205px;
+    overflow: hidden;
+    direction: ltl;
+}
+
+textarea {
+    background-color: #111;
+    border: 1px solid #000;
+    color: #ffffff;
+    padding: 1px;
+    font-family: courier new;
+    font-size:10px;
+}
 
 
-// migrate to external class tbc
-
-$svxConfigFile = '/etc/svxlink/svxlink.conf';
-    if (fopen($svxConfigFile,'r'))
-       { $svxconfig = parse_ini_file($svxConfigFile,true,INI_SCANNER_RAW);
-         $callsign = $svxconfig['ReflectorLogic']['CALLSIGN'];
-         $fmnetwork =$svxconfig['ReflectorLogic']['FMNET'];   }
-else { $callsign="N0CALL"; 
-       $fmnetwork="no registered";
-	}
 
 
-
-
-?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" lang="en">
-<head>
-    <meta name="robots" content="index" />
-    <meta name="robots" content="follow" />
-    <meta name="language" content="English" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta name="generator" content="SVXLink" />
-    <meta name="Author" content="SP2ONG, SP0DZ" />
-    <meta name="Description" content="Dashboard for SVXLink by SP2ONG, SP0DZ" />
-    <meta name="KeyWords" content="SVXLink,SP2ONG, SP0DZ" />
-    <meta http-equiv="cache-control" content="max-age=0" />
-    <meta http-equiv="cache-control" content="no-cache, no-store, must-revalidate" />
-    <meta http-equiv="expires" content="0" />
-    <meta http-equiv="pragma" content="no-cache" />
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Architects+Daughter&family=Fredoka+One&family=Tourney&family=Oswald&display=swap" rel="stylesheet">
-<link rel="shortcut icon" href="images/favicon.ico" sizes="16x16 32x32" type="image/png">    
-
-<?php echo ("<title>" . $callsign ." ". $fmnetwork . " Dashboard</title>"); ?>
-<?php include_once "include/browserdetect.php"; ?>
-    <script type="text/javascript" src="scripts/jquery.min.js"></script>
-    <script type="text/javascript" src="scripts/functions.js"></script>
-    <script type="text/javascript" src="scripts/pcm-player.min.js"></script>
-    <script type="text/javascript">
-      $.ajaxSetup({ cache: false });
-    </script>
-    <link href="css/featherlight.css" type="text/css" rel="stylesheet" />
-    <script src="scripts/featherlight.js" type="text/javascript" charset="utf-8"></script>
-<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-
+</style>
 </head>
 <body style="background-color: #e1e1e1;font: 11pt arial, sans-serif;">
 <center>
-<fieldset style="box-shadow:0 0 10px #999; background-color:#f1f1f1; width:0px;margin-top:15px;margin-left:0px;margin-right:5px;font-size:13px;border-top-left-radius: 10px; border-top-right-radius: 10px;border-bottom-left-radius: 10px; border-bottom-right-radius: 10px;">
-<div class="container"> 
-<div class="header">
-<div class="parent">
-    <div class="img" style="padding-left:270px"><img src="images/tower-rpt.png" /></div>
-    <div class="text"style="padding-right:230px">
-<center><p style="margin-top:5px;margin-bottom:0px;">
-<span style="font-size: 32px;letter-spacing:4px;font-family: &quot;Fredoka One&quot;, sans-serif;font-weight:500;color:DarkOrange"><?php echo $callsign; ?></span>
-<p style="margin-top:0px;margin-bottom:0px;">
-<span style="font-size: 30px;font-family: 'Architects Daughter', 'Helvetica Neue', Helvetica, Arial, sans-serif;letter-spacing: 3px;font-weight: 600;background: #3083b8;"><?php echo $fmnetwork; ?></span>
-</p></center>
-</div></div>
-</div>
-<?php include_once __DIR__."/include/top_menu.php"; ?>
+<fieldset style="border:#3083b8 2px groove;box-shadow:0 0 10px #999; background-color:#f1f1f1; width:555px;margin-top:15px;margin-left:0px;margin-right:5px;font-size:13px;border-top-left-radius: 10px; border-top-right-radius: 10px;border-bottom-left-radius: 10px; border-bottom-right-radius: 10px;">
+<div style="padding:0px;width:550px;background-image: linear-gradient(to bottom, #e9e9e9 50%, #bcbaba 100%);border-radius: 10px;-moz-border-radius:10px;-webkit-border-radius:10px;border: 1px solid LightGrey;margin-left:0px; margin-right:0px;margin-top:4px;margin-bottom:0px;line-height:1.6;white-space:normal;">
+<center>
+<h1 id="web-audio-peak-meters" style="color:#00aee8;font: 18pt arial, sans-serif;font-weight:bold; text-shadow: 0.25px 0.25px gray;">Updater</h1>
 
-<div class="content"><center>
-<div style="margin-top:0px;">
-<?php
-if (isProcessRunning('node')) {
-echo '&nbsp;&nbsp;<button class="button link" onclick="playAudioToggle(8080, this)"><b>&nbsp;&nbsp;&nbsp;<img src=images/speaker.png alt="" style="vertical-align:middle">&nbsp;&nbsp;RX Monitor&nbsp;&nbsp;&nbsp;</b></button><br><br>';
+
+<?php 
+ini_set("allow_url_fopen", 1);
+session_start();
+$isTetra = false;
+$isSimplex = false;
+
+$svxConfigFile = '/etc/svxlink/svxlink.conf';
+if (fopen($svxConfigFile,'r')) {$svxconfig = parse_ini_file($svxConfigFile,true,INI_SCANNER_RAW); }
+$logics = explode(",",$svxconfig['GLOBAL']['LOGICS']);
+foreach ($logics as $key) {
+  if ($key == "SimplexLogic") $isSimplex = true;
+  if ($key == "TetraLogic") $isTetra = true; 
+};
+$tgUri = $svxconfig['ReflectorLogic']['TG_URI'];
+$fmNetwork = $svxconfig['ReflectorLogic']['FMNET']; 
+
+
+
+//if ($_SERVER["REQUEST_METHOD"] == "POST") {
+//  if (empty($_POST["ssid"])) {
+//     echo "Name is required";
+//  } else {
+//    $ssid = $_POST["ssid"]);
+//  }
+//}}
+
+// load the connlist
+$retval = null;
+$conns = null;
+//exec('nmcli  -t -f NAME  con show',$conns,$retval);
+
+// find the gateway
+$ipgw = null;
+$screen = null;
+
+
+$screen[0] = "Welcome to HotSpot Updater.";
+$screen[1] = "";
+$screen[2] = "Please use buttons for appriopriate acctions.";
+$screen[3] = "";
+$screen[4] = "Have a Fun. Vy 73 de SP0DZ |shhh...:)";
+
+
+
+if ($_SESSION['refresh']){
+	$screen =null;
+	$command = "tail -n 500 /var/www/html/update/screen.log |tac 2>&1";
+        exec($command,$screen,$retval);
+
+	$str = $screen[0];
+	if ($str === "###-FINISH-####") {
+		$_SESSION['refresh'] = False;
+	}  else {
+	//else {$_SESSION['refresh'] = False;}
+	header("Refresh: 3");
+	}
+};
+
+
+
+if (isset($_POST['btnChkOs']))
+    {
+
+        $retval = null;
+        $screen = null;
+        //$sAconn = $_POST['sAconn'];
+        //$password = $_POST['password'];
+        //exec('nmcli dev wifi rescan');
+        $command = "sudo nice -n 19 sh check.os.sh > /var/www/html/update/screen.log 2>&1 &";
+        exec($command,$screen,$retval);
+	
+	$_SESSION['refresh']=True; header("Refresh: 3");
+	//sleep(1);
+	//$command = "tail -n 500 /var/www/html/update/screen.log |tac 2>&1";
+        //exec($command,$screen,$retval);       
+
+	
 }
-?>
-</div></center>
-</div>
-<?php
-if (MENUBUTTON=="TOP") {
-include_once __DIR__."/include/buttons.php"; 
+
+
+
+if (isset($_POST['btnUpdateOs']))
+    {
+
+        $retval = null;
+        $screen = null;
+        //$sAconn = $_POST['sAconn'];
+        //$password = $_POST['password'];
+        //exec('nmcli dev wifi rescan');
+        $command = "sudo nice -n 19 sh update.os.sh > /var/www/html/update/screen.log 2>&1 &";
+        exec($command,$screen,$retval);
+
+	$_SESSION['refresh']=True; header("Refresh: 3");
+
+};
+
+
+
+if (isset($_POST['btnChkSounds']))
+    {
+
+        $retval = null;
+        $screen = null;
+        //$sAconn = $_POST['sAconn'];
+        //$password = $_POST['password'];
+        //exec('nmcli dev wifi rescan');
+        
+        if (strtoupper($fmNetwork) == "FM POLAND")
+        {
+                $command = "sudo nice -n 19 sh check.sounds.fm-poland.sh > /var/www/html/update/screen.log 2>&1 &";
+        } elseif (strtoupper($fmNetwork) == "FM GERMANY")
+        {
+                $command = "sudo nice -n 19 sh check.sounds.fm-germany.sh > /var/www/html/update/screen.log 2>&1 &";
+        }
+        else {
+        $command = "sudo nice -n 19 sh check.sounds.sh > /var/www/html/update/screen.log 2>&1 &";
+        }
+        
+        exec($command,$screen,$retval);
+
+        $_SESSION['refresh']=True; header("Refresh: 3");
+        //sleep(1);
+        //$command = "tail -n 500 /var/www/html/update/screen.log |tac 2>&1";
+        //exec($command,$screen,$retval);
+
+
 }
+
+
+if (isset($_POST['btnUpdateSounds']))
+    {
+
+        $retval = null;
+        $screen = null;
+        //$sAconn = $_POST['sAconn'];
+        //$password = $_POST['password'];
+        //exec('nmcli dev wifi rescan');
+        
+        if (strtoupper($fmNetwork) == "FM POLAND")
+        {
+                $command = "sudo nice -n 19 sh update.sounds.fm-poland.sh > /var/www/html/update/screen.log 2>&1 &";
+        } elseif (strtoupper($fmNetwork) == "FM GERMANY")
+        {
+                $command = "sudo nice -n 19 sh update.sounds.fm-germany.sh > /var/www/html/update/screen.log 2>&1 &";
+        }
+        else {
+        $command = "sudo nice -n 19 sh update.sounds.sh > /var/www/html/update/screen.log 2>&1 &";
+        }
+	//$command = "sudo nice -n 19 sh update.sounds.sh > /var/www/html/update/screen.log 2>&1 &";
+        exec($command,$screen,$retval);
+
+        $_SESSION['refresh']=True; header("Refresh: 3");
+};
+
+
+if (isset($_POST['btnChkConfig']))
+    {
+        $retval = null;
+        $screen = null;
+        //$sAconn = $_POST['sAconn'];
+        //$password = $_POST['password'];
+        //exec('nmcli dev wifi rescan');
+        if (strtoupper($fmNetwork) == "FM POLAND")
+        {
+                $command = "sudo nice -n 19 sh check.config.fm-poland.sh > /var/www/html/update/screen.log 2>&1 &";
+        } elseif (strtoupper($fmNetwork) == "FM GERMANY")
+        {
+                $command = "sudo nice -n 19 sh check.config.fm-germany.sh > /var/www/html/update/screen.log 2>&1 &";
+        }
+        else {
+        $command = "sudo nice -n 19 sh check.config.sh > /var/www/html/update/screen.log 2>&1 &";
+        }
+        //$command = "sudo nice -n 19 sh check.config.sh > /var/www/html/update/screen.log 2>&1 &";
+        exec($command,$screen,$retval);
+        $_SESSION['refresh']=True; header("Refresh: 3");
+        //sleep(1);
+        //$command = "tail -n 500 /var/www/html/update/screen.log |tac 2>&1";
+        //exec($command,$screen,$retval);
+};
+
+
+if (isset($_POST['btnUpdateConfig']))
+    {
+
+        $retval = null;
+        $screen = null;
+        //$sAconn = $_POST['sAconn'];
+        //$password = $_POST['password'];
+        //exec('nmcli dev wifi rescan');
+        
+	if (strtoupper($fmNetwork) == "FM POLAND")
+        {
+                $command = "sudo nice -n 19 sh update.config.fm-poland.sh > /var/www/html/update/screen.log 2>&1 &";
+        } elseif (strtoupper($fmNetwork) == "FM GERMANY")
+        {
+                $command = "sudo nice -n 19 sh update.config.fm-germany.sh > /var/www/html/update/screen.log 2>&1 &";
+        }
+        else {
+        $command = "sudo nice -n 19 sh update.config.sh > /var/www/html/update/screen.log 2>&1 &";
+        }
+
+
+	//$command = "sudo nice -n 19 sh update.config.sh > /var/www/html/update/screen.log 2>&1 &";
+        exec($command,$screen,$retval);
+
+        $_SESSION['refresh']=True; header("Refresh: 3");
+
+
+
+};
+
+
+if (isset($_POST['btnChkDashboard']))
+    {
+
+        $retval = null;
+        $screen = null;
+        
+	$command = "sudo nice -n 19 sh check.dashboard.sh > /var/www/html/update/screen.log 2>&1 &";
+        exec($command,$screen,$retval);
+        
+	$_SESSION['refresh']=True; header("Refresh: 3");
+}
+
+
+if (isset($_POST['btnUpdateDashboard']))
+    {
+
+        $retval = null;
+        $screen = null;
+        
+	$command = "sudo cp /var/www/html/update/update.dashboard.sh /opt";
+	exec($command,$screen,$retval);
+	$command = "sudo nice -n 19 sh /opt/update.dashboard.sh > /var/www/html/update/screen.log 2>&1 &";
+        exec($command,$screen,$retval);
+        //exec('nmcli dev wifi rescan');
+        //$command3 = "sudo wget ".$tgUri." >> /var/www/html/update/screen.log 2>&1";
+        //exec($command3,$screen,$retval);
+	//if ($retval) {
+	//echo "*";
+	//$command4 = "sudo mv /var/www/html/tgdb.txt /var/www/html/include/tgdb.php >> /var/www/html/update/screen.log 2>&1";
+        //exec($command4,$screen,$retval);
+	//}
+        //$_SESSION['refresh']=True; header("Refresh: 3");
+        $_SESSION['refresh']=True; header("Refresh: 3");
+
+};
+
+if (isset($_POST['btnChkSvxlink']))
+    {
+
+        $retval = null;
+        $screen = null;
+        $command = "sudo nice -n 19 sh check.svxlink.sh > /var/www/html/update/screen.log 2>&1 &"; //for any other cases
+        if ($isTetra){ $command = "sudo nice -n 19 sh check.svxlink.tetra.sh > /var/www/html/update/screen.log 2>&1 &";};        
+        exec($command,$screen,$retval);
+        $_SESSION['refresh']=True; header("Refresh: 3");
+}
+
+
+
+
+
+if (isset($_POST['btnUpdateSvxlink']))
+    {
+
+        $retval = null;
+        $screen = null;
+        $command = "sudo nice -n 19 sh update.svxlink.sh > /var/www/html/update/screen.log 2>&1 &";
+        if ($isTetra){ $command = "sudo nice -n 19 sh update.svxlink.tetra.sh > /var/www/html/update/screen.log 2>&1 &";};   
+        exec($command,$screen,$retval);
+
+        $_SESSION['refresh']=True; header("Refresh: 3");
+
+};
+
 ?>
-<?php
-    echo '<table style="margin-bottom:0px;border:0; border-collapse:collapse; cellspacing:0; cellpadding:0; background-color:#f1f1f1;"><tr style="border:none;background-color:#f1f1f1;">';
-    echo '<td width="200px" valign="top" class="hide" style="height:auto;border:0;background-color:#f1f1f1;">';
-    echo '<div class="nav" style="margin-bottom:10px;margin-top:10px;">'."\n";
 
-    echo '<script type="text/javascript">'."\n";
-    echo 'function reloadStatusInfo(){'."\n";
-    echo '  $("#statusInfo").load("include/status.php",function(){ setTimeout(reloadStatusInfo,3000) });'."\n";
-    echo '}'."\n";
-    echo 'setTimeout(reloadStatusInfo,3000);'."\n";
-    echo '$(window).trigger(\'resize\');'."\n";
-    echo '</script>'."\n";
-    echo '<div id="statusInfo" style="margin-bottom:30px;">'."\n";
-    include 'include/status.php';
-    echo '</div>'."\n";
-    echo '</div>'."\n";
-    echo '</td>'."\n";
+<form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>"> 
+<DIV style="height:340px">
+<table>
+	<tr>
+	<th>Screen</th> 
+	</tr>
+<tr>
+<Td>
+	<textarea name="scan" rows="15" cols="80"><?php 
+			echo implode("\n",$screen); ?></textarea>
 
-    echo '<td valign="top" style="height:auto;border:none;  background-color:#f1f1f1;">';
-    echo '<div class="content">'."\n";
-    echo '<script type="text/javascript">'."\n";
+</td>
+</tr>  
+</table> 
+<table>
+        <tr>
+        <th>Check versions</th>
+        </tr>
+<tr>
+<Td>
+        <button name="btnChkOs" type="submit" class="red" style="height:30px; width:80px; font-size:12px;">OS</button>
+        <button name="btnChkSounds" type="submit" class="red" style="height:30px; width:80px; font-size:12px;">Sounds</button>
+	<button name="btnChkConfig" type="submit" class="red" style="height:30px; width:80px; font-size:12px;">Config</button>
+	<button name="btnChkSvxlink" type="submit" class="red" style="height:30px; width:80px; font-size:12px;">SVXLink</button>
+	<button name="btnChkDashboard" type="submit" class="red" style="height:30px; width:90px; font-size:12px;">Dashboard</button>
 
-    if (URLSVXRAPI!="") {
-    echo 'function reloadSVXREF(){'."\n";
-    //echo '  $("#svxref").load("include/svxref.php",function(){ setTimeout(reloadSVXREF,90000) });'."\n";
-    echo '}'."\n";
-    echo 'setTimeout(reloadSVXREF,90000);'."\n";
-     }
+</td>
+</tr>
+</table>
+<table>
+        <tr>
+        <th>Upgrade</th>
+        </tr>
+<tr>
+<Td>
+        
+	<button name="btnUpdateOs" type="submit" class="red" style="height:30px; width:80px; font-size:12px;">OS</button>
+        <button name="btnUpdateSounds" type="submit" class="red" style="height:30px; width:80px; font-size:12px;">Sounds</button>
+        <button name="btnUpdateConfig" type="submit" class="red" style="height:30px; width:80px; font-size:12px;">Config</button>
+        <button name="btnUpdateSvxlink" type="submit" class="red" style="height:30px; width:80px; font-size:12px;">SVXLink</button>
+	<button name="btnUpdateDashboard" type="submit" class="red" style="height:30px; width:90px; font-size:12px;">Dashboard</button>
+</td>
+</tr>
+</table>
 
-    echo 'function reloadLastHerd(){'."\n";
-    echo '  $("#lastHerd").load("include/lh.php",function(){ setTimeout(reloadLastHerd,3000) });'."\n";
-    echo '}'."\n";
-    echo 'setTimeout(reloadLastHerd,3000);'."\n";
+</DIV>
+</form>
 
-    echo '$(window).trigger(\'resize\');'."\n";
-    echo '</script>'."\n";
-    echo '<center><div id="lastHerd" style="margin-bottom:30px;">'."\n";
-    include 'include/lh.php';
-    echo '</div></center>'."\n";
-    echo "<br />\n";
-    if (URLSVXRAPI!="") {
-    echo '<center><div id="svxref" style="margin-bottom:30px;">'."\n";
-    //include 'include/svxref.php';
-    echo '</div></center>'."\n";
-    }
-    echo '</td>';
-?>
-</tr></table>
-<?php
-    echo '<div class="content2">'."\n";
-    echo '<script type="text/javascript">'."\n";
-    echo 'function reloadSysInfo(){'."\n";
-    echo '  $("#sysInfo").load("include/system.php",function(){ setTimeout(reloadSysInfo,15000) });'."\n";
-    echo '}'."\n";
-    echo 'setTimeout(reloadSysInfo,15000);'."\n";
-    echo '$(window).trigger(\'resize\');'."\n";
-    echo '</script>'."\n";
-    echo '<div id="sysInfo">'."\n";
-    include 'include/system.php';
-    echo '</div>'."\n";
-    echo '</div>'."\n";
-?>
-<?php
-if (MENUBUTTON=="BOTTOM") {
-include_once __DIR__."/include/buttons.php"; }
-?>
-<!--- Please do not remove copyright info -->
-<center><span title="Dashboard" style="font: 7pt arial, sans-serif;">SvxLink Dashboard ©  SP2ONG, SP0DZ <?php $cdate=date("Y"); if ($cdate > "2021") {$cdate="2021-".date("Y");} echo $cdate; ?>
-	</div>
-</div>
-</fieldset>
-<br>
+<p style="margin: 0 auto;"></p>
+<p style="margin-bottom:-2px;"></p>
+
 </body>
 </html>
