@@ -1,4 +1,5 @@
 #!/bin/bash
+# Remaks: We need to move to JSON format in PHP code in the future
 
 cd /var/www/html/include
 
