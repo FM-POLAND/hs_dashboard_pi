@@ -1,7 +1,7 @@
 THIS REPO IS KEEP LIVE FOR MIRATION PURPOSES ONLY.
 REPO SPLIT release migrated the code to https://github.com/SP0DZ/hotspot.dashboard.pi
 
-please check also others FORKS 
+please check also others FORKS https://github.com/FM-POLAND/hs_dashboard_pi/forks
 
 
 
