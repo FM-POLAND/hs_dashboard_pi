@@ -1,3 +1,10 @@
+THIS REPO IS KEEP LIVE FOR MIRATION PURPOSES ONLY.
+REPO SPLIT release migrated the code to https://github.com/SP0DZ/hotspot.dashboard.pi
+
+please check also others FORKS 
+
+
+
 # hs_dashboard_pi
 HotSpot dashboard repository inspired by pi star dashboard
 
